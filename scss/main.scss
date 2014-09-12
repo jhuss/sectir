@@ -1,0 +1,11 @@
+@import 'default_properties';
+
+body
+{
+  color: $text-color-default;
+  background: $background-color-default;
+  font-family: $font-family-default;
+  font-size: $font-size-default;
+  margin: 0;
+  padding: 0;
+}

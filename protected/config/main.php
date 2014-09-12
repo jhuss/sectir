@@ -30,8 +30,25 @@ return array(
 		*/
 	),
 
+    'aliases' => array(
+        'vendor' => 'application.vendor',
+    ),
+
 	// application components
 	'components'=>array(
+        'sass' => array(
+            // Path to the SassHandler class
+            // You need the full path only if you don't use Composer's autoloader
+            //'class' => 'vendor.artem-frolov.yii-sass.SassHandler',
+
+            // Use the following if you use Composer's autoloader and Yii >= 1.1.15
+            'class' => 'SassHandler',
+
+            // Enable Compass support, defaults to false
+            //'enableCompass' => true,
+
+            'compilerOutputFormatting' => SassHandler::OUTPUT_FORMATTING_COMPRESSED
+        ),
 		'user'=>array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,

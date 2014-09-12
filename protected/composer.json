@@ -1,0 +1,16 @@
+{
+    "name": "sectir/sectir",
+    "require": {
+        "php": ">=5.3.0",
+        "yiisoft/yii": "1.1.15",
+        "leafo/scssphp": "dev-master",
+        "leafo/scssphp-compass": "dev-master",
+        "artem-frolov/yii-sass": "dev-master"
+    },
+    "autoload": {
+        "files": [
+            "vendor/yiisoft/yii/framework/yii.php",
+            "vendor/artem-frolov/yii-sass/SassHandler.php"
+        ]
+    }
+}
