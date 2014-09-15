@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="400"
+   height="250"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.5 r10040"
+   sodipodi:docname="headers.svg"
+   inkscape:export-filename="/home/jhuss/Develop/Personal/Web/SECTIR/sectir/images/src/header-login.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs4">
+    <filter
+       inkscape:collect="always"
+       id="filter3831"
+       x="-0.063450819"
+       width="1.1269016"
+       y="-0.3542211"
+       height="1.7084422">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="6.8953195"
+         id="feGaussianBlur3833" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1"
+     inkscape:cx="255.14229"
+     inkscape:cy="203.45865"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:showpageshadow="false"
+     inkscape:window-width="1360"
+     inkscape:window-height="717"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-802.36218)">
+    <g
+       id="g3835"
+       transform="translate(12.8125,-22.966358)"
+       inkscape:export-filename="/home/jhuss/Develop/Personal/Web/SECTIR/sectir/images/src/login-header.png"
+       inkscape:export-xdpi="59.405933"
+       inkscape:export-ydpi="59.405933">
+      <path
+         transform="translate(0,802.36218)"
+         id="rect3784"
+         d="m 188.78125,139.46875 0,46.71875 40.8125,0 0,-46.71875 -40.8125,0 z m -88,9.875 0,36.84375 40.8125,0 0,-36.84375 -40.8125,0 z m 132,0 0,36.84375 40.8125,0 0,-36.84375 -40.8125,0 z m -88,4.59375 0,32.25 40.8125,0 0,-32.25 -40.8125,0 z m -88,6.59375 0,25.65625 40.8125,0 0,-25.65625 -40.8125,0 z m 220,0 0,25.65625 40.8125,0 0,-25.65625 -40.8125,0 z"
+         style="fill:#a0a0a0;fill-opacity:1;stroke:none;filter:url(#filter3831)"
+         inkscape:connector-curvature="0" />
+      <rect
+         y="962.88849"
+         x="56.789474"
+         height="25.657894"
+         width="40.789474"
+         id="rect2985"
+         style="fill:#408022;fill-opacity:1;stroke:none" />
+      <rect
+         style="fill:#225280;fill-opacity:1;stroke:none"
+         id="rect2987"
+         width="40.789474"
+         height="36.842106"
+         x="100.78947"
+         y="951.70428" />
+      <rect
+         y="956.30957"
+         x="144.78947"
+         height="32.236843"
+         width="40.789474"
+         id="rect2989"
+         style="fill:#bb8b13;fill-opacity:1;stroke:none" />
+      <rect
+         style="fill:#7e2f24;fill-opacity:1;stroke:none"
+         id="rect2991"
+         width="40.789474"
+         height="46.710526"
+         x="188.78947"
+         y="941.83588" />
+      <rect
+         y="951.70428"
+         x="232.78947"
+         height="36.842106"
+         width="40.789474"
+         id="rect2993"
+         style="fill:#353535;fill-opacity:1;stroke:none" />
+      <rect
+         style="fill:#386a60;fill-opacity:1;stroke:none"
+         id="rect2995"
+         width="40.789474"
+         height="25.657894"
+         x="276.78949"
+         y="962.88849" />
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-size:75.67984772px;font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Open Sans;-inkscape-font-specification:Open Sans Light"
+       x="81.935005"
+       y="900.83521"
+       id="text3844"
+       sodipodi:linespacing="125%"
+       inkscape:export-xdpi="59.405933"
+       inkscape:export-ydpi="59.405933"
+       inkscape:export-filename="/home/jhuss/Develop/Personal/Web/SECTIR/sectir/images/src/login-header.png"><tspan
+         sodipodi:role="line"
+         id="tspan3846"
+         x="81.935005"
+         y="900.83521">SECTIR</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Open Sans;-inkscape-font-specification:Open Sans"
+       x="200.2085"
+       y="987.82721"
+       id="text3848"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3850"
+         x="200.2085"
+         y="987.82721"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;font-family:Open Sans;-inkscape-font-specification:Open Sans">Sistema Estadístico en Ciencia, Tecnología</tspan><tspan
+         sodipodi:role="line"
+         x="200.2085"
+         y="1005.3272"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;font-family:Open Sans;-inkscape-font-specification:Open Sans"
+         id="tspan3852"> e Innovación del Estado Trujillo</tspan></text>
+  </g>
+</svg>

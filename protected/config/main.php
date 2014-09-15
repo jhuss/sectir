@@ -54,6 +54,31 @@ return array(
 
 			'compilerOutputFormatting' => SassHandler::OUTPUT_FORMATTING_COMPRESSED
 		),
+		'clientScript'=>array(
+			'packages'=>array(
+				'angular'=>array(
+					'baseUrl'=>'//ajax.googleapis.com/ajax/libs/angularjs/1.2.23/',
+					'js'=>array('angular.min.js'),
+				),
+				'angular-ui-bootstrap'=>array(
+					'baseUrl'=>'//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/',
+					'js'=>array('ui-bootstrap.min.js'),
+				),
+				'jquery'=>array(
+					'baseUrl'=>'//ajax.googleapis.com/ajax/libs/jquery/1.11.1/',
+					'js'=>array('jquery.min.js'),
+				),
+				'jquery.ui'=>array(
+					'baseUrl'=>'//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/',
+					'js'=>array('jquery-ui.min.js'),
+					'css'=>array('themes/smoothness/jquery-ui.css'),
+				),
+				'sugarjs'=>array(
+					'baseUrl'=>'//cdnjs.cloudflare.com/ajax/libs/sugar/1.4.1/',
+					'js'=>array('sugar-full.min.js'),
+				),
+			),
+		),
 		'user'=>array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,

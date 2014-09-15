@@ -1,0 +1,41 @@
+.proj-title {
+  background-image: url('../../images/login-header.png');
+  background-repeat: no-repeat;
+  background-position: top center;
+  padding-top: 90px;
+  margin-top: 20px;
+
+  span {
+    font-size: 1.2em;
+  }
+
+  hr {
+    margin-top: 4px;
+  }
+}
+
+#login-form {
+  display: block;
+  margin: 0 auto;
+  width: 80%;
+
+  .error-summary {
+    border-radius: 3px;
+    padding: 5px;
+    margin-bottom: 17px;
+  }
+
+  .form-group {
+    label {
+      font-size: 1.3em;
+    }
+  }
+
+  .username, .password {
+    label {
+      font-size: 1.5em;
+      line-height: 2em;
+      padding: 0;
+    }
+  }
+}

@@ -1,4 +1,5 @@
 @import 'default_properties';
+@import 'utils';
 
 body
 {
@@ -8,4 +9,8 @@ body
   font-size: $font-size-default;
   margin: 0;
   padding: 0;
+}
+
+.col-centered {
+  @extend .column-center;
 }
