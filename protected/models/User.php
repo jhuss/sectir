@@ -28,7 +28,7 @@
  * @property UserRemoteIdentity[] $userRemoteIdentities
  * @property UserUsedPassword[] $userUsedPassword
  */
-class ExampleUser extends CActiveRecord
+class User extends CActiveRecord
 {
 	/**
 	 * @inheritdoc

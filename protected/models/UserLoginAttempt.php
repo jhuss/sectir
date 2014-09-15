@@ -16,7 +16,7 @@
  * The followings are the available model relations:
  * @property User $user
  */
-class ExampleUserLoginAttempt extends CActiveRecord
+class UserLoginAttempt extends CActiveRecord
 {
 	/**
 	 * @inheritdoc

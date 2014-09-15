@@ -7,7 +7,7 @@ Yii::import('usr.components.*');
  * It contains the authentication method that checks if the provided
  * data can identity the user.
  */
-class ExampleUserIdentity extends CUserIdentity
+class UserIdentity extends CUserIdentity
 	implements IPasswordHistoryIdentity,
 	IActivatedIdentity,
 	IEditableIdentity,

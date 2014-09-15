@@ -14,7 +14,7 @@ require(Yii::getPathOfAlias('usr.extensions').DIRECTORY_SEPARATOR.'password.php'
  * The followings are the available model relations:
  * @property User $user
  */
-class ExampleUserUsedPassword extends CActiveRecord
+class UserUsedPassword extends CActiveRecord
 {
 	/**
 	 * @inheritdoc

@@ -19,7 +19,7 @@
  * @property UserProfilePicture[] $thumbnails
  * @property Users $user
  */
-class ExampleUserProfilePicture extends CActiveRecord
+class UserProfilePicture extends CActiveRecord
 {
 	/**
 	 * @inheritdoc
