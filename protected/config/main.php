@@ -8,6 +8,7 @@
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'My Web Application',
+	'theme' => 'default',
 
 	// preloading 'log' component
 	'preload'=>array('log'),
@@ -28,27 +29,31 @@ return array(
 			'ipFilters'=>array('127.0.0.1','::1'),
 		),
 		*/
+		'usr'=>array(
+			'userIdentityClass' => 'UserIdentity',
+			'registrationEnabled' => false
+		),
 	),
 
-    'aliases' => array(
-        'vendor' => 'application.vendor',
-    ),
+	'aliases' => array(
+		'vendor' => 'application.vendor',
+	),
 
 	// application components
 	'components'=>array(
-        'sass' => array(
-            // Path to the SassHandler class
-            // You need the full path only if you don't use Composer's autoloader
-            //'class' => 'vendor.artem-frolov.yii-sass.SassHandler',
+		'sass' => array(
+			// Path to the SassHandler class
+			// You need the full path only if you don't use Composer's autoloader
+			//'class' => 'vendor.artem-frolov.yii-sass.SassHandler',
 
-            // Use the following if you use Composer's autoloader and Yii >= 1.1.15
-            'class' => 'SassHandler',
+			// Use the following if you use Composer's autoloader and Yii >= 1.1.15
+			'class' => 'SassHandler',
 
-            // Enable Compass support, defaults to false
-            //'enableCompass' => true,
+			// Enable Compass support, defaults to false
+			//'enableCompass' => true,
 
-            'compilerOutputFormatting' => SassHandler::OUTPUT_FORMATTING_COMPRESSED
-        ),
+			'compilerOutputFormatting' => SassHandler::OUTPUT_FORMATTING_COMPRESSED
+		),
 		'user'=>array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
@@ -65,15 +70,14 @@ return array(
 		),
 		*/
 		// uncomment the following to use a MySQL database
-		/*
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=testdrive',
+			'connectionString' => 'mysql:host=localhost;dbname=sectir',
 			'emulatePrepare' => true,
-			'username' => 'root',
-			'password' => '',
+			'username' => 'sectir',
+			'password' => 'sectir',
 			'charset' => 'utf8',
+			'tablePrefix' => ''
 		),
-		*/
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
 			'errorAction'=>'site/error',

@@ -12,15 +12,14 @@ return array(
 	// application components
 	'components'=>array(
 		// uncomment the following to use a MySQL database
-		/*
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=testdrive',
+			'connectionString' => 'mysql:host=localhost;dbname=sectir',
 			'emulatePrepare' => true,
-			'username' => 'root',
-			'password' => '',
+			'username' => 'sectir',
+			'password' => 'sectir',
 			'charset' => 'utf8',
+			'tablePrefix' => ''
 		),
-		*/
 		'log'=>array(
 			'class'=>'CLogRouter',
 			'routes'=>array(
