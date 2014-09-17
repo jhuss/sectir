@@ -2,7 +2,7 @@
 @var $this DefaultController
 @var $model LoginForm */
 
-$title = Yii::t('UsrModule.usr', 'Log in');
+$title = 'Iniciar sesión';
 $this->pageTitle = Yii::app()->name . ' - ' . $title;
 ?>
     <div class="row">
@@ -29,8 +29,6 @@ $this->pageTitle = Yii::app()->name . ' - ' . $title;
                     ),
                     'focus' => array($model, 'username'),
                 )); ?>
-
-                    <p class="note"><?php echo Yii::t('UsrModule.usr', 'Fields marked with <span class="required">*</span> are required.'); ?></p>
 
                     <?php echo $form->errorSummary($model, null, null, array('class'=>'error-summary bg-danger')); ?>
 
