@@ -20,6 +20,11 @@
 
 <body>
     <div class="container">
+<?php if(constant('GOB_BANNER')): ?>
+        <div class="row">
+            <div class="col-xs-12 gob-banner"></div>
+        </div>
+<?php endif; ?>
 <?php echo $content; ?>
     </div>
 <?php

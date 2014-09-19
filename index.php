@@ -1,5 +1,9 @@
 <?php
 
+// Configuración básica
+include('conf.php');
+define('GOB_BANNER', $GOB_BANNER);
+
 // remove the following lines when in production mode
 defined('YII_DEBUG') or define('YII_DEBUG',true);
 // specify how many levels of call stack should be shown in each log message
@@ -12,3 +16,4 @@ $config=dirname(__FILE__).'/protected/config/main.php';
 require(dirname(__FILE__).'/protected/vendor/autoload.php');
 
 Yii::createWebApplication($config)->run();
+Yii::app()->user->setReturnUrl($BASE_URL);

@@ -14,3 +14,11 @@ body
 .col-centered {
   @extend .column-center;
 }
+
+.gob-banner {
+  background-image: url('../../images/gob/banda.png'), url('../../images/gob/fundacite-tru.png');
+  background-position: left top, right center;
+  background-repeat: no-repeat;
+  height: 40px;
+  margin-bottom: 10px;
+}

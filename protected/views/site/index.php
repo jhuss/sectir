@@ -1,6 +1,8 @@
 <?php
     /* @var $this SiteController */
 
+    $this->setPageTitle(Yii::app()->name . ': ' . Yii::app()->params['defaultTitle']);
+
     // ejemplo de "Clip" registrando angularjs
     $this->beginClip('Footer');
         $cs = Yii::app()->clientScript;

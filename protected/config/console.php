@@ -1,31 +1,44 @@
 <?php
 
+require(dirname(__FILE__) . '/../../conf.php');
+
 // This is the configuration for yiic console application.
 // Any writable CConsoleApplication properties can be configured here.
 return array(
-	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'My Console Application',
+	'basePath' => dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
+	'name' => $SITE_NAME,
+
+	'commandMap' => array(
+		'usr' => array(
+			'class' => 'application.vendor.nineinchnick.yii-usr.commands.UsrCommand',
+		),
+	),
 
 	// preloading 'log' component
-	'preload'=>array('log'),
+	'preload' => array('log'),
 
 	// application components
-	'components'=>array(
+	'components' => array(
 		// uncomment the following to use a MySQL database
-		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=sectir',
+		'db' => array(
+			'connectionString' => 'mysql:host=' . $DB_HOST . ';dbname=' . $DB_NAME,
 			'emulatePrepare' => true,
-			'username' => 'sectir',
-			'password' => 'sectir',
+			'username' => $DB_USER,
+			'password' => $DB_PASS,
 			'charset' => 'utf8',
-			'tablePrefix' => ''
+			'tablePrefix' => $DB_PREFIX
 		),
-		'log'=>array(
-			'class'=>'CLogRouter',
-			'routes'=>array(
+		'authManager' => array(
+			'class' => 'CDbAuthManager',
+			'connectionID' => 'db',
+			'defaultRoles' => array('usr.manage', $ADMIN_USER),
+		),
+		'log' => array(
+			'class' => 'CLogRouter',
+			'routes' => array(
 				array(
-					'class'=>'CFileLogRoute',
-					'levels'=>'error, warning',
+					'class' => 'CFileLogRoute',
+					'levels' => 'error, warning',
 				),
 			),
 		),
