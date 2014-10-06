@@ -62,6 +62,9 @@ class UserIdentity extends CUserIdentity
     public function authenticate()
     {
         $record = User::model()->findByAttributes(array('username'=>$this->username));
+        if($record === null) {
+            $record = User::model()->findByAttributes(array('email'=>$this->username));
+        }
         $authenticated = $record !== null && $record->verifyPassword($this->password);
 
         $attempt = new UserLoginAttempt;

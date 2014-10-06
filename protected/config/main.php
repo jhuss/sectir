@@ -36,6 +36,12 @@ return array(
 			'userIdentityClass' => 'UserIdentity',
 			'registrationEnabled' => true,
 			'requireVerifiedEmail' => false,
+			'pictureUploadRules' => array(
+				array('file', 'allowEmpty' => true, 'types'=>'jpg, gif, png', 'maxSize'=>2*1024*1024, 'safe' => false, 'maxFiles' => 1),
+			),
+			'captcha' => array(
+				//'captchaAction'=>'/usr/default/captcha'
+			),
 		),
 	),
 
@@ -86,6 +92,7 @@ return array(
 		'user' => array(
 			// enable cookie-based authentication
 			'allowAutoLogin' => true,
+			'loginUrl'=>array('usr/login'),
 		),
 		'authManager' => array(
 			'class' => 'CDbAuthManager',

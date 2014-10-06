@@ -11,5 +11,5 @@
         $cs->registerCoreScript('angular');
         $cs->registerCoreScript('angular-ui-bootstrap');
     $this->endClip();
-?>
-<h1>Hello World</h1>
+
+$this->renderPartial('//layouts/_usrbar', array('model'=>$model));

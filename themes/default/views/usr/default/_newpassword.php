@@ -1,7 +1,8 @@
-	<div class="control-group">
-		<?php echo $form->labelEx($model,'newPassword'); ?>
-		<?php echo $form->passwordField($model,'newPassword', array('autocomplete'=>'off')); ?>
-		<?php echo $form->error($model,'newPassword'); ?>
+	<div class="form-group<?php echo ($model->hasErrors('newPassword')) ? ' has-error' : ''; ?>">
+		<?php echo $form->labelEx($model,'newPassword', array('class'=>sprintf('col-xs-%s control-label',$labelSize))); ?>
+        <div class="col-xs-<?php echo $controlSize; ?>">
+		<?php echo $form->passwordField($model,'newPassword', array('class'=>'form-control', 'autocomplete'=>'off')); ?>
+		<?php echo $form->error($model,'newPassword', array('class'=>'text-danger')); ?>
 <?php if ($this->module->dicewareEnabled): ?>
 		<span><a id="Users_generatePassword" href="#"><?php echo Yii::t('UsrModule.usr', 'Generate a password'); ?></a></span>
 <?php
@@ -24,10 +25,13 @@ JavaScript;
 Yii::app()->getClientScript()->registerScript(__CLASS__.'#diceware', $script);
 ?>
 <?php endif; ?>
+        </div>
 	</div>
 
-	<div class="control-group">
-		<?php echo $form->labelEx($model,'newVerify'); ?>
-		<?php echo $form->passwordField($model,'newVerify', array('autocomplete'=>'off')); ?>
-		<?php echo $form->error($model,'newVerify'); ?>
+	<div class="form-group<?php echo ($model->hasErrors('newVerify')) ? ' has-error' : ''; ?>">
+		<?php echo $form->labelEx($model,'newVerify', array('class'=>sprintf('col-xs-%s control-label',$labelSize))); ?>
+        <div class="col-xs-<?php echo $controlSize; ?>">
+            <?php echo $form->passwordField($model,'newVerify', array('class'=>'form-control', 'autocomplete'=>'off')); ?>
+            <?php echo $form->error($model,'newVerify', array('class'=>'text-danger')); ?>
+        </div>
 	</div>

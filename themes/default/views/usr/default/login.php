@@ -6,7 +6,7 @@ $title = 'Iniciar sesión';
 $this->pageTitle = Yii::app()->name . ' - ' . $title;
 ?>
     <div class="row">
-        <div class="col-xs-12 col-md-6 col-lg-5 col-centered">
+        <div class="col-xs-10 col-md-6 col-lg-6 col-centered">
             <div class="row">
                 <div class="proj-title text-center">
                     <span>Sistema Estadístico en Ciencia, Tecnología e Innovación del Estado Trujillo</span>
@@ -14,7 +14,9 @@ $this->pageTitle = Yii::app()->name . ' - ' . $title;
                 </div>
                 <h2 class="text-center"><?php echo $title; ?></h2>
 
-                <?php $this->widget('usr.components.UsrAlerts', array('cssClassPrefix' => $this->module->alertCssClassPrefix)); ?>
+                <div class="usr-alert">
+                <?php $this->widget('usr.components.UsrAlerts', array('cssClassPrefix' => 'alert alert-danger ')); ?>
+                </div>
 
                 <div class="<?php echo $this->module->formCssClass; ?>">
 
@@ -30,14 +32,14 @@ $this->pageTitle = Yii::app()->name . ' - ' . $title;
                     'focus' => array($model, 'username'),
                 )); ?>
 
-                    <?php echo $form->errorSummary($model, null, null, array('class'=>'error-summary bg-danger')); ?>
+                    <?php echo $form->errorSummary($model, null, null, array('class'=>'alert alert-danger')); ?>
 
-                    <div class="username form-group">
+                    <div class="username form-group<?php echo ($model->hasErrors('username')) ? ' has-error' : ''; ?>">
                         <?php echo $form->textField($model, 'username', array('class'=>'form-control', 'placeholder'=>$model->getAttributeLabel('username'))); ?>
                         <?php echo $form->error($model, 'username', array('class'=>'text-danger')); ?>
                     </div>
 
-                    <div class="password form-group">
+                    <div class="password form-group<?php echo ($model->hasErrors('password')) ? ' has-error' : ''; ?>">
                         <?php echo $form->passwordField($model, 'password', array('class'=>'form-control', 'placeholder'=>$model->getAttributeLabel('password'))); ?>
                         <?php echo $form->error($model, 'password', array('class'=>'text-danger')); ?>
                     </div>
@@ -96,7 +98,6 @@ $this->beginClip('Footer');
 Yii::app()->sass->register(Yii::getPathOfAlias('webroot.scss') . '/login.scss');
 
 $cs = Yii::app()->clientScript;
-$cs->coreScriptPosition = CClientScript::POS_END;
 $cs->registerScriptFile(Yii::app()->baseUrl . '/bootstrap/javascripts/bootstrap.js', CClientScript::POS_END);
 
 $this->endClip();

@@ -9,7 +9,7 @@ $authManager = Yii::app()->authManager;
 $assignedRoles = $id === null ? array() : $authManager->getAuthItems(CAuthItem::TYPE_ROLE, $id);
 $allRoles = $authManager->getAuthItems(CAuthItem::TYPE_ROLE);
 
-$this->pageTitle = $id === null ? Yii::t('UsrModule.manager', 'Create user') : Yii::t('UsrModule.manager', 'Update user {id}', array('{id}' => $id));
+$this->pageTitle = $id === null ? Yii::t('UsrModule.manager', 'Create user') : Yii::t('UsrModule.manager', 'Update user {id}', array('{id}' => $profileForm->username));
 
 $this->menu=array(
 	array('label'=>Yii::t('UsrModule.manager', 'List users'), 'url'=>array('index')),
@@ -18,15 +18,44 @@ if ($id !== null) {
 	$this->menu[] = array('label'=>Yii::t('UsrModule.manager', 'Create user'), 'url'=>array('update'));
 }
 
+$this->renderPartial('//layouts/_usrbar', array('model'=>$profileForm));
+
+$this->beginClip('Footer');
+    Yii::app()->sass->register(Yii::getPathOfAlias('webroot.scss') . '/profile.scss');
+
+    if ($profileForm->getIdentity() instanceof IPictureIdentity && !empty($profileForm->pictureUploadRules)) {
+        $cs = Yii::app()->clientScript;
+        $cs->registerCssFile(Html::cssUrl('fileinput.min.css'));
+        $cs->registerScriptFile(Html::jsUrl('fileinput.min.js'), CClientScript::POS_END);
+        $cs->registerScript('fileInput', "$('#ProfileForm_picture').fileinput({
+                browseClass: 'btn btn-primary',
+                showCaption: false,
+                showRemove: false,
+                showUpload: false,
+                browseLabel: 'Buscar imagen',
+                browseIcon: ''
+            });", CClientScript::POS_READY);
+    }
+$this->endClip();
+
+$labelSize = 4;
+$controlSize = 8;
 ?>
+<div class="row">
+    <h2><?php echo $this->pageTitle; ?></h2>
+    <hr style="margin-top: 0;">
+</div>
 
-<h1><?php echo $this->pageTitle; ?></h1>
+<div class="row">
+    <div class="col-xs-10 usr-alert">
+        <?php $this->widget('usr.components.UsrAlerts', array('cssClassPrefix'=>'alert alert-warning ')); ?>
+    </div>
+</div>
 
-<?php $this->widget('usr.components.UsrAlerts', array('cssClassPrefix'=>$this->module->alertCssClassPrefix)); ?>
-
-<div class="<?php echo $this->module->formCssClass; ?>">
-
+<div class="row <?php echo $this->module->formCssClass; ?>">
+    <div class="col-xs-12">
 <?php if ($id !== null): ?>
+        <div class="col-xs-10">
 <?php $this->widget($this->module->detailViewClass, array(
 	'data' => $identity,
 	'attributes' => array(
@@ -74,36 +103,45 @@ if ($id !== null) {
 		),
 	),
 )); ?>
+            <br>
+        </div>
 <?php endif; ?>
 
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'profile-form',
-	'enableAjaxValidation'=>true,
+	'enableAjaxValidation'=>false,
 	'enableClientValidation'=>false,
 	'clientOptions'=>array(
 		'validateOnSubmit'=>true,
 	),
-	'htmlOptions' => array('enctype' => 'multipart/form-data'),
+	'htmlOptions' => array('class'=>'form-horizontal', 'role'=>'form', 'enctype' => 'multipart/form-data'),
 	'focus'=>array($profileForm,'username'),
 )); ?>
 
-	<p class="note"><?php echo Yii::t('UsrModule.manager', 'Fields with {asterisk} are required.', array('{asterisk}'=>'<span class="required">*</span>')); ?></p>
+    <div class="form-group">
+        <div class="col-xs-10">
+            <div class="usr-err">
+            <?php echo $form->errorSummary($profileForm, null, null, array('class'=>'alert alert-danger')); ?>
+            <h5 class="text-right"><span class="label label-danger note"><?php echo Yii::t('UsrModule.manager', 'Fields with {asterisk} are required.', array('{asterisk}'=>'<span class="required">*</span>')); ?></span></h5>
+            </div>
+        </div>
+    </div>
 
-	<?php echo $form->errorSummary($profileForm); ?>
+    <?php $this->renderPartial('/default/_form', array('form'=>$form, 'model'=>$profileForm, 'passwordForm'=>$passwordForm, 'labelSize'=>$labelSize, 'controlSize'=>$controlSize)); ?>
 
-<?php $this->renderPartial('/default/_form', array('form'=>$form, 'model'=>$profileForm, 'passwordForm'=>$passwordForm)); ?>
+    <?php if (Yii::app()->user->checkAccess('usr.update.auth') && !empty($allRoles)): ?>
+        <div class="form-group">
+            <?php echo CHtml::label(Yii::t('UsrModule.manager', 'Authorization roles'), 'roles'); ?>
+            <?php echo CHtml::checkBoxList('roles', array_keys($assignedRoles), CHtml::listData($allRoles, 'name', 'description'), array('template'=>'{beginLabel}{input}{labelTitle}{endLabel}')); ?>
+        </div>
+    <?php endif; ?>
 
-<?php if (Yii::app()->user->checkAccess('usr.update.auth') && !empty($allRoles)): ?>
-	<div class="control-group">
-		<?php echo CHtml::label(Yii::t('UsrModule.manager', 'Authorization roles'), 'roles'); ?>
-		<?php echo CHtml::checkBoxList('roles', array_keys($assignedRoles), CHtml::listData($allRoles, 'name', 'description'), array('template'=>'{beginLabel}{input}{labelTitle}{endLabel}')); ?>
-	</div>
-<?php endif; ?>
-
-	<div class="buttons">
-		<?php echo CHtml::submitButton($id === null ? Yii::t('UsrModule.manager', 'Create') : Yii::t('UsrModule.manager', 'Save'), array('class'=>$this->module->submitButtonCssClass)); ?>
-	</div>
+    <div class="form-group">
+        <div class="col-xs-10 text-right">
+        <?php echo CHtml::submitButton($id === null ? Yii::t('UsrModule.manager', 'Create') : Yii::t('UsrModule.manager', 'Save'), array('id'=>'profile-save', 'class'=>'btn btn-primary ' . $this->module->submitButtonCssClass)); ?>
+        </div>
+    </div>
 
 <?php $this->endWidget(); ?>
-
+    </div>
 </div><!-- form -->

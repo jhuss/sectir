@@ -1,0 +1,40 @@
+@import 'default_properties';
+@import 'utils';
+
+#profile-form {
+  label {
+    font-size: 1.2em;
+  }
+}
+
+#profile-save {
+  margin-right: 15px;
+}
+
+.btn.update {
+  float: right;
+}
+
+.profile-avatar {
+  padding-right: 0 !important;
+  text-align: right;
+}
+
+.profile {
+  padding: 0 !important;
+
+  .block {
+    font-size: 1.6em;
+    margin: 0 0 5px 0;
+
+    div {
+      padding: 0;
+    }
+
+    .attr {
+      font-weight: bold;
+      text-align: right;
+      padding-right: 10px;
+    }
+  }
+}
