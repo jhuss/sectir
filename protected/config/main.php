@@ -125,7 +125,40 @@ return array(
 			// use 'site/error' action to display errors
 			'errorAction' => 'site/error',
 		),
-		'log' => array(
+		'log' => _log(),
+	),
+
+	// application-level parameters that can be accessed
+	// using Yii::app()->params['paramName']
+	'params' => array(
+		'defaultTitle' => 'Sistema Estadístico en Ciencia, Tecnología e Innovación del Estado Trujillo',
+		'adminEmail' => 'webmaster@example.com',
+	),
+);
+
+function _log() {
+	$log = array();
+
+	if (constant('YII_DEBUG')) {
+		$log = array(
+			'class' => 'CLogRouter',
+			'routes' => array(
+				array(
+					'class' => 'CFileLogRoute',
+					'levels' => 'error, warning',
+				),
+				array(
+					'class' => '\\SK\\Yii\\FirePHP\\LogRoute',
+					'levels' => 'error, warning, info, trace',
+				),
+				array(
+					'class' => '\\SK\\Yii\\FirePHP\\ProfileLogRoute',
+					'report' => 'summary', // or "callstack"
+				),
+			),
+		);
+	} else {
+		$log = array(
 			'class' => 'CLogRouter',
 			'routes' => array(
 				array(
@@ -139,13 +172,8 @@ return array(
 				),
 				*/
 			),
-		),
-	),
+		);
+	}
 
-	// application-level parameters that can be accessed
-	// using Yii::app()->params['paramName']
-	'params' => array(
-		'defaultTitle' => 'Sistema Estadístico en Ciencia, Tecnología e Innovación del Estado Trujillo',
-		'adminEmail' => 'webmaster@example.com',
-	),
-);
+	return $log;
+}

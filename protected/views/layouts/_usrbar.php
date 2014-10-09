@@ -8,19 +8,19 @@
         $cs->registerScriptFile(Yii::app()->baseUrl . '/bootstrap/javascripts/bootstrap.js', CClientScript::POS_END);
     $this->endClip();
 
-    if (is_null($model)) {
-        $model = $this->module->createFormModel('ProfileForm', '');
-        $model->detachBehavior('captcha');
-        $model->setIdentity($identity=$this->loadModel(Yii::app()->user->id));
-        $model->setAttributes($identity->getAttributes());
-    }
+    $module = Yii::app()->getModule('usr');
+    $model = $module->createFormModel('ProfileForm');
+    $model->detachBehavior('captcha');
+    $identity = $model->getIdentity(Yii::app()->user->id);
+    $model->setIdentity($identity);
+    //FB::info($model->getIdentity(Yii::app()->user->id)->getPictureUrl(16,16), 'application.views.layouts');
 
     if ($model->getIdentity() instanceof IPictureIdentity) {
-        $picture = $model->getIdentity()->getPictureUrl(16,16);
+        $picture = $model->getIdentity(Yii::app()->user->id)->getPictureUrl(80,80);
     }
 
     $home = CHtml::image(Html::imageUrl('icons/home.png'));
-    $avatar = CHtml::image($picture['url'], Yii::t('UsrModule.usr', 'Profile picture'), array('height' => $picture['height'], 'width' => $picture['width']));
+    $avatar = CHtml::image($picture['url'], Yii::t('UsrModule.usr', 'Profile picture'), array('height' => 16, 'width' => 16));
     $salir = CHtml::image(Html::imageUrl('icons/door_out.png'), 'salir', array('height' => 16, 'width' => 16));
 ?>
 <div class="row usr-bar">
