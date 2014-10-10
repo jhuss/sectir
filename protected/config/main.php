@@ -97,7 +97,6 @@ return array(
 		'authManager' => array(
 			'class' => 'CDbAuthManager',
 			'connectionID' => 'db',
-			'defaultRoles' => array('usr.manage', $ADMIN_USER),
 		),
 		'request' => array(
 			'baseUrl' => $BASE_URL,
@@ -132,6 +131,7 @@ return array(
 	// using Yii::app()->params['paramName']
 	'params' => array(
 		'defaultTitle' => 'Sistema Estadístico en Ciencia, Tecnología e Innovación del Estado Trujillo',
+		'adminUser' => $ADMIN_USER,
 		'adminEmail' => 'webmaster@example.com',
 	),
 );

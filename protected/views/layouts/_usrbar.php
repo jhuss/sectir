@@ -13,10 +13,9 @@
     $model->detachBehavior('captcha');
     $identity = $model->getIdentity(Yii::app()->user->id);
     $model->setIdentity($identity);
-    //FB::info($model->getIdentity(Yii::app()->user->id)->getPictureUrl(16,16), 'application.views.layouts');
 
     if ($model->getIdentity() instanceof IPictureIdentity) {
-        $picture = $model->getIdentity(Yii::app()->user->id)->getPictureUrl(80,80);
+        $picture = $model->identity->getPictureUrl(80,80);
     }
 
     $home = CHtml::image(Html::imageUrl('icons/home.png'));
@@ -28,10 +27,13 @@
         <ul class="nav nav-pills">
             <li class="item"><?php echo CHtml::link($home . CHtml::tag('span', array('class'=>'nav-title'), 'Inicio', true), $this->createUrl('/'), array('class'=>'home')); ?></li>
             <li class="item dropdown">
-                <?php echo CHtml::link($avatar . CHtml::tag('span', array('class'=>'nav-title'), $model->firstName . ' ' . $model->lastName, true) . CHtml::tag('span', array('class'=>'caret'), '', true), '#', array('class'=>'avatar dropdown-toggle', 'data-toggle'=>'dropdown')); ?>
+                <?php echo CHtml::link($avatar . CHtml::tag('span', array('class'=>'nav-title'), $model->identity->firstName . ' ' . $model->identity->lastName, true) . CHtml::tag('span', array('class'=>'caret'), '', true), '#', array('class'=>'avatar dropdown-toggle', 'data-toggle'=>'dropdown')); ?>
                 <ul class="dropdown-menu" role="menu">
                     <li><?php echo CHtml::link('Ver Perfil', array('/usr/profile')); ?></li>
                     <li><?php echo CHtml::link('Actualizar Perfil', array('/usr/profile', 'update'=>true)); ?></li>
+                    <?php if(Yii::app()->user->checkAccess('usr.update')): ?>
+                        <li><?php echo CHtml::link('Administrar Usuarios', array('/usr/manager')); ?></li>
+                    <?php endif; ?>
                 </ul>
             </li>
         </ul>
