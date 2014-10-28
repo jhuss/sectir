@@ -1,0 +1,375 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "a5cb25a04d4e846c13f44e6c30321335",
+    "packages": [
+        {
+            "name": "artem-frolov/yii-sass",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/artem-frolov/yii-sass.git",
+                "reference": "07796ec4aebdbfe082ac354a692f6b93856c2079"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/artem-frolov/yii-sass/zipball/07796ec4aebdbfe082ac354a692f6b93856c2079",
+                "reference": "07796ec4aebdbfe082ac354a692f6b93856c2079",
+                "shasum": ""
+            },
+            "require": {
+                "leafo/scssphp": "dev-master",
+                "leafo/scssphp-compass": "dev-master",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpmd/phpmd": "*",
+                "phpunit/phpunit": "~4.2",
+                "squizlabs/php_codesniffer": "*",
+                "yiisoft/yii": "~1.1"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "SassHandler.php",
+                    "ExtendedScssc.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Artem Frolov",
+                    "email": "artem@frolov.net",
+                    "homepage": "http://frolov.net/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Sass (SCSS) and Compass support for the Yii framework",
+            "homepage": "https://github.com/artem-frolov/yii-sass",
+            "keywords": [
+                "compass",
+                "css",
+                "sass",
+                "scss",
+                "yii"
+            ],
+            "time": "2014-08-12 12:17:04"
+        },
+        {
+            "name": "firephp/firephp-core",
+            "version": "v0.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/firephp/firephp-core.git",
+                "reference": "fabad0f2503f9577fe8dd2cb1d1c7cd73ed2aacf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/firephp/firephp-core/zipball/fabad0f2503f9577fe8dd2cb1d1c7cd73ed2aacf",
+                "reference": "fabad0f2503f9577fe8dd2cb1d1c7cd73ed2aacf",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib/FirePHPCore/FirePHP.class.php",
+                    "lib/FirePHPCore/fb.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christoph Dorn",
+                    "email": "christoph@christophdorn.com",
+                    "homepage": "http://christophdorn.com"
+                }
+            ],
+            "description": "Traditional FirePHPCore library for sending PHP variables to the browser.",
+            "homepage": "https://github.com/firephp/firephp-core",
+            "time": "2013-04-23 15:28:20"
+        },
+        {
+            "name": "leafo/scssphp",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/leafo/scssphp.git",
+                "reference": "8c08da585537e97efd528c7d278463d2b9396371"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/leafo/scssphp/zipball/8c08da585537e97efd528c7d278463d2b9396371",
+                "reference": "8c08da585537e97efd528c7d278463d2b9396371",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*"
+            },
+            "bin": [
+                "bin/pscss"
+            ],
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "classmap.php"
+                ],
+                "psr-4": {
+                    "Leafo\\ScssPhp\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT",
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Leaf Corcoran",
+                    "email": "leafot@gmail.com",
+                    "homepage": "http://leafo.net"
+                }
+            ],
+            "description": "scssphp is a compiler for SCSS written in PHP.",
+            "homepage": "http://leafo.net/scssphp/",
+            "keywords": [
+                "css",
+                "less",
+                "sass",
+                "scss",
+                "stylesheet"
+            ],
+            "time": "2014-08-12 22:41:53"
+        },
+        {
+            "name": "leafo/scssphp-compass",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/leafo/scssphp-compass.git",
+                "reference": "f1631ddb17731326863954d99b39694f0bbed6ec"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/leafo/scssphp-compass/zipball/f1631ddb17731326863954d99b39694f0bbed6ec",
+                "reference": "f1631ddb17731326863954d99b39694f0bbed6ec",
+                "shasum": ""
+            },
+            "require": {
+                "leafo/scssphp": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "compass.inc.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Leaf Corcoran",
+                    "email": "leafot@gmail.com",
+                    "homepage": "http://leafo.net"
+                }
+            ],
+            "description": "Compass for scssphp",
+            "homepage": "http://leafo.net/scssphp/",
+            "time": "2012-08-02 02:04:32"
+        },
+        {
+            "name": "nineinchnick/yii-usr",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nineinchnick/yii-usr.git",
+                "reference": "74d851cf3babf18b1b52387d4c0bd6d42d08e1d1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nineinchnick/yii-usr/zipball/74d851cf3babf18b1b52387d4c0bd6d42d08e1d1",
+                "reference": "74d851cf3babf18b1b52387d4c0bd6d42d08e1d1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Jan Waś",
+                    "email": "janek.jan@gmail.com",
+                    "homepage": "http://niix.pl/"
+                }
+            ],
+            "description": "Yii framework module for user authentication, password reset, registration and profile updating.",
+            "time": "2014-09-17 07:58:11"
+        },
+        {
+            "name": "shiki/yii-firephp",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/shiki/yii-firephp.git",
+                "reference": "93dfb80d83bf21d8562084f90d7c2aebf2bf352e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/shiki/yii-firephp/zipball/93dfb80d83bf21d8562084f90d7c2aebf2bf352e",
+                "reference": "93dfb80d83bf21d8562084f90d7c2aebf2bf352e",
+                "shasum": ""
+            },
+            "require": {
+                "firephp/firephp-core": ">=0.4.0",
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "SK": "lib"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "BJ Basañes",
+                    "email": "bj@basanes.net",
+                    "homepage": "http://shiki.me"
+                }
+            ],
+            "description": "FirePHP extension for Yii Framework.",
+            "homepage": "https://github.com/shiki/yii-firephp",
+            "keywords": [
+                "firebug",
+                "firephp",
+                "log",
+                "logging",
+                "profile",
+                "profiling",
+                "yii"
+            ],
+            "time": "2013-11-16 00:52:40"
+        },
+        {
+            "name": "yiisoft/yii",
+            "version": "1.1.15",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yiisoft/yii.git",
+                "reference": "022a51d34ad2c95db2b77b2075e98f5dd78b08e0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yiisoft/yii/zipball/022a51d34ad2c95db2b77b2075e98f5dd78b08e0",
+                "reference": "022a51d34ad2c95db2b77b2075e98f5dd78b08e0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.1.0"
+            },
+            "bin": [
+                "framework/yiic"
+            ],
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Qiang Xue",
+                    "email": "qiang.xue@gmail.com",
+                    "homepage": "http://www.yiiframework.com/",
+                    "role": "Founder and project lead"
+                },
+                {
+                    "name": "Alexander Makarov",
+                    "email": "sam@rmcreative.ru",
+                    "homepage": "http://rmcreative.ru/",
+                    "role": "Core framework development"
+                },
+                {
+                    "name": "Maurizio Domba",
+                    "homepage": "http://mdomba.info/",
+                    "role": "Core framework development"
+                },
+                {
+                    "name": "Carsten Brandt",
+                    "email": "mail@cebe.cc",
+                    "homepage": "http://cebe.cc/",
+                    "role": "Core framework development"
+                },
+                {
+                    "name": "Wei Zhuo",
+                    "email": "weizhuo@gmail.com",
+                    "role": "Project site maintenance and development"
+                },
+                {
+                    "name": "Sebastián Thierer",
+                    "email": "sebas@artfos.com",
+                    "role": "Component development"
+                },
+                {
+                    "name": "Jeffrey Winesett",
+                    "email": "jefftulsa@gmail.com",
+                    "role": "Documentation and marketing"
+                },
+                {
+                    "name": "Timur Ruziev",
+                    "email": "resurtm@gmail.com",
+                    "homepage": "http://resurtm.com/",
+                    "role": "Core framework development"
+                },
+                {
+                    "name": "Paul Klimov",
+                    "email": "klimov.paul@gmail.com",
+                    "role": "Core framework development"
+                }
+            ],
+            "description": "Yii Web Programming Framework",
+            "homepage": "http://www.yiiframework.com/",
+            "keywords": [
+                "framework",
+                "yii"
+            ],
+            "time": "2014-06-30 00:14:27"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "leafo/scssphp": 20,
+        "leafo/scssphp-compass": 20,
+        "artem-frolov/yii-sass": 20,
+        "nineinchnick/yii-usr": 20,
+        "shiki/yii-firephp": 20
+    },
+    "prefer-stable": false,
+    "platform": {
+        "php": ">=5.3.0"
+    },
+    "platform-dev": []
+}

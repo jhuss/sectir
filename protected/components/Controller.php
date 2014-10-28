@@ -27,7 +27,7 @@ class Controller extends CController
             $userAdmin = User::model()->findByAttributes(array('username'=>Yii::app()->params['adminUser']));
             $auth = Yii::app()->authManager;
 
-            if($userId == $userAdmin->id){
+            if($userAdmin && $userId == $userAdmin->id){
                 $rol = $auth->getAuthItems(1, $userId);
 
                 if(empty($rol)) {

@@ -11,4 +11,4 @@ $DB_HOST = 'localhost';
 $DB_NAME = 'sectir';
 $DB_USER = 'sectir';
 $DB_PASS = 'sectir';
-$DB_PREFIX = '';
+$DB_PREFIX = 'sectir_';
