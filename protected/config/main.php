@@ -7,7 +7,7 @@ require(dirname(__FILE__) . '/../../conf.php');
 
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
-return array(
+$arrayConfig = array(
 	'basePath' => dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name' => $SITE_NAME,
 	'theme' => 'default',
@@ -42,7 +42,8 @@ return array(
 			'captcha' => array(
 				//'captchaAction'=>'/usr/default/captcha'
 			),
-		),
+        ),
+        'respuesta',
 	),
 
 	'aliases' => array(
@@ -135,6 +136,18 @@ return array(
 		'adminEmail' => 'webmaster@example.com',
 	),
 );
+
+if($GII_ACTIVATED)
+{
+    $arrayConfig['modules']['gii'] = array(
+            'class'=>'system.gii.GiiModule',
+			'password'=>$GII_PASS,
+			// If removed, Gii defaults to localhost only. Edit carefully to taste.
+			'ipFilters'=>array('127.0.0.1','::1')
+    );
+}
+
+return $arrayConfig;
 
 function _log() {
 	$log = array();

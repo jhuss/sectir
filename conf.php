@@ -12,3 +12,7 @@ $DB_NAME = 'sectir';
 $DB_USER = 'sectir';
 $DB_PASS = 'sectir';
 $DB_PREFIX = 'sectir_';
+
+// Configuración de Gii
+$GII_ACTIVATED = true;
+$GII_PASS = '12345';
