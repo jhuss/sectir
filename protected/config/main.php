@@ -87,7 +87,12 @@ $arrayConfig = array(
 				'sugarjs' => array(
 					'baseUrl' => '//cdnjs.cloudflare.com/ajax/libs/sugar/1.4.1/',
 					'js' => array('sugar-full.min.js'),
-				),
+                ),
+                'sectir-input' => array(
+                    'basePath' => "webroot.js.sectir-input",
+                    'js' => array('sectir-input.min.js'),
+                    'depends' => array("angular"),
+                ),
 			),
 		),
 		'user' => array(
