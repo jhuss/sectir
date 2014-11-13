@@ -8,3 +8,6 @@ protected/data/*.db
 themes/classic/views/
 protected/vendor/*
 *.swp
+bower_components/*
+node_modules/*
+tmp/*

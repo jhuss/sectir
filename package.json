@@ -1,0 +1,30 @@
+{
+  "name": "sectir",
+  "version": "1.0.0",
+  "description": "Sectir",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jhuss/sectir.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jhuss/sectir/issues"
+  },
+  "homepage": "https://github.com/jhuss/sectir",
+  "dependencies": {
+    "bower": "^1.3.12",
+    "grunt": "^0.4.5",
+    "grunt-bower-concat": "^0.4.0",
+    "grunt-cli": "^0.1.13",
+    "grunt-contrib-copy": "^0.7.0",
+    "grunt-contrib-uglify": "^0.6.0"
+  },
+  "devDependencies": {
+    "grunt-contrib-copy": "^0.7.0"
+  }
+}
