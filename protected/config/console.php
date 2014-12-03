@@ -30,7 +30,10 @@ return array(
 		),
 		'authManager' => array(
 			'class' => 'CDbAuthManager',
-			'connectionID' => 'db',
+            'connectionID' => 'db', 
+            'assignmentTable' => "{{AuthAssignment}}",
+            'itemChildTable' => "{{AuthItemChild}}",
+            'itemTable' => "{{AuthItem}}",
 			'defaultRoles' => array('usr.manage', $ADMIN_USER),
 		),
 		'log' => array(

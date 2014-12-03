@@ -102,7 +102,10 @@ $arrayConfig = array(
 		),
 		'authManager' => array(
 			'class' => 'CDbAuthManager',
-			'connectionID' => 'db',
+            'connectionID' => 'db',
+            'assignmentTable' => "{{AuthAssignment}}",
+            'itemChildTable' => "{{AuthItemChild}}",
+            'itemTable' => "{{AuthItem}}"
 		),
 		'request' => array(
 			'baseUrl' => $BASE_URL,
