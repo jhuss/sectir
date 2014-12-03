@@ -7,7 +7,8 @@
         "leafo/scssphp-compass": "dev-master",
         "artem-frolov/yii-sass": "dev-master",
         "nineinchnick/yii-usr": "dev-master",
-        "shiki/yii-firephp": "dev-master"
+        "shiki/yii-firephp": "dev-master",
+        "anahkiasen/underscore-php": "dev-master"
     },
     "autoload": {
         "files": [

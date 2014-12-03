@@ -4,20 +4,66 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a5cb25a04d4e846c13f44e6c30321335",
+    "hash": "7cd1717d3ad5a8c40db08a626521a4d4",
     "packages": [
+        {
+            "name": "anahkiasen/underscore-php",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Anahkiasen/underscore-php.git",
+                "reference": "f310aea3006d812160f57c04fc8a78062de694a2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Anahkiasen/underscore-php/zipball/f310aea3006d812160f57c04fc8a78062de694a2",
+                "reference": "f310aea3006d812160f57c04fc8a78062de694a2",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~4",
+                "patchwork/utf8": "1.1.*",
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Underscore\\": [
+                        "src",
+                        "tests"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Maxime Fabre",
+                    "email": "ehtnam6@gmail.com"
+                }
+            ],
+            "description": "A redacted port of Underscore.js for PHP",
+            "keywords": [
+                "internals",
+                "laravel",
+                "toolkit"
+            ],
+            "time": "2014-10-04 13:56:59"
+        },
         {
             "name": "artem-frolov/yii-sass",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/artem-frolov/yii-sass.git",
-                "reference": "07796ec4aebdbfe082ac354a692f6b93856c2079"
+                "reference": "7c11035dbe9f821d16a7e6024512884c30b68064"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/artem-frolov/yii-sass/zipball/07796ec4aebdbfe082ac354a692f6b93856c2079",
-                "reference": "07796ec4aebdbfe082ac354a692f6b93856c2079",
+                "url": "https://api.github.com/repos/artem-frolov/yii-sass/zipball/7c11035dbe9f821d16a7e6024512884c30b68064",
+                "reference": "7c11035dbe9f821d16a7e6024512884c30b68064",
                 "shasum": ""
             },
             "require": {
@@ -59,7 +105,7 @@
                 "scss",
                 "yii"
             ],
-            "time": "2014-08-12 12:17:04"
+            "time": "2014-11-04 16:25:19"
         },
         {
             "name": "firephp/firephp-core",
@@ -98,17 +144,65 @@
             "time": "2013-04-23 15:28:20"
         },
         {
+            "name": "illuminate/support",
+            "version": "v4.2.9",
+            "target-dir": "Illuminate/Support",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/illuminate/support.git",
+                "reference": "b6716d34afce6e69523725f2534a5c3a54dba964"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/b6716d34afce6e69523725f2534a5c3a54dba964",
+                "reference": "b6716d34afce6e69523725f2534a5c3a54dba964",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "jeremeamia/superclosure": "~1.0",
+                "patchwork/utf8": "1.1.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Illuminate\\Support": ""
+                },
+                "files": [
+                    "Illuminate/Support/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylorotwell@gmail.com"
+                }
+            ],
+            "time": "2014-09-12 21:42:43"
+        },
+        {
             "name": "leafo/scssphp",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafo/scssphp.git",
-                "reference": "8c08da585537e97efd528c7d278463d2b9396371"
+                "reference": "b65729d314abd13f83507a406246746e278f135d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafo/scssphp/zipball/8c08da585537e97efd528c7d278463d2b9396371",
-                "reference": "8c08da585537e97efd528c7d278463d2b9396371",
+                "url": "https://api.github.com/repos/leafo/scssphp/zipball/b65729d314abd13f83507a406246746e278f135d",
+                "reference": "b65729d314abd13f83507a406246746e278f135d",
                 "shasum": ""
             },
             "require": {
@@ -150,7 +244,7 @@
                 "scss",
                 "stylesheet"
             ],
-            "time": "2014-08-12 22:41:53"
+            "time": "2014-11-01 17:49:18"
         },
         {
             "name": "leafo/scssphp-compass",
@@ -193,12 +287,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nineinchnick/yii-usr.git",
-                "reference": "74d851cf3babf18b1b52387d4c0bd6d42d08e1d1"
+                "reference": "dddaf3966d4da30faa42c7f4b9b17112f59b528b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nineinchnick/yii-usr/zipball/74d851cf3babf18b1b52387d4c0bd6d42d08e1d1",
-                "reference": "74d851cf3babf18b1b52387d4c0bd6d42d08e1d1",
+                "url": "https://api.github.com/repos/nineinchnick/yii-usr/zipball/dddaf3966d4da30faa42c7f4b9b17112f59b528b",
+                "reference": "dddaf3966d4da30faa42c7f4b9b17112f59b528b",
                 "shasum": ""
             },
             "require": {
@@ -217,7 +311,63 @@
                 }
             ],
             "description": "Yii framework module for user authentication, password reset, registration and profile updating.",
-            "time": "2014-09-17 07:58:11"
+            "time": "2014-11-06 15:20:17"
+        },
+        {
+            "name": "patchwork/utf8",
+            "version": "v1.1.26",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tchwork/utf8.git",
+                "reference": "6b8e46603b49ee87ad6bceb314da94cc04ffcdce"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tchwork/utf8/zipball/6b8e46603b49ee87ad6bceb314da94cc04ffcdce",
+                "reference": "6b8e46603b49ee87ad6bceb314da94cc04ffcdce",
+                "shasum": ""
+            },
+            "require": {
+                "lib-pcre": ">=7.3",
+                "php": ">=5.3.0"
+            },
+            "suggest": {
+                "ext-iconv": "Use iconv for best performance",
+                "ext-intl": "Use Intl for best performance",
+                "ext-mbstring": "Use Mbstring for best performance"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Patchwork": "class/",
+                    "Normalizer": "class/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "(Apache-2.0 or GPL-2.0)"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                }
+            ],
+            "description": "Portable and performant UTF-8, Unicode and Grapheme Clusters for PHP",
+            "homepage": "https://github.com/tchwork/utf8",
+            "keywords": [
+                "grapheme",
+                "i18n",
+                "unicode",
+                "utf-8",
+                "utf8"
+            ],
+            "time": "2014-11-08 10:13:25"
         },
         {
             "name": "shiki/yii-firephp",
@@ -365,7 +515,8 @@
         "leafo/scssphp-compass": 20,
         "artem-frolov/yii-sass": 20,
         "nineinchnick/yii-usr": 20,
-        "shiki/yii-firephp": 20
+        "shiki/yii-firephp": 20,
+        "anahkiasen/underscore-php": 20
     },
     "prefer-stable": false,
     "platform": {
