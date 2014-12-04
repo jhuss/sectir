@@ -1111,6 +1111,115 @@ class ColocarDatosCommand extends CConsoleCommand
         ));
         $command->execute();
 
+        $command = $builder->createMultipleInsertCommand("{{Grupocomp}}",array(
+            array(
+                'enunciado' => 'Núcleos y sedes',
+                'identificador' => 'sedenucleo',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Talento Humano',
+                'identificador' => 'talentohumano',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Programas de doctorado',
+                'identificador' => 'doctorado',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Programas de maestría',
+                'identificador' => 'maestria',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Programas de especialidades',
+                'identificador' => 'especialidades',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Programas de pregrado',
+                'identificador' => 'pregrado',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Proyectos aprobados para la universidad',
+                'identificador' => 'proyectosaprob',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Recursos aprobados por la universidad',
+                'identificador' => 'recursossaprob',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Patentes aprobadas',
+                'identificador' => 'patentes',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Lineas de investigación',
+                'identificador' => 'lineas_inv',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Actores de financiamiento',
+                'identificador' => 'actores_fin',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Redes temáticas',
+                'identificador' => 'red_tem',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Problemáticas enfrentadas',
+                'identificador' => 'problematica',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Infraestructura',
+                'identificador' => 'infraestructura',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Comité de Ética',
+                'identificador' => 'comiteetica2',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+
+        ));
+
     }
 
 }
