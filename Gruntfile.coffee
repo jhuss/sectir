@@ -30,11 +30,31 @@ module.exports = (grunt) ->
             main:
                 src: "tmp/sectir-input.min.js"
                 dest: "js/sectir-input/sectir-input.min.js"
+        shell:
+            migrateDown:
+                command: "echo 'yes' | protected/yiic migrate down 10000"
+            migrateUp:
+                command: "echo 'yes' | protected/yiic migrate up"
+            colocarDatos:
+                command: "protected/yiic colocardatos"
+            crearAdmin:
+                command: "protected/yiic crearadmin"
+            createAuthRoles:
+                command: "protected/yiic usr createAuthItems"
     grunt.loadNpmTasks 'grunt-bower-concat'
     grunt.loadNpmTasks 'grunt-contrib-copy'
     grunt.loadNpmTasks 'grunt-contrib-uglify'
+    grunt.loadNpmTasks 'grunt-shell'
     grunt.loadNpmTasks 'grunt-bower-task'
-
+    
+    #Tasks
+    grunt.registerTask "putdatabase", [
+        "shell:migrateDown"
+        "shell:migrateUp"
+        "shell:crearAdmin"
+        "shell:createAuthRoles"
+        "shell:colocarDatos"
+    ]
     grunt.registerTask "install", "bower:install"
     grunt.registerTask "default", [
         "bower_concat:all", "uglify:all" , "copy:main"

@@ -11,11 +11,21 @@ return array(
 	'commandMap' => array(
 		'usr' => array(
 			'class' => 'application.vendor.nineinchnick.yii-usr.commands.UsrCommand',
-		),
+        ),
+        'migrate' => array(
+            'class' => 'application.vendor.yiisoft.yii.framework.cli.commands.MigrateCommand',
+            'migrationTable' => "{{migration}}",
+        ),
 	),
 
 	// preloading 'log' component
 	'preload' => array('log'),
+
+	'import' => array(
+		'application.models.*',
+        'application.components.*',
+        'application.vendor.*',     
+	),
 
 	// application components
 	'components' => array(
