@@ -34,7 +34,7 @@ class ColocarDatosCommand extends CConsoleCommand
             //IMPORTANTE Grupo 1 de INSTRUMENTO IUTET
             array(
                 'enunciado' => 'Nombre del entrevistado',
-                'identificador' => 'preg_nom_entr',
+                'identificador' => 'preg_datos_nom_entr',
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
@@ -43,7 +43,7 @@ class ColocarDatosCommand extends CConsoleCommand
             ),
             array(
                 'enunciado' => 'Universidades, institutos tecnológicos, escuelas técnicas',
-                'identificador' => 'preg_universidad_pertenece',
+                'identificador' => 'preg_datos_universidad_pertenece',
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
@@ -52,7 +52,7 @@ class ColocarDatosCommand extends CConsoleCommand
             ),
             array(
                 'enunciado' => 'Año de fundación',
-                'identificador' => 'preg_ano_fundacion',
+                'identificador' => 'preg_datos_ano_fundacion',
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
@@ -61,7 +61,7 @@ class ColocarDatosCommand extends CConsoleCommand
             ),
             array(
                 'enunciado' => 'Ubicación',
-                'identificador' => 'preg_universidad_ubicacion',
+                'identificador' => 'preg_datos_universidad_ubicacion',
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
@@ -70,7 +70,7 @@ class ColocarDatosCommand extends CConsoleCommand
             ),
             array(
                 'enunciado' => 'Municipio',
-                'identificador' => 'preg_municipio',
+                'identificador' => 'preg_datos_municipio',
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
@@ -79,7 +79,7 @@ class ColocarDatosCommand extends CConsoleCommand
             ),
             array(
                 'enunciado' => 'Caracter',
-                'identificador' => 'preg_caracterpublicoprivado',
+                'identificador' => 'preg_datos_caracterpublicoprivado',
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
@@ -942,14 +942,14 @@ class ColocarDatosCommand extends CConsoleCommand
         $command = $builder->createMultipleInsertCommand("{{Grupo}}",array(
             array(
                 'enunciado' => 'Identificación',
-                'identificador' => 'universidad',
+                'identificador' => 'datos',
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
             ),
             array(
                 'enunciado' => 'Núcleos y sedes',
-                'identificador' => 'sednucleo',
+                'identificador' => 'sedenucleo',
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
@@ -1005,7 +1005,7 @@ class ColocarDatosCommand extends CConsoleCommand
             ),
             array(
                 'enunciado' => 'Recursos aprobados en la universidad',
-                'identificador' => 'recursosaprb',
+                'identificador' => 'recursosaprob',
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
@@ -1220,6 +1220,209 @@ class ColocarDatosCommand extends CConsoleCommand
 
         ));
 
+        // Comenzamos a insertar pregunta grupo
+        $sqlPreguntaGrupo = "INSERT INTO {{PreguntaGrupo}} (pregunta_id, grupo_id, peso) (SELECT p.id AS pregunta_id, g.id AS grupo_id, :peso AS peso FROM {{Pregunta}} p JOIN {{Grupo}} g ON g.identificador=:grupoid WHERE p.identificador =:preguntaid)";
+        $commandPreguntaGrupo = Yii::app()->db->createCommand($sqlPreguntaGrupo);
+        $commandPreguntaGrupo->bindValue(':grupoid','sedenucleo');
+        $commandPreguntaGrupo->bindValue(':preguntaid','preg_sedenucleo');
+        $commandPreguntaGrupo->bindValue(':peso','1');
+        //TODO Pasar lo de los parametros a las consultas
+        //NOTE: Todos los arrays están ordenados por peso.
+        $arrayPreguntaGrupo = array(
+            'datos' => array(
+                'preg_datos_nom_entr',
+                'preg_datos_universidad_pertenece',
+                'preg_datos_ano_fundacion',
+                'preg_datos_universidad_ubicacion',
+                'preg_datos_municipio',
+                'preg_datos_caracterpublicoprivado',
+            ),
+            'sedenucleo' => array(
+                'preg_sedenucleo_compuesta',
+                'preg_sedenucleo',
+                'preg_sedenucleo_ubicacion',
+            ),
+            'actividadesciencia' => array(
+                'preg_actividadesciencia_compuesta',
+                'preg_actividadesciencia_sino',
+                'preg_actividadesciencia_cuales',
+            ),
+            'talentohumano' => array(
+                'preg_talentohumano_compuesta',
+                'preg_talentohumano_nombre',
+                'preg_talentohumano_edad',
+                'preg_talentohumano_nivelac',
+                'preg_talentohumano_uni_compuesta',
+                'preg_talentohumano_nacionalpub',
+                'preg_talentohumano_nacionalpri',
+                'preg_talentohumano_internacional',
+                'preg_talentohumano_fuentefin',
+                'preg_talentohumano_categoriapeii',
+                'preg_talentohumano_pei_inv',
+                'preg_talentohumano_pei_inn',
+                'preg_talentohumano_exp_area',
+                'preg_talentohumano_linea_inv',
+            ),
+            'doctorado' => array(
+                'preg_doctorado_compuesta',
+                'preg_doctorado_existente',
+                'preg_doctorado_numero',
+            ),
+            'maestria' => array(
+                'preg_maestria_compuesta',
+                'preg_maestria_existente',
+                'preg_maestria_numero',
+            ),
+            'especialidades' => array(
+                'preg_especialidades_compuesta',
+                'preg_especialidades_existente',
+                'preg_especialidades_numero',
+            ),
+            'pregrado' => array(
+                'preg_pregrado_compuesta',
+                'preg_pregrado_existente',
+                'preg_pregrado_numero',
+            ),
+            'proyectosaprob' => array(
+                'preg_proyectosaprob_comp',
+                'preg_proyectosaprob_subq',
+                'preg_proyectosaprob_num',
+            ),
+            'recursosaprob' => array(
+                'preg_recursosaprob_comp',
+                'preg_recursosaprob_subq',
+                'preg_recursosaprob_num',
+            ),
+            'proyectosaprob_area' => array(
+                'preg_proyectosaprob_area_comp',
+                'preg_proyectosaprob_area_subq',
+                'preg_proyectosaprob_area_num',
+            ),
+            'patentes' => array(
+                'preg_patentes_area_comp',
+                'preg_patentes_area_subq',
+                'preg_patentes_area_num',
+            ),
+            'patentes2' => array(
+                'preg_patentes_mencionar_pat',
+            ),
+            'recursosaprob_area' => array(
+                'preg_recursosaprob_area_comp',
+                'preg_recursosaprob_area_subq',
+                'preg_recursosaprob_area_num',
+            ),
+            'revistas' => array(
+                'preg_revistas_area_comp',
+                'preg_revistas_area_subq',
+                'preg_revistas_area_revista',
+                'preg_revistas_area_num',
+            ),
+            'lineas_inv' => array(
+                'preg_lineas_inv_comp',
+                'preg_lineas_inv_lineasinv',
+                'preg_lineas_inv_ejestematico',
+                'preg_lineas_inv_programapost',
+            ),
+            'actores' => array(
+                'preg_actores_fin_comp',
+                'preg_actores_fin_actorespart',
+                'preg_actores_fin_actoresfin',
+            ),
+            'red_tem' => array(
+                'preg_red_tem_pert',
+                'preg_red_tem_mencione',
+            ),
+            'problematica' => array(
+                'preg_problematica_cual',
+                'preg_problematica_describa',
+            ),
+            'infraestructura' => array(
+                'preg_infraestructura_comp',
+                'preg_infraestructura_activa',
+                'preg_infraestructura_espacios',
+                'preg_infraestructura_equipamiento',
+                'preg_infraestructura_usoinf_comp',
+                'preg_infraestructura_usodoc',
+                'preg_infraestructura_usoinv',
+            ),
+            'internet' => array(
+                'preg_internet_servint',
+                'preg_internet_proveedorint',
+                'preg_internet_cualprov',
+                'preg_internet_usoinv',
+            ),
+            'comiteetica' => array(
+                'preg_comiteetica_evalue',
+                'preg_comiteetica_cual',
+            ),
+            'comiteetica2' => array(
+                'preg_comiteetica2_composicion_comp',
+                'preg_comiteetica2_ident',
+                'preg_comiteetica2_profesion',
+                'preg_comiteetica2_cargo',
+                'preg_comiteetica2_correo',
+            ),
+            'comiteetica3' => array(
+                'preg_comiteetica3_fecha',
+                'preg_comiteetica3_reuniones',
+                'preg_comiteetica3_trabev',
+                'preg_comiteetica3_titulosmenc',
+                'preg_comiteetica3_principalesdif',
+                'preg_comiteetica3_formaev',
+                'preg_comiteetica3_tieneconent',
+                'preg_comiteetica3_cuales_ent',
+            ),
+        );
+
+        foreach ($arrayPreguntaGrupo as $idGrupo=>$grupoPreguntas) {
+            foreach ($grupoPreguntas as $i=>$pregunta) {  
+                $commandPreguntaGrupo->bindValue(':grupoid',$idGrupo);
+                $commandPreguntaGrupo->bindValue(':preguntaid',$pregunta);
+                $commandPreguntaGrupo->bindValue(':peso',$i);
+                echo "Comando con pregunta ($idGrupo,$pregunta) y peso $i ejecutado\n";
+                $commandPreguntaGrupo->execute();
+            }
+        }
+        //Comenzamos con Grupotipoencuesta 
+        $sqlEncuestaGrupo = "INSERT INTO {{TipoencuestaGrupo}} (tipoencuesta_id, grupo_id, peso) (SELECT t.id AS tipoencuesta_id, g.id AS grupo_id, :peso AS peso FROM {{Tipoencuesta}} t JOIN {{Grupo}} g ON g.identificador=:grupoid WHERE t.identificador =:tipoencuestaid)";
+        $arrayEncuestaGrupo = array(
+            'tipoencuesta_uni' => array(
+                'datos',
+                'sedenucleo',
+                'actividadesciencia',
+                'talentohumano',
+                'doctorado',
+                'maestria',
+                'especialidades',
+                'pregrado',
+                'proyectosaprob',
+                'recursosaprob',
+                'proyectosaprob_area',
+                'recursosaprob_area',
+                'patentes',
+                'patentes2',
+                'revistas',
+                'lineas_inv',
+                'actores',
+                'red_tem',
+                'problematica',
+                'infraestructura',
+                'internet',
+                'comiteetica',
+                'comiteetica2',
+                'comiteetica3',
+            ),
+        );
+        $commandTipoEncuestaGrupo = Yii::app()->db->createCommand($sqlEncuestaGrupo);
+        foreach ($arrayEncuestaGrupo as $idEncuesta=>$grupos) {
+            foreach ($grupos as $i=>$grupo) {  
+                $commandTipoEncuestaGrupo->bindValue(':grupoid',$grupo);
+                $commandTipoEncuestaGrupo->bindValue(':tipoencuestaid',$idEncuesta);
+                $commandTipoEncuestaGrupo->bindValue(':peso',$i);
+                echo "Comando con Grupo ($idEncuesta,$grupo) y peso $i ejecutado\n";
+                $commandTipoEncuestaGrupo->execute();
+            }
+        }
     }
 
 }
