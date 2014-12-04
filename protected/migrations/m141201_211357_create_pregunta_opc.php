@@ -6,9 +6,9 @@ class m141201_211357_create_pregunta_opc extends CDbMigration
     {
         $this->createTable("{{PreguntaOpc}}",array(
             'pregunta_id' => 'int(11) not null',
-            'grupo_id' => 'int(11) not null',
+            'opcion_id' => 'int(11) not null',
             'peso' => 'int(11) not null',
-            'PRIMARY KEY (pregunta_id, grupo_id)'
+            'PRIMARY KEY (pregunta_id, opcion_id)'
         ));
         $this->addForeignKey("fk_{{PreguntaOpc}}_pregunta",
             "{{PreguntaOpc}}",
@@ -18,10 +18,10 @@ class m141201_211357_create_pregunta_opc extends CDbMigration
             "CASCADE",
             "CASCADE"
         );
-        $this->addForeignKey("fk_{{PreguntaOpc}}_grupo",
+        $this->addForeignKey("fk_{{PreguntaOpc}}_opcion",
             "{{PreguntaOpc}}",
-            "grupo_id",
-            "{{Grupo}}",
+            "opcion_id",
+            "{{Opcion}}",
             "id",
             "CASCADE",
             "CASCADE"
@@ -30,7 +30,7 @@ class m141201_211357_create_pregunta_opc extends CDbMigration
 	public function down()
 	{
         $this->dropForeignKey("fk_{{PreguntaOpc}}_pregunta","{{PreguntaOpc}}");
-        $this->dropForeignKey("fk_{{PreguntaOpc}}_grupo","{{PreguntaOpc}}");
+        $this->dropForeignKey("fk_{{PreguntaOpc}}_opcion","{{PreguntaOpc}}");
         $this->dropTable("{{PreguntaOpc}}");
 	}
 }
