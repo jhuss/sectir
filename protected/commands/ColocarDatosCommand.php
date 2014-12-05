@@ -1127,6 +1127,20 @@ class ColocarDatosCommand extends CConsoleCommand
                 'user_id' => $idUser,
             ),
             array(
+                'enunciado' => 'Actividades de ciencia',
+                'identificador' => 'actividadesciencia',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Revistas arbitradas',
+                'identificador' => 'revistas',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
                 'enunciado' => 'Programas de doctorado',
                 'identificador' => 'doctorado',
                 'creado_en' => new CDbExpression('NOW()'),
@@ -1163,7 +1177,21 @@ class ColocarDatosCommand extends CConsoleCommand
             ),
             array(
                 'enunciado' => 'Recursos aprobados por la universidad',
-                'identificador' => 'recursossaprob',
+                'identificador' => 'recursosaprob',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Proyectos aprobados para la universidad por area',
+                'identificador' => 'proyectosaprob_area',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Recursos aprobados por la universidad',
+                'identificador' => 'recursosaprob_area',
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
@@ -1219,13 +1247,10 @@ class ColocarDatosCommand extends CConsoleCommand
             ),
 
         ));
-
+        $command->execute();
         // Comenzamos a insertar pregunta grupo
         $sqlPreguntaGrupo = "INSERT INTO {{PreguntaGrupo}} (pregunta_id, grupo_id, peso) (SELECT p.id AS pregunta_id, g.id AS grupo_id, :peso AS peso FROM {{Pregunta}} p JOIN {{Grupo}} g ON g.identificador=:grupoid WHERE p.identificador =:preguntaid)";
         $commandPreguntaGrupo = Yii::app()->db->createCommand($sqlPreguntaGrupo);
-        $commandPreguntaGrupo->bindValue(':grupoid','sedenucleo');
-        $commandPreguntaGrupo->bindValue(':preguntaid','preg_sedenucleo');
-        $commandPreguntaGrupo->bindValue(':peso','1');
         //TODO Pasar lo de los parametros a las consultas
         //NOTE: Todos los arrays están ordenados por peso.
         $arrayPreguntaGrupo = array(
@@ -1717,6 +1742,142 @@ class ColocarDatosCommand extends CConsoleCommand
             ),
         ));
         $commandOpcs->execute();
+
+        $arrayGrupocomp = array(
+            'sedenucleo' => array(
+            ),
+            'talentohumano' => array(
+            ),
+            'doctorado' => array(
+            ),
+            'maestria' => array(
+            ),
+            'especialidades' => array(
+            ),
+            'pregrado' => array(
+            ),
+            'proyectosaprob' => array(
+                'organizacion_cdcht',
+                'organizacion_mppcti',
+                'organizacion_privados',
+                'organizacion_internac',
+                'organizacion_fondo',
+                'organizacion_otro',
+            ),
+            'recursosaprob' => array(
+                'organizacion_cdcht',
+                'organizacion_mppcti',
+                'organizacion_privados',
+                'organizacion_internac',
+                'organizacion_fondo',
+                'organizacion_otro',
+            ),
+            'proyectosaprob_area' => array(
+                'area_alimentos',
+                'area_agricola',
+                'area_ambiente',
+                'area_energiaalt',
+                'area_biologiasal',
+                'area_cienciastierra',
+                'area_fisicaquimicamat',
+                'area_ciencias_ec_soc',
+                'area_artes',
+                'area_educacion',
+                'area_desarrollo',
+                'area_humanidades',
+                'area_otros'
+            ),
+            'recursosaprob_area' => array(
+                'area_alimentos',
+                'area_agricola',
+                'area_ambiente',
+                'area_energiaalt',
+                'area_biologiasal',
+                'area_cienciastierra',
+                'area_fisicaquimicamat',
+                'area_ciencias_ec_soc',
+                'area_artes',
+                'area_educacion',
+                'area_desarrollo',
+                'area_humanidades',
+                'area_otros'
+            ),
+            'patentes' => array(
+                'area_alimentos',
+                'area_agricola',
+                'area_ambiente',
+                'area_energiaalt',
+                'area_biologiasal',
+                'area_cienciastierra',
+                'area_fisicaquimicamat',
+                'area_ciencias_ec_soc',
+                'area_artes',
+                'area_educacion',
+                'area_desarrollo',
+                'area_humanidades',
+                'area_otros'
+            ),
+            'lineas_inv' => array(
+            ),
+            'actores_fin' => array(
+            ),
+            'red_tem' => array(
+            ),
+            'problematica' => array(
+            ),
+            'infraestructura' => array(
+                'infraestructura_inform',
+                'infraestructura_analisis',
+                'infraestructura_bibl',
+                'infraestructura_conf',
+                'infraestructura_reuniones',
+                'infraestructura_investig',
+                'infraestructura_aulas',
+                'infraestructura_mobil',
+                'infraestructura_equipos',
+            ),
+            'comiteetica2' => array(
+            ),
+            'actividadesciencia' => array(
+                'actividadesciencia_proyinn',
+                'actividadesciencia_incub',
+                'actividadesciencia_des_fondos',
+                'actividadesciencia_creacionuni',
+                'actividadesciencia_creacionbases',
+                'actividadesciencia_promocion_div',
+                'actividadesciencia_consol_redes',
+                'actividadesciencia_orgcursos',
+                'actividadesciencia_fortespacios',
+                'actividadesciencia_fomento',
+                'actividadesciencia_otras',
+            ),
+            'revistas' => array(
+                'area_alimentos',
+                'area_agricola',
+                'area_ambiente',
+                'area_energiaalt',
+                'area_biologiasal',
+                'area_cienciastierra',
+                'area_fisicaquimicamat',
+                'area_ciencias_ec_soc',
+                'area_artes',
+                'area_educacion',
+                'area_desarrollo',
+                'area_humanidades',
+                'area_otros'
+            ),
+        );
+        $sqlGrupocompOpcion = "INSERT INTO {{GrupocompOpcioncomp}} (grupocomp_id, opcioncomp_id, peso) (SELECT g.id AS grupocomp_id, o.id AS opcioncomp_id, :peso AS peso FROM {{Opcioncomp}} o JOIN {{Grupocomp}} g ON g.identificador=:grupoid WHERE o.identificador =:opcionid)";
+        $commandPreguntaGrupo = Yii::app()->db->createCommand($sqlGrupocompOpcion);
+        foreach ($arrayGrupocomp as $idGrupo=>$grupoOpciones) {
+            foreach ($grupoOpciones as $i=>$opcion) {  
+                $commandPreguntaGrupo->bindValue(':grupoid',$idGrupo);
+                $commandPreguntaGrupo->bindValue(':opcionid',$opcion);
+                $commandPreguntaGrupo->bindValue(':peso',$i);
+                echo "Comando con opcion ($idGrupo,$opcion) y peso $i ejecutado\n";
+                var_dump($commandPreguntaGrupo->execute());
+            }
+        }
         
     }
 
