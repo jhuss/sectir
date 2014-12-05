@@ -174,6 +174,15 @@ class ColocarDatosCommand extends CConsoleCommand
                 'compuesta' => true,
             ), 
             array(
+                'enunciado' => 'Sexo',
+                'identificador' => 'preg_talentohumano_sexo',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+                'tipo' => 'list',
+                'compuesta' => true,
+            ), 
+            array(
                 'enunciado' => 'Nivel Académico',
                 'identificador' => 'preg_talentohumano_nivelac',
                 'creado_en' => new CDbExpression('NOW()'),
@@ -1276,6 +1285,7 @@ class ColocarDatosCommand extends CConsoleCommand
                 'preg_talentohumano_compuesta',
                 'preg_talentohumano_nombre',
                 'preg_talentohumano_edad',
+                'preg_talentohumano_sexo',
                 'preg_talentohumano_nivelac',
                 'preg_talentohumano_uni_compuesta',
                 'preg_talentohumano_nacionalpub',
@@ -1878,6 +1888,811 @@ class ColocarDatosCommand extends CConsoleCommand
                 var_dump($commandPreguntaGrupo->execute());
             }
         }
+        $commandOpcs2 = $builder->createMultipleInsertCommand("{{Opcion}}",array(
+            array(
+                'enunciado' => 'Instituto Experimental "Jóse Witremundo Torrealba"',
+                'identificador' => 'instituto_jwt',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Centro Regional de Investigaciones Humanística Económicas y Social. (CRIHES) (NURR-CARMONA)',
+                'identificador' => 'centro_crihes',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Centro de Investigaciones para el Desarrollo Integral Sustentable (CIDIS)',
+                'identificador' => 'centro_cidis',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Centro de Investigaciones Literarias y Lingüísticas Mario Briceño Iragorry (CILL)',
+                'identificador' => 'centro_cill',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Centro para la Agricultura Tropical  Alternativa y el Desarrollo Integral. (CATADI)',
+                'identificador' => 'centro_catadi',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Centro para la Formación y Actualización Docente (CEFAD)',
+                'identificador' => 'centro_cefad',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Centro de Desarrollo Local (CILARR-CEDEULA)',
+                'identificador' => 'centro_cilarr',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Centro de Ecología Boconó',
+                'identificador' => 'centro_bocono',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            /**
+             * <!Fin centros!>
+             */
+            array(
+                'enunciado' => 'Laboratorio de Biología de Lutzomya "Pablo Anduze" (NURR-CARMONA)',
+                'identificador' => 'lab_pabloanduze',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Laboratorio de Investigación Arte y Poética (NURR-CARMONA)',
+                'identificador' => 'lab_arte_poetica',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Laboratorio de Fitopatología y Control Biológico "Dr. Carlos Díaz Polanco" (NURR-CARMONA)',
+                'identificador' => 'lab_carlospolanco',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Laboratorio de Investigación Educativa "Don Simón Rodríguez" (NURR-CARMONA)',
+                'identificador' => 'lab_simonrodriguez',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Laboratorio de Investigación en "Ecología y Epidemiología de Leishmaniasis Visceral" (NURR-VILLA)',
+                'identificador' => 'lab_leishmaniasis',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Laboratorio de Ecología de Parásitos (NURR-VILLA)',
+                'identificador' => 'lab_parasitos',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Laboratorio de Investigación de Fisiología e Inmunología (NURR-VILLA)',
+                'identificador' => 'lab_fisiologia_inmuno',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Laboratorio de Productos Lácteos',
+                'identificador' => 'lab_prod_lact',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Laboratorio de Investigación en Planificación Física Agrícola (NURR-VILLA)',
+                'identificador' => 'lab_plan_fisica_ag',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Laboratorio de Investigación de Fisiología de Postcosecha (NURR-CARMONA)',
+                'identificador' => 'lab_postcosecha',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Laboratorio de Suelos. (NURR-VILLA)',
+                'identificador' => 'lab_suelos',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Laboratorio de Química Ambiental (LAQUIAM) (NURR-VILLA)',
+                'identificador' => 'lab_laquiam',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Laboratorio de Comunicaciones para la Investigación Postgrado y Extensión.(LABCOM) (NURR-
+
+CARMONA)',
+                'identificador' => 'lab_labcom',//NOTE Laboratorio aquí
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            /**
+             * <Fin laboratorios>
+             */
+            
+            array(
+                'enunciado' => 'Grupo de Investigación de Suelos y Aguas. (GISA) (NURR-CARMONA)',
+                'identificador' => 'grupo_invsuelosaguas',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Grupo de Investigación en Geografía y Ciencias de la Tierra (GEOCIENCIAS) (NURR-CARMONA)',
+                'identificador' => 'grupo_geociencias',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Grupo de Investigación en Lenguas Extranjeras. (GILE) (NURR-VILLA)',
+                'identificador' => 'grupo_gile',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Grupo de Investigación Educativa Integración Escuela-Comunidad. (GIEEC) (NURR-CARMONA)',
+                'identificador' => 'grupo_gieec',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Grupo de Investigación en Producción Animal. (GIPA) (NURR-VILLA)',
+                'identificador' => 'grupo_gipa',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Grupo de Investigación de las Ciencias Contables y Administrativas (GICCA) (NURR-CARMONA)',
+                'identificador' => 'grupo_gicca',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Grupo de Investigación Científica y la Enseñanza de la Física (GRINCEF) (NURR-VILLA)',
+                'identificador' => 'grupo_grincef',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Grupo de Investigación  en Productos Naturales (GIPRONA) (NURR-VILLA)',
+                'identificador' => 'grupo_giprona',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            /**
+             * Fin de grupos de investigación
+             */
+            array(
+                'enunciado' => 'Unidad de Producción Integral. (UPI)',
+                'identificador' => 'unidadtec_upi',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Unidad Experimental de Producción Animal. (UEPA)',
+                'identificador' => 'unidadtec_uepa',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Museo de Arte Popular "Salvador Valero" (NURR-CARMONA)',
+                'identificador' => 'unidadtec_salvadorva',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            /**
+             * Universidades
+             */ 
+            array(
+                'enunciado' => 'Universidad Bolivariana de Venezuela',
+                'identificador' => 'uni_ubv',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Universidad Nacional Abierta',
+                'identificador' => 'uni_una',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Universidad Nacional Experimental Simón Rodríguez',
+                'identificador' => 'uni_unesr',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Universidad Pedagógica Experimental Libertador',
+                'identificador' => 'uni_upel',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Universidad Nacional Experimental Rafael María Baralt (UNERMB)',
+                'identificador' => 'uni_unermb',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Universidad Nacional Experimental Politécnica de la Fuerza Armada Nacional',
+                'identificador' => 'uni_unefa',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            //NOTE Finalizados institutos
+            /**
+             * Municipios
+             */
+            array(
+                'enunciado' => 'Municipio Andres Bello (Santa Isabel)',
+                'identificador' => 'muni_andresbello',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Municipio Boconó (Boconó)',
+                'identificador' => 'muni_bocono',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Municipio Bolívar (Sabana Grande)',
+                'identificador' => 'muni_bolivar',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Municipio Candelaria (Chejendé)',
+                'identificador' => 'muni_candelaria',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Municipio Carache (Carache)',
+                'identificador' => 'muni_carache',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Municipio Escuque (Escuque)',
+                'identificador' => 'muni_escuque',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Municipio José Felipe Márquez Cañizalez (El Paradero)',
+                'identificador' => 'muni_jfmc',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Municipio Juan Vicente Campos Elías (Campo Elías)',
+                'identificador' => 'muni_campoelias',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Municipio La Ceiba (Santa Apolonia)',
+                'identificador' => 'muni_laceiba',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Municipio Miranda (El Dividive)',
+                'identificador' => 'muni_miranda',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Municipio Monte Carmelo (Monte Carmelo)',
+                'identificador' => 'muni_montecarmelo',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Municipio Motatán (Motatán)',
+                'identificador' => 'muni_motatan',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Municipio Pampán (Pampán)',
+                'identificador' => 'muni_pampan',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Municipio Pampanito (Pampanito)',
+                'identificador' => 'muni_pampanito',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Municipio Rafael Rangel (Betijoque)',
+                'identificador' => 'muni_rafaelrangel',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Municipio San Rafael de Carvajal (Carvajal)',
+                'identificador' => 'muni_carvajal',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Municipio Sucre (Sabana de Mendoza)',
+                'identificador' => 'muni_sucre',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Municipio Trujillo (Trujillo)',
+                'identificador' => 'muni_trujillo',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Municipio Urdaneta (La Quebrada)',
+                'identificador' => 'muni_urdaneta',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Municipio Valera (Valera)',
+                'identificador' => 'muni_valera',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            /**
+             * Fin municipios
+             */
+            /**
+             * Caracter de una universidad
+             */
+            array(
+                'enunciado' => 'Público',
+                'identificador' => 'caracter_publico',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Privado',
+                'identificador' => 'caracter_privado',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            /**
+             * Fin de caracter
+             */
+            /**
+             * Nivel académico
+             */
+            array(
+                'enunciado' => 'Doctor',
+                'identificador' => 'nivelac_doctor',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Magister',
+                'identificador' => 'nivelac_magister',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Especialista',
+                'identificador' => 'nivelac_especialista',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Licenciado, Economista o Ingeniero',
+                'identificador' => 'nivelac_lic',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Tecnico superior (TSU)',
+                'identificador' => 'nivelac_tsu',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Bachiller',
+                'identificador' => 'nivelac_bachiller',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            /**
+             * Fin nivel académico
+             */
+            /**
+             * Sexo
+             */
+            array(
+                'enunciado' => 'Masculino',
+                'identificador' => 'sexo_masculino',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Femenino',
+                'identificador' => 'sexo_femenino',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            /**
+             * Fin sexo
+             */
+            /*
+             * Fuente financiamiento
+             * TODO Colocar fuentes reales
+             */
+            array(
+                'enunciado' => 'Fuente de financiamiento 1',
+                'identificador' => 'fuentefin_1',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Fuente de financiamiento 2',
+                'identificador' => 'fuentefin_2',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Fuente de financiamiento 3',
+                'identificador' => 'fuentefin_3',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            /**
+             * Fin fuente
+             */   
+            /**
+             * Area de experiencia
+             *
+             */        
+            array(
+                'enunciado' => 'Area de experiencia 1',
+                'identificador' => 'areaexp_1',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Area de experiencia 2',
+                'identificador' => 'areaexp_2',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Area de experiencia 3',
+                'identificador' => 'areaexp_3',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Area de experiencia 4',
+                'identificador' => 'areaexp_4',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            /**
+             * Fin area experiencia
+             */
+            /**
+             * Linea de investigación
+             */
+            array(
+                'enunciado' => 'Lineas de investigación 1',
+                'identificador' => 'lineainv_1',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Lineas de investigación 2',
+                'identificador' => 'lineainv_2',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Lineas de investigación 3',
+                'identificador' => 'lineainv_3',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            /**
+             * Fin linea
+             */
+            /**
+             * Ejes temáticos
+             */ 
+            array(
+                'enunciado' => 'Eje temático 1',
+                'identificador' => 'ejetem_1',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Eje temático 2',
+                'identificador' => 'ejetem_2',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Eje temático 3',
+                'identificador' => 'ejetem_3',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            /**
+             * Fin ejes temáticos
+             */
+            /**
+             * Booleanos
+             */
+            array(
+                'enunciado' => 'Sí',
+                'identificador' => 'bool_si',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'No',
+                'identificador' => 'bool_no',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            /**
+             * Redes temáticas
+             */
+            array(
+                'enunciado' => 'Nacional',
+                'identificador' => 'redtem_nacional',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Regional',
+                'identificador' => 'redtem_regional',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Internacional',
+                'identificador' => 'redtem_internacional',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Local',
+                'identificador' => 'redtem_local',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            /**
+             * Fin redes temáticas
+             */
+            array(
+                'enunciado' => 'Escaso financiamiento',
+                'identificador' => 'problematica_fin',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Poca participación de sus integrantes',
+                'identificador' => 'problematica_pocapart',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Deficiente infraestructura',
+                'identificador' => 'problematica_definf',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Dispersión de recursos',
+                'identificador' => 'problematica_recursos',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Falta de articulación con otros actores',
+                'identificador' => 'problematica_actores',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Insuficiencia de recursos bibliográficos y/o tecnológicos',
+                'identificador' => 'problematica_recursosbib',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Recurso humano insuficiente',
+                'identificador' => 'problematica_rrhh',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Otros',
+                'identificador' => 'problematica_otros',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            /**
+             * Nivel de satisfacción
+             */
+            array(
+                'enunciado' => 'Excelente',
+                'identificador' => 'satisfaccion_excelente',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Buena',
+                'identificador' => 'satisfaccion_buena',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Regular',
+                'identificador' => 'satisfaccion_regular',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Deficiente',
+                'identificador' => 'satisfaccion_deficiente',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            /**
+             * Tipo de conexión de internet
+             */
+            array(
+                'enunciado' => 'Banda ancha',
+                'identificador' => 'tipointernet_bandaancha',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Satelital',
+                'identificador' => 'tipointernet_satelital',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Fibra óptica',
+                'identificador' => 'tipointernet_fibraoptica',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Cable',
+                'identificador' => 'tipointernet_cable',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+        ));
+        $commandOpcs2->execute();
         
     }
 
