@@ -8,6 +8,7 @@ class m141201_205502_create_pregunta_grupo extends CDbMigration
             'pregunta_id' => 'int(11) not null',
             'grupo_id' => 'int(11) not null',
             'peso' => 'int(11) not null',
+            'PRIMARY KEY(pregunta_id, grupo_id)'
         ));
         $this->addForeignKey("fk_{{PreguntaGrupo}}_pregunta",
             "{{PreguntaGrupo}}",
