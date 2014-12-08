@@ -8,7 +8,6 @@ if (isset($this->breadcrumbs)) {
 }
 $this->pageTitle = Yii::app()->name.' - '.$title;
 
-$this->renderPartial('//layouts/_usrbar', array('model'=>$model));
 ?>
 <div class="row">
     <h2><?php echo $title . CHtml::link(Yii::t('UsrModule.usr', 'update'), array('profile', 'update'=>true), array('class'=>'btn btn-primary update')); ?></h2>

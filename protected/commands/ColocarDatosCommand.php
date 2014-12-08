@@ -30,6 +30,7 @@ class ColocarDatosCommand extends CConsoleCommand
                 'user_id' => $idUser,
             ),
         ));
+        $command->execute();
         $command = $builder->createMultipleInsertCommand("{{Pregunta}}",array(
             //IMPORTANTE Grupo 1 de INSTRUMENTO IUTET
             array(

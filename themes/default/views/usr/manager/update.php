@@ -18,7 +18,6 @@ if ($id !== null) {
 	$this->menu[] = array('label'=>Yii::t('UsrModule.manager', 'Create user'), 'url'=>array('update'));
 }
 
-$this->renderPartial('//layouts/_usrbar', array('model'=>$profileForm));
 
 $this->beginClip('Footer');
     Yii::app()->sass->register(Yii::getPathOfAlias('webroot.scss') . '/profile.scss');

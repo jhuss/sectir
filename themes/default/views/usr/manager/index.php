@@ -40,7 +40,6 @@ Yii::app()->clientScript->registerScript('actions', $script);
 $labelSize = 3;
 $controlSize = 8;
 
-$this->renderPartial('//layouts/_usrbar', array('model'=>null));
 ?>
 
 <div class="row">

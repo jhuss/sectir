@@ -126,4 +126,20 @@ class Tipoencuesta extends CActiveRecord
             )
         );
     }
+    /**
+     * Retorna los identificadores de los tipos de encuestas
+     * @return array
+     */
+    public function getIdentificadoresTE()
+    {
+        $query = "SELECT id, identificador, enunciado FROM " . $this->tableName() . " ORDER BY identificador";
+        $command = Yii::app()->db->createCommand($query);
+        $vals = $command->queryAll();
+        $retVal = array();
+        foreach ($vals as $v) {
+            $retVal[$v["id"]] = "(" . $v["identificador"] . "): " . $v["enunciado"];
+        }
+        return $retVal;
+    }
+    
 }

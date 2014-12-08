@@ -41,9 +41,9 @@ class Encuesta extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('tipoencuesta_id, enunciado, identificador', 'required'),
-			array('tipoencuesta_id', 'numerical', 'integerOnly'=>true),
-            array('tipoencuesta_id', 'exist', 'allowEmpty' => false, 'className' => 'Encuesta', 'attributeName' => 'id'),
-			array('enunciado', 'length', 'max'=>256),
+            array('tipoencuesta_id', 'exist', 'allowEmpty' => false, 'className' => 'Tipoencuesta', 'attributeName' => 'id'),
+            array('enunciado', 'length', 'max'=>256),
+            array('identificador', 'unique'),
 			array('identificador', 'length', 'max'=>32),
 			array('fecha_inicial, fecha_final, actualizado_en', 'safe'),
             array('fecha_inicial, fecha_final', 'date'),
@@ -138,7 +138,12 @@ class Encuesta extends CActiveRecord
                'class' => 'zii.behaviors.CTimestampBehavior',
                'createAttribute' => 'creado_en',
                'updateAttribute' => 'actualizado_en',
-            )
+           ),
+           'defaultValue' => array(
+               'class' => 'DefaultValueBehavior',
+               'attribute' => 'user_id',
+               'value' => Yii::app()->user->id,
+           ),
         );
     }
 }

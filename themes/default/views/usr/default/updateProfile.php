@@ -11,7 +11,6 @@ $this->pageTitle = Yii::app()->name.' - '.$title;
 $labelSize = 4;
 $controlSize = 8;
 
-$this->renderPartial('//layouts/_usrbar', array('model'=>$model));
 
 $this->beginClip('Footer');
     Yii::app()->sass->register(Yii::getPathOfAlias('webroot.scss') . '/profile.scss');

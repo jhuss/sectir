@@ -21,7 +21,7 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'tipoencuesta_id'); ?>
-		<?php echo $form->textField($model,'tipoencuesta_id'); ?>
+		<?php echo $form->dropDownList($model,'tipoencuesta_id',(new Tipoencuesta)->identificadoresTE); ?>
 		<?php echo $form->error($model,'tipoencuesta_id'); ?>
 	</div>
 

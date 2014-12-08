@@ -12,4 +12,3 @@
         $cs->registerCoreScript('angular-ui-bootstrap');
     $this->endClip();
 
-$this->renderPartial('//layouts/_usrbar', array('model'=>$model));
