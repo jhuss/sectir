@@ -2893,432 +2893,473 @@ CARMONA)',
             /**
              * Sede nucleo
              */
-            array(
-                'preguntaid' => 'preg_sedenucleo_compuesta',
-                'lft' => 1,
-                'rgt' => 6,
-            ),
-            array(
-                'preguntaid' => 'preg_sedenucleo',
-                'lft' => 2,
-                'rgt' => 3,
-            ),
-            array(
-                'preguntaid' => 'preg_sedenucleo_ubicacion',
-                'lft' => 4,
-                'rgt' => 5,
+            'sedenucleo' => array(
+                array(
+                    'preguntaid' => 'preg_sedenucleo_compuesta',
+                    'lft' => 1,
+                    'rgt' => 6,
+                ),
+                array(
+                    'preguntaid' => 'preg_sedenucleo',
+                    'lft' => 2,
+                    'rgt' => 3,
+                ),
+                array(
+                    'preguntaid' => 'preg_sedenucleo_ubicacion',
+                    'lft' => 4,
+                    'rgt' => 5,
+                ),
             ),
             /**
              * actividades ciencia
+             *
              */
-            array(
-                'preguntaid' => 'preg_actividadesciencia_compuest',
-                'lft' => 1,
-                'rgt' => 8,
-            ),
-            //TODO Vamos aquí
-            array(
-                'preguntaid' => 'preg_actividadesciencia_subq',
-                'lft' => 2,
-                'rgt' => 3,
-            ),
-            array(
-                'preguntaid' => 'preg_actividadesciencia_sino',
-                'lft' => 4,
-                'rgt' => 5,
-            ),
-            array(
-                'preguntaid' => 'preg_actividadesciencia_cuales',
-                'lft' => 6,
-                'rgt' => 7,
+            'actividadesciencia' => array(
+                array(
+                    'preguntaid' => 'preg_actividadesciencia_compuest',
+                    'lft' => 1,
+                    'rgt' => 8,
+                ),
+                
+                array(
+                    'preguntaid' => 'preg_actividadesciencia_subq',
+                    'lft' => 2,
+                    'rgt' => 3,
+                ),
+                array(
+                    'preguntaid' => 'preg_actividadesciencia_sino',
+                    'lft' => 4,
+                    'rgt' => 5,
+                ),
+                array(
+                    'preguntaid' => 'preg_actividadesciencia_cuales',
+                    'lft' => 6,
+                    'rgt' => 7,
+                ),
             ),
             /**
              * Talento humano
              */
-            array(
-                'preguntaid' => 'preg_talentohumano_compuesta',
-                'lft' => 1,
-                'rgt' => 30,
-            ),
-            array(
-                'preguntaid' => 'preg_talentohumano_nombre',
-                'lft' => 2,
-                'rgt' => 3,
-            ),
-            array(
-                'preguntaid' => 'preg_talentohumano_edad',
-                'lft' => 4,
-                'rgt' => 5,
-            ),
-            array(
-                'preguntaid' => 'preg_talentohumano_sexo',
-                'lft' => 6,
-                'rgt' => 7,
-            ),
-            array(
-                'preguntaid' => 'preg_talentohumano_nivelac',
-                'lft' => 8,
-                'rgt' => 9,
-            ),
-            array(
-                'preguntaid' => 'preg_talentohumano_uni_compuesta',
-                'lft' => 10,
-                'rgt' => 17,
-            ),
-            array(
-                'preguntaid' => 'preg_talentohumano_nacionalpub',
-                'lft' => 11,
-                'rgt' => 12,
-            ),
-            array(
-                'preguntaid' => 'preg_talentohumano_nacionalpri',
-                'lft' => 13,
-                'rgt' => 14,
-            ),
-            array(
-                'preguntaid' => 'preg_talentohumano_internacional',
-                'lft' => 15,
-                'rgt' => 16,
-            ),
-            array(
-                'preguntaid' => 'preg_talentohumano_fuentefin',
-                'lft' => 18,
-                'rgt' => 19,
-            ),
-            array(
-                'preguntaid' => 'preg_talentohumano_categoriapeii',
-                'lft' => 20,
-                'rgt' => 25,
-            ),
-            array(
-                'preguntaid' => 'preg_talentohumano_pei_inv',
-                'lft' => 21,
-                'rgt' => 22,
-            ),
-            array(
-                'preguntaid' => 'preg_talentohumano_pei_inn',
-                'lft' => 23,
-                'rgt' => 24,
-            ),
-            array(
-                'preguntaid' => 'preg_talentohumano_exp_area',
-                'lft' => 26,
-                'rgt' => 27,
-            ),
-            array(
-                'preguntaid' => 'preg_talentohumano_linea_inv',
-                'lft' => 28,
-                'rgt' => 29,
+            'talentohumano' => array( 
+                array(
+                    'preguntaid' => 'preg_talentohumano_compuesta',
+                    'lft' => 1,
+                    'rgt' => 30,
+                ),
+                array(
+                    'preguntaid' => 'preg_talentohumano_nombre',
+                    'lft' => 2,
+                    'rgt' => 3,
+                ),
+                array(
+                    'preguntaid' => 'preg_talentohumano_edad',
+                    'lft' => 4,
+                    'rgt' => 5,
+                ),
+                array(
+                    'preguntaid' => 'preg_talentohumano_sexo',
+                    'lft' => 6,
+                    'rgt' => 7,
+                ),
+                array(
+                    'preguntaid' => 'preg_talentohumano_nivelac',
+                    'lft' => 8,
+                    'rgt' => 9,
+                ),
+                array(
+                    'preguntaid' => 'preg_talentohumano_uni_compuesta',
+                    'lft' => 10,
+                    'rgt' => 17,
+                ),
+                array(
+                    'preguntaid' => 'preg_talentohumano_nacionalpub',
+                    'lft' => 11,
+                    'rgt' => 12,
+                ),
+                array(
+                    'preguntaid' => 'preg_talentohumano_nacionalpri',
+                    'lft' => 13,
+                    'rgt' => 14,
+                ),
+                array(
+                    'preguntaid' => 'preg_talentohumano_internacional',
+                    'lft' => 15,
+                    'rgt' => 16,
+                ),
+                array(
+                    'preguntaid' => 'preg_talentohumano_fuentefin',
+                    'lft' => 18,
+                    'rgt' => 19,
+                ),
+                array(
+                    'preguntaid' => 'preg_talentohumano_categoriapeii',
+                    'lft' => 20,
+                    'rgt' => 25,
+                ),
+                array(
+                    'preguntaid' => 'preg_talentohumano_pei_inv',
+                    'lft' => 21,
+                    'rgt' => 22,
+                ),
+                array(
+                    'preguntaid' => 'preg_talentohumano_pei_inn',
+                    'lft' => 23,
+                    'rgt' => 24,
+                ),
+                array(
+                    'preguntaid' => 'preg_talentohumano_exp_area',
+                    'lft' => 26,
+                    'rgt' => 27,
+                ),
+                array(
+                    'preguntaid' => 'preg_talentohumano_linea_inv',
+                    'lft' => 28,
+                    'rgt' => 29,
+                ),
             ),
             /**
              * Doctorado
              */
-            array(
-                'preguntaid' => 'preg_doctorado_compuesta',
-                'lft' => 1,
-                'rgt' => 6,
-            ),
-            array(
-                'preguntaid' => 'preg_doctorado_existente',
-                'lft' => 2,
-                'rgt' => 3,
-            ),
-            array(
-                'preguntaid' => 'preg_doctorado_numero',
-                'lft' => 4,
-                'rgt' => 5,
+            'doctorado' => array(
+                array(
+                    'preguntaid' => 'preg_doctorado_compuesta',
+                    'lft' => 1,
+                    'rgt' => 6,
+                ),
+                array(
+                    'preguntaid' => 'preg_doctorado_existente',
+                    'lft' => 2,
+                    'rgt' => 3,
+                ),
+                array(
+                    'preguntaid' => 'preg_doctorado_numero',
+                    'lft' => 4,
+                    'rgt' => 5,
+                ),
             ),
             /**
              * Maestria
-             */
-            array(
-                'preguntaid' => 'preg_maestria_compuesta',
-                'lft' => 1,
-                'rgt' => 6,
-            ),
-            array(
-                'preguntaid' => 'preg_maestria_existente',
-                'lft' => 2,
-                'rgt' => 3,
-            ),
-            array(
-                'preguntaid' => 'preg_maestria_numero',
-                'lft' => 4,
-                'rgt' => 5,
+             * 
+             **/
+            'maestria' => array(
+                array(
+                    'preguntaid' => 'preg_maestria_compuesta',
+                    'lft' => 1,
+                    'rgt' => 6,
+                ),
+                array(
+                    'preguntaid' => 'preg_maestria_existente',
+                    'lft' => 2,
+                    'rgt' => 3,
+                ),
+                array(
+                    'preguntaid' => 'preg_maestria_numero',
+                    'lft' => 4,
+                    'rgt' => 5,
+                ),
+
             ),
             /**
              * Especialidades
              */
-            array(
-                'preguntaid' => 'preg_especialidades_compuesta',
-                'lft' => 1,
-                'rgt' => 6,
-            ),
-            array(
-                'preguntaid' => 'preg_especialidades_existente',
-                'lft' => 2,
-                'rgt' => 3,
-            ),
-            array(
-                'preguntaid' => 'preg_especialidades_numero',
-                'lft' => 4,
-                'rgt' => 5,
+            'especialidades' => array(
+                array(
+                    'preguntaid' => 'preg_especialidades_compuesta',
+                    'lft' => 1,
+                    'rgt' => 6,
+                ),
+                array(
+                    'preguntaid' => 'preg_especialidades_existente',
+                    'lft' => 2,
+                    'rgt' => 3,
+                ),
+                array(
+                    'preguntaid' => 'preg_especialidades_numero',
+                    'lft' => 4,
+                    'rgt' => 5,
+                ),
             ),
             /**
              * Pregrado
              */
-            array(
-                'preguntaid' => 'preg_pregrado_compuesta',
-                'lft' => 1,
-                'rgt' => 6,
-            ),
-            array(
-                'preguntaid' => 'preg_pregrado_existente',
-                'lft' => 2,
-                'rgt' => 3,
-            ),
-            array(
-                'preguntaid' => 'preg_pregrado_numero',
-                'lft' => 4,
-                'rgt' => 5,
+            'pregrado' => array(
+                array(
+                    'preguntaid' => 'preg_pregrado_compuesta',
+                    'lft' => 1,
+                    'rgt' => 6,
+                ),
+                array(
+                    'preguntaid' => 'preg_pregrado_existente',
+                    'lft' => 2,
+                    'rgt' => 3,
+                ),
+                array(
+                    'preguntaid' => 'preg_pregrado_numero',
+                    'lft' => 4,
+                    'rgt' => 5,
+                ),
+
             ),
             /**
              * Proyectos aprobados
              */
-            array(
-                'preguntaid' => 'preg_proyectosaprob_comp',
-                'lft' => 1,
-                'rgt' => 6,
-            ),
-            array(
-                'preguntaid' => 'preg_proyectosaprob_subq',
-                'lft' => 2,
-                'rgt' => 3,
-            ),
-            array(
-                'preguntaid' => 'preg_proyectosaprob_num',
-                'lft' => 4,
-                'rgt' => 5,
+            'proyectosaprob' => array(
+                array(
+                    'preguntaid' => 'preg_proyectosaprob_comp',
+                    'lft' => 1,
+                    'rgt' => 6,
+                ),
+                array(
+                    'preguntaid' => 'preg_proyectosaprob_subq',
+                    'lft' => 2,
+                    'rgt' => 3,
+                ),
+                array(
+                    'preguntaid' => 'preg_proyectosaprob_num',
+                    'lft' => 4,
+                    'rgt' => 5,
+                ),
             ),
             /**
              * Recursos aprobados
              */
-            array(
-                'preguntaid' => 'preg_recursosaprob_comp',
-                'lft' => 1,
-                'rgt' => 6,
-            ),
-            array(
-                'preguntaid' => 'preg_recursosaprob_subq',
-                'lft' => 2,
-                'rgt' => 3,
-            ),
-            array(
-                'preguntaid' => 'preg_recursosaprob_num',
-                'lft' => 4,
-                'rgt' => 5,
+            'recursosaprob' => array(
+                array(
+                    'preguntaid' => 'preg_recursosaprob_comp',
+                    'lft' => 1,
+                    'rgt' => 6,
+                ),
+                array(
+                    'preguntaid' => 'preg_recursosaprob_subq',
+                    'lft' => 2,
+                    'rgt' => 3,
+                ),
+                array(
+                    'preguntaid' => 'preg_recursosaprob_num',
+                    'lft' => 4,
+                    'rgt' => 5,
+                ),
             ),
             /**
              * Proyectos aprobados por area
              */
-            array(
-                'preguntaid' => 'preg_proyectosaprob_area_comp',
-                'lft' => 1,
-                'rgt' => 6,
-            ),
-            array(
-                'preguntaid' => 'preg_proyectosaprob_area_subq',
-                'lft' => 2,
-                'rgt' => 3,
-            ),
-            array(
-                'preguntaid' => 'preg_proyectosaprob_area_num',
-                'lft' => 4,
-                'rgt' => 5,
+            'proyectosaprob_area' => array(
+                array(
+                    'preguntaid' => 'preg_proyectosaprob_area_comp',
+                    'lft' => 1,
+                    'rgt' => 6,
+                ),
+                array(
+                    'preguntaid' => 'preg_proyectosaprob_area_subq',
+                    'lft' => 2,
+                    'rgt' => 3,
+                ),
+                array(
+                    'preguntaid' => 'preg_proyectosaprob_area_num',
+                    'lft' => 4,
+                    'rgt' => 5,
+                ),
             ),
             /**
              * Recursos aprobados por area
              */
-            array(
-                'preguntaid' => 'preg_recursosaprob_area_comp',
-                'lft' => 1,
-                'rgt' => 6,
-            ),
-            array(
-                'preguntaid' => 'preg_recursosaprob_area_subq',
-                'lft' => 2,
-                'rgt' => 3,
-            ),
-            array(
-                'preguntaid' => 'preg_recursosaprob_area_num',
-                'lft' => 4,
-                'rgt' => 5,
+            'recursosaprob_area' => array(
+                array(
+                    'preguntaid' => 'preg_recursosaprob_area_comp',
+                    'lft' => 1,
+                    'rgt' => 6,
+                ),
+                array(
+                    'preguntaid' => 'preg_recursosaprob_area_subq',
+                    'lft' => 2,
+                    'rgt' => 3,
+                ),
+                array(
+                    'preguntaid' => 'preg_recursosaprob_area_num',
+                    'lft' => 4,
+                    'rgt' => 5,
+                ),
             ),
             /**
              * Patentes
              */
-            array(
-                'preguntaid' => 'preg_patentes_area_comp',
-                'lft' => 1,
-                'rgt' => 6,
-            ),
-            array(
-                'preguntaid' => 'preg_patentes_area_subq',
-                'lft' => 2,
-                'rgt' => 3,
-            ),
-            array(
-                'preguntaid' => 'preg_patentes_area_num',
-                'lft' => 4,
-                'rgt' => 5,
+            'patentes' => array(
+                array(
+                    'preguntaid' => 'preg_patentes_area_comp',
+                    'lft' => 1,
+                    'rgt' => 6,
+                ),
+                array(
+                    'preguntaid' => 'preg_patentes_area_subq',
+                    'lft' => 2,
+                    'rgt' => 3,
+                ),
+                array(
+                    'preguntaid' => 'preg_patentes_area_num',
+                    'lft' => 4,
+                    'rgt' => 5,
+                ),
             ),
             /**
              * Revistas
              */
-            array(
-                'preguntaid' => 'preg_revistas_area_comp',
-                'lft' => 1,
-                'rgt' => 8,
-            ),
-            array(
-                'preguntaid' => 'preg_revistas_area_subq',
-                'lft' => 2,
-                'rgt' => 3,
-            ),
-            array(
-                'preguntaid' => 'preg_revistas_area_revista',
-                'lft' => 4,
-                'rgt' => 5,
-            ),
-            array(
-                'preguntaid' => 'preg_revistas_area_num',
-                'lft' => 6,
-                'rgt' => 7,
+            'revistas' => array(
+                array(
+                    'preguntaid' => 'preg_revistas_area_comp',
+                    'lft' => 1,
+                    'rgt' => 8,
+                ),
+                array(
+                    'preguntaid' => 'preg_revistas_area_subq',
+                    'lft' => 2,
+                    'rgt' => 3,
+                ),
+                array(
+                    'preguntaid' => 'preg_revistas_area_revista',
+                    'lft' => 4,
+                    'rgt' => 5,
+                ),
+                array(
+                    'preguntaid' => 'preg_revistas_area_num',
+                    'lft' => 6,
+                    'rgt' => 7,
+                ),
             ),
             /**
              * Lineas de investigación
              */
-            array(
-                'preguntaid' => 'preg_lineas_inv_comp',
-                'lft' => 1,
-                'rgt' => 8,
-            ),
-            array(
-                'preguntaid' => 'preg_lineas_inv_lineasinv',
-                'lft' => 2,
-                'rgt' => 3,
-            ),
-            array(
-                'preguntaid' => 'preg_lineas_inv_ejestematico',
-                'lft' => 4,
-                'rgt' => 5,
-            ),
-            array(
-                'preguntaid' => 'preg_lineas_inv_programapost',
-                'lft' => 6,
-                'rgt' => 7,
+            'lineas_inv' => array(
+                array(
+                    'preguntaid' => 'preg_lineas_inv_comp',
+                    'lft' => 1,
+                    'rgt' => 8,
+                ),
+                array(
+                    'preguntaid' => 'preg_lineas_inv_lineasinv',
+                    'lft' => 2,
+                    'rgt' => 3,
+                ),
+                array(
+                    'preguntaid' => 'preg_lineas_inv_ejestematico',
+                    'lft' => 4,
+                    'rgt' => 5,
+                ),
+                array(
+                    'preguntaid' => 'preg_lineas_inv_programapost',
+                    'lft' => 6,
+                    'rgt' => 7,
+                ),
             ),
             /**
              * Actores de financiamiento
              */
-            array(
-                'preguntaid' => 'preg_actores_fin_comp',
-                'lft' => 1,
-                'rgt' => 6,
-            ),
-            array(
-                'preguntaid' => 'preg_actores_fin_actorespart',
-                'lft' => 2,
-                'rgt' => 3,
-            ),
-            array(
-                'preguntaid' => 'preg_actores_fin_actoresfin',
-                'lft' => 4,
-                'rgt' => 5,
+            'actores_fin' => array(
+                array(
+                    'preguntaid' => 'preg_actores_fin_comp',
+                    'lft' => 1,
+                    'rgt' => 6,
+                ),
+                array(
+                    'preguntaid' => 'preg_actores_fin_actorespart',
+                    'lft' => 2,
+                    'rgt' => 3,
+                ),
+                array(
+                    'preguntaid' => 'preg_actores_fin_actoresfin',
+                    'lft' => 4,
+                    'rgt' => 5,
+                ),
             ),
             /**
              * Infraestructura
              */
-            array(
-                'preguntaid' => 'preg_infraestructura_comp',
-                'lft' => 1,
-                'rgt' => 16,
-            ),
-            array(
-                'preguntaid' => 'preg_infraestructura_subq',
-                'lft' => 2,
-                'rgt' => 3,
-            ),
-            array(
-                'preguntaid' => 'preg_infraestructura_activa',
-                'lft' => 4,
-                'rgt' => 5,
-            ),
-            array(
-                'preguntaid' => 'preg_infraestructura_espacios',
-                'lft' => 6,
-                'rgt' => 7,
-            ),
-            array(
-                'preguntaid' => 'preg_infraestructura_equipamient',
-                'lft' => 8,
-                'rgt' => 9,
-            ),
-            array(
-                'preguntaid' => 'preg_infraestructura_usoinf_comp',
-                'lft' => 10,
-                'rgt' => 15,
-            ),
-            array(
-                'preguntaid' => 'preg_infraestructura_usodoc',
-                'lft' => 11,
-                'rgt' => 12,
-            ),
-            array(
-                'preguntaid' => 'preg_infraestructura_usoinv',
-                'lft' => 13,
-                'rgt' => 14,
+            'infraestructura' => array(
+                array(
+                    'preguntaid' => 'preg_infraestructura_comp',
+                    'lft' => 1,
+                    'rgt' => 16,
+                ),
+                array(
+                    'preguntaid' => 'preg_infraestructura_subq',
+                    'lft' => 2,
+                    'rgt' => 3,
+                ),
+                array(
+                    'preguntaid' => 'preg_infraestructura_activa',
+                    'lft' => 4,
+                    'rgt' => 5,
+                ),
+                array(
+                    'preguntaid' => 'preg_infraestructura_espacios',
+                    'lft' => 6,
+                    'rgt' => 7,
+                ),
+                array(
+                    'preguntaid' => 'preg_infraestructura_equipamient',
+                    'lft' => 8,
+                    'rgt' => 9,
+                ),
+                array(
+                    'preguntaid' => 'preg_infraestructura_usoinf_comp',
+                    'lft' => 10,
+                    'rgt' => 15,
+                ),
+                array(
+                    'preguntaid' => 'preg_infraestructura_usodoc',
+                    'lft' => 11,
+                    'rgt' => 12,
+                ),
+                array(
+                    'preguntaid' => 'preg_infraestructura_usoinv',
+                    'lft' => 13,
+                    'rgt' => 14,
+                ),
             ),
             /**
              * Comite de ética2
              */
-            array(
-                'preguntaid' => 'preg_comiteetica2_composicion_co',
-                'lft' => 1,
-                'rgt' => 10,
-            ),
-            array(
-                'preguntaid' => 'preg_comiteetica2_ident',
-                'lft' => 2,
-                'rgt' => 3,
-            ),
-            array(
-                'preguntaid' => 'preg_comiteetica2_profesion',
-                'lft' => 4,
-                'rgt' => 5,
-            ),
-            array(
-                'preguntaid' => 'preg_comiteetica2_cargo',
-                'lft' => 6,
-                'rgt' => 7,
-            ),
-            array(
-                'preguntaid' => 'preg_comiteetica2_correo',
-                'lft' => 8,
-                'rgt' => 9,
+            'comiteetica2' => array(
+                array(
+                    'preguntaid' => 'preg_comiteetica2_composicion_co',
+                    'lft' => 1,
+                    'rgt' => 10,
+                ),
+                array(
+                    'preguntaid' => 'preg_comiteetica2_ident',
+                    'lft' => 2,
+                    'rgt' => 3,
+                ),
+                array(
+                    'preguntaid' => 'preg_comiteetica2_profesion',
+                    'lft' => 4,
+                    'rgt' => 5,
+                ),
+                array(
+                    'preguntaid' => 'preg_comiteetica2_cargo',
+                    'lft' => 6,
+                    'rgt' => 7,
+                ),
+                array(
+                    'preguntaid' => 'preg_comiteetica2_correo',
+                    'lft' => 8,
+                    'rgt' => 9,
+                ),
             ),
             
         );
-        $sql = "INSERT INTO {{Preguntacompuesta}} (lft, rgt, pregunta_id) SELECT :lft AS lft, :rgt AS rgt, p.id AS pregunta_id FROM {{Pregunta}} p WHERE p.identificador=:idpregunta";
+        $sql = "INSERT INTO {{Preguntacompuesta}} (lft, rgt, pregunta_id, grupocomp_id) SELECT :lft AS lft, :rgt AS rgt, p.id AS pregunta_id, g.id AS grupocomp_id FROM {{Pregunta}} p JOIN {{Grupocomp}} g ON g.identificador=:grupoid WHERE p.identificador=:idpregunta";
 
         $commandPreguntaComp = Yii::app()->db->createCommand($sql);
-        foreach ($arrayComp as $val){
-            $commandPreguntaComp->bindValue(":lft",$val['lft']);
-            $commandPreguntaComp->bindValue(":rgt",$val['rgt']);
-            $commandPreguntaComp->bindValue(":idpregunta",$val['preguntaid']);
-            echo "Ejecutando comando con preguntaid " . $val['preguntaid']
-                . " lft=" . $val['lft'] . " rgt=" . $val['rgt'] .".\n";
-            var_dump($commandPreguntaComp->execute());
+        foreach ($arrayComp as $grupoId=>$val){
+            foreach ($val as $pregunta) { 
+                $commandPreguntaComp->bindValue(":lft",$pregunta['lft']);
+                $commandPreguntaComp->bindValue(":rgt",$pregunta['rgt']);
+                $commandPreguntaComp->bindValue(":idpregunta",$pregunta['preguntaid']);
+                $commandPreguntaComp->bindValue(":grupoid",$grupoId);
+                echo "Ejecutando comando con preguntaid " . $pregunta['preguntaid']
+                    . "grupoid" . $grupoId . " lft=" . $pregunta['lft'] . " rgt=" . $pregunta['rgt'] .".\n";
+                var_dump($commandPreguntaComp->execute());
+            }
         }
         
         
