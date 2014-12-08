@@ -40,11 +40,13 @@ class Encuesta extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('tipoencuesta_id, enunciado, identificador, creado_en, user_id', 'required'),
-			array('tipoencuesta_id, user_id', 'numerical', 'integerOnly'=>true),
+			array('tipoencuesta_id, enunciado, identificador', 'required'),
+			array('tipoencuesta_id', 'numerical', 'integerOnly'=>true),
+            array('tipoencuesta_id', 'exist', 'allowEmpty' => false, 'className' => 'Encuesta', 'attributeName' => 'id'),
 			array('enunciado', 'length', 'max'=>256),
 			array('identificador', 'length', 'max'=>32),
 			array('fecha_inicial, fecha_final, actualizado_en', 'safe'),
+            array('fecha_inicial, fecha_final', 'date'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, tipoencuesta_id, enunciado, identificador, fecha_inicial, fecha_final, creado_en, actualizado_en, user_id', 'safe', 'on'=>'search'),
@@ -128,5 +130,15 @@ class Encuesta extends CActiveRecord
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
-	}
+    }
+    public function behaviors()
+    {
+        return array(
+           'timestamp' => array(
+               'class' => 'zii.behaviors.CTimestampBehavior',
+               'createAttribute' => 'creado_en',
+               'updateAttribute' => 'actualizado_en',
+            )
+        );
+    }
 }
