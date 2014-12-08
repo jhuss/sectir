@@ -16,6 +16,9 @@
  * @property Users $user
  * @property Grupo[] $sectirGrupos
  */
+
+use Underscore\Types\Arrays;
+
 class Tipoencuesta extends CActiveRecord
 {
 	/**
@@ -140,6 +143,56 @@ class Tipoencuesta extends CActiveRecord
             $retVal[$v["id"]] = "(" . $v["identificador"] . "): " . $v["enunciado"];
         }
         return $retVal;
+    }
+
+    public function getPreguntasEncuesta()
+    {
+        /**
+         * Obtenemos preguntas (Junto con sus valores lft y rgt
+         */
+        $sql = <<<EOF
+SELECT p.enunciado, p.id, p.identificador, p.compuesta, pc.lft, pc.rgt, pc.grupocomp_id FROM {{PreguntaGrupo}} pg INNER JOIN {{Grupo}} g ON pg.grupo_id = g.id INNER JOIN {{TipoencuestaGrupo}} teg ON teg.grupo_id = g.id INNER JOIN {{Tipoencuesta}} te ON teg.tipoencuesta_id = te.id INNER JOIN {{Pregunta}} p ON pg.pregunta_id = p.id LEFT JOIN {{Preguntacompuesta}} pc ON p.id = pc.pregunta_id WHERE te.id = :idencuesta
+EOF;
+        $command = Yii::app()->db->createCommand($sql);
+        $command->bindValue(":idencuesta",$this->id);
+        $preguntas = $command->queryAll();
+        $idPreguntas = Arrays::from($preguntas)->pluck('id')->obtain();
+        /**
+         * Obtenemos opciones
+         */
+        $sqlOpcs = <<<EOF
+SELECT o.id, o.enunciado, o.identificador, po.pregunta_id FROM {{PreguntaOpc}} po INNER JOIN {{Opcion}} o ON po.opcion_id = o.id INNER JOIN {{Pregunta}} p ON po.pregunta_id = p.id WHERE p.id IN (_ids_)
+EOF;
+        $paramsOpc = array_map(function($id){
+            return ":pregunta_$id";
+        },range(0,count($idPreguntas) - 1));
+        $sqlOpcs = strtr($sqlOpcs,array(
+            '_ids_' => implode(",",$paramsOpc)
+        ));
+        $commandOpc = Yii::app()->db->createCommand($sqlOpcs);
+        foreach ($idPreguntas as $i=>$val) {
+            $commandOpc->bindValue($paramsOpc[$i],$val);
+        }
+        $opciones = $commandOpc->queryAll();
+        /**
+         * Obtenemos opciones compuestas
+         */
+        $sqlOpcComp = <<<EOF
+SELECT oc.id, oc.enunciado, goc.grupocomp_id FROM {{GrupocompOpcioncomp}} goc INNER JOIN {{Opcioncomp}} oc ON goc.opcioncomp_id = oc.id WHERE goc.grupocomp_id IN (_ids_)
+EOF;
+        $idGrupoComps = Arrays::from($preguntas)->pluck('grupocomp_id')->obtain();
+        $paramsOpc = array_map(function($id){
+            return ":grupocomp_id_$id";
+        },range(0,count($idPreguntas) - 1));
+        $sqlOpcComp = strtr($sqlOpcComp,array(
+            '_ids_' => implode(",",$paramsOpc)
+        ));
+        $commandOpc = Yii::app()->db->createCommand($sqlOpcComp);
+        foreach ($idPreguntas as $i=>$val) {
+            $commandOpc->bindValue($paramsOpc[$i],$val);
+        }
+        $opciones = $commandOpc->queryAll();
+        var_dump($opciones);
     }
     
 }

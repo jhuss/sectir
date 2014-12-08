@@ -2849,6 +2849,12 @@ CARMONA)',
                 'satisfaccion_regular',
                 'satisfaccion_deficiente',
             ),
+            'preg_infraestructura_usoinf_comp' => array(
+                'satisfaccion_excelente',
+                'satisfaccion_buena',
+                'satisfaccion_regular',
+                'satisfaccion_deficiente',
+            ),
             'preg_internet_servint' => array(
                 'bool_si',
                 'bool_no',
