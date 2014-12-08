@@ -48,27 +48,8 @@
 		<?php echo $form->textField($model,'fecha_final'); ?>
 		<?php echo $form->error($model,'fecha_final'); ?>
 	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'creado_en'); ?>
-		<?php echo $form->textField($model,'creado_en'); ?>
-		<?php echo $form->error($model,'creado_en'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'actualizado_en'); ?>
-		<?php echo $form->textField($model,'actualizado_en'); ?>
-		<?php echo $form->error($model,'actualizado_en'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'user_id'); ?>
-		<?php echo $form->textField($model,'user_id'); ?>
-		<?php echo $form->error($model,'user_id'); ?>
-	</div>
-
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+		<?php echo CHtml::submitButton($model->isNewRecord ? 'Crear' : 'Guardar'); ?>
 	</div>
 
 <?php $this->endWidget(); ?>
