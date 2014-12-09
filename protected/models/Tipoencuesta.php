@@ -150,8 +150,20 @@ class Tipoencuesta extends CActiveRecord
         /**
          * Obtenemos preguntas (Junto con sus valores lft y rgt
          */
+        // Fixed query
+        //Poner caching (Ya que es pesado)
         $sql = <<<EOF
-SELECT p.enunciado, p.id, p.identificador, p.compuesta, pc.lft, pc.rgt, pc.grupocomp_id FROM {{PreguntaGrupo}} pg INNER JOIN {{Grupo}} g ON pg.grupo_id = g.id INNER JOIN {{TipoencuestaGrupo}} teg ON teg.grupo_id = g.id INNER JOIN {{Tipoencuesta}} te ON teg.tipoencuesta_id = te.id INNER JOIN {{Pregunta}} p ON pg.pregunta_id = p.id LEFT JOIN {{Preguntacompuesta}} pc ON p.id = pc.pregunta_id WHERE te.id = :idencuesta
+SELECT p.enunciado, p.id, p.identificador, p.compuesta, p.tipo, pc.lft, pc.rgt, pc.grupocomp_id, pc.cuenta, pg.grupo_id FROM {{PreguntaGrupo}} pg 
+	INNER JOIN {{Grupo}} g ON pg.grupo_id = g.id 
+    INNER JOIN {{TipoencuestaGrupo}} teg ON teg.grupo_id = g.id 
+    INNER JOIN {{Tipoencuesta}} te ON teg.tipoencuesta_id = te.id 
+    INNER JOIN {{Pregunta}} p ON pg.pregunta_id = p.id 
+    LEFT JOIN (
+        SELECT node.pregunta_id,node.lft,node.rgt,COUNT(parent.pregunta_id) AS cuenta, node.grupocomp_id FROM 	({{Preguntacompuesta}} node, {{Preguntacompuesta}} parent )
+		WHERE node.lft BETWEEN parent.lft AND parent.rgt AND node.grupocomp_id = parent.grupocomp_id
+    	GROUP BY node.pregunta_id,node.grupocomp_id
+        ) AS pc ON p.id = pc.pregunta_id 
+WHERE te.id = :idencuesta
 EOF;
         $command = Yii::app()->db->createCommand($sql);
         $command->bindValue(":idencuesta",$this->id);
@@ -191,8 +203,23 @@ EOF;
         foreach ($idPreguntas as $i=>$val) {
             $commandOpc->bindValue($paramsOpc[$i],$val);
         }
-        $opciones = $commandOpc->queryAll();
-        var_dump($opciones);
+        $opcionesComp = $commandOpc->queryAll();
+        /**
+         * Organizamos preguntas
+         */
+        $arrayFinal = Arrays::from($preguntas)->sort(function($val){
+            return array(
+                (int) $val["grupo_id"],
+                (int) $val["grupocomp_id"],
+                (int) $val["lft"]
+            );
+        });
+
+        $arrayFinal = $arrayFinal->group(function($val){
+            return $val["grupo_id"] . "-" . (int) $val["grupocomp_id"];
+        });
+        var_dump($arrayFinal->obtain());
+
     }
     
 }
