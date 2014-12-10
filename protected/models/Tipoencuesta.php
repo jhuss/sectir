@@ -191,6 +191,27 @@ EOF;
             $commandOpc->bindValue($paramsOpc[$i],$val);
         }
         $opciones = $commandOpc->queryAll();
+        $opcionesPorPreguntaID = Arrays::from($opciones)->group(function($val){
+            return $val["pregunta_id"];
+        })->obtain();
+        $getOptionFn = function($val){
+            return StringUtils::getQuotedSurroundedStr($val["identificador"]) 
+                . ":"
+                . StringUtils::getQuotedSurroundedStr($val["enunciado"]);
+        }; 
+        foreach ($preguntas as &$val) {
+            if (array_key_exists($val["id"],$opcionesPorPreguntaID)) {
+                $opcs = $opcionesPorPreguntaID[$val["id"]];
+                CVarDumper::dump($opcs,5,true);
+                $val["ng-options"] = 
+                    "o for o in {" . 
+                    implode(",",array_map($getOptionFn,
+                       $opcs)) 
+                    . "}";
+            }
+        }
+        unset($val);
+        CVarDumper::dump($preguntas,5,true);
         /**
          * Obtenemos opciones compuestas
          */
@@ -209,6 +230,16 @@ EOF;
             $commandOpc->bindValue($paramsOpc[$i],$val);
         }
         $opcionesComp = $commandOpc->queryAll();
+        $opcionesCompPorGrupoComp = Arrays::from($opcionesComp)->group(function($val){
+            return $val["grupocomp_id"];
+        })->obtain();
+        foreach ($preguntas as &$ref) {
+            if ($ref["tipo"] === "subq" && array_key_exists($ref["grupocomp_id"],$opcionesCompPorGrupoComp)) {
+                echo "entrando\n";
+                $ref["subq"] = $opcionesCompPorGrupoComp[$ref["grupocomp_id"]];
+            }
+        }
+        unset($ref);
         /**
          * Organizamos preguntas
          */
@@ -275,7 +306,8 @@ EOF;
                         $matching->addChild($preg);
                     }
                 }
-                $grupoComp = TreeUtils::getTreeArray(Arrays::from($arrayTemp)->first()->obtain());
+                $temp = TreeUtils::getTreeArray(Arrays::from($arrayTemp)->first()->obtain());
+                $grupoComp = $temp;
                 //CVarDumper::dump($grupoComp,6, true);         
             }
         }
