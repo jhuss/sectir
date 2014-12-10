@@ -171,7 +171,6 @@ EOF;
         $command = Yii::app()->db->createCommand($sql);
         $command->bindValue(":idencuesta",$this->id);
         $preguntas = $command->queryAll();
-        echo "Preguntas\n";
         $idPreguntas = Arrays::from($preguntas)->pluck('id')->obtain();
         /**
          * Obtenemos opciones
@@ -232,7 +231,6 @@ EOF;
         })->obtain();
         foreach ($preguntas as &$ref) {
             if ($ref["tipo"] === "subq" && array_key_exists($ref["grupocomp_id"],$opcionesCompPorGrupoComp)) {
-                echo "entrando\n";
                 $ref["subq"] = $opcionesCompPorGrupoComp[$ref["grupocomp_id"]];
             }
         }
@@ -305,5 +303,6 @@ EOF;
                 $grupoComp = $temp;
             }
         }
+        return $arrayAgrupadoYOrdPeso;
     }
 }
