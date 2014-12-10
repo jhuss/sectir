@@ -172,7 +172,6 @@ EOF;
         $command->bindValue(":idencuesta",$this->id);
         $preguntas = $command->queryAll();
         echo "Preguntas\n";
-        CVarDumper::dump($preguntas,3,true);
         $idPreguntas = Arrays::from($preguntas)->pluck('id')->obtain();
         /**
          * Obtenemos opciones
@@ -202,7 +201,6 @@ EOF;
         foreach ($preguntas as &$val) {
             if (array_key_exists($val["id"],$opcionesPorPreguntaID)) {
                 $opcs = $opcionesPorPreguntaID[$val["id"]];
-                CVarDumper::dump($opcs,5,true);
                 $val["ng-options"] = 
                     "o for o in {" . 
                     implode(",",array_map($getOptionFn,
@@ -211,7 +209,6 @@ EOF;
             }
         }
         unset($val);
-        CVarDumper::dump($preguntas,5,true);
         /**
          * Obtenemos opciones compuestas
          */
@@ -284,8 +281,6 @@ EOF;
                 })->group(function($val){
                     return $val->getValue()["cuenta"];
                 })->obtain();
-                //echo "Array dumper al comenzar\n";
-                //CVarDumper::dump($arrayTemp,6, true);         
                 foreach ($arrayTemp as $grupo=>$elGrupo) {
                     /**
                         * No me interesa agregar un padre
@@ -308,9 +303,7 @@ EOF;
                 }
                 $temp = TreeUtils::getTreeArray(Arrays::from($arrayTemp)->first()->obtain());
                 $grupoComp = $temp;
-                //CVarDumper::dump($grupoComp,6, true);         
             }
         }
-        CVarDumper::dump($arrayAgrupadoYOrdPeso,10,true);
     }
 }
