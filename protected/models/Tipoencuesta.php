@@ -178,17 +178,22 @@ EOF;
         $sqlOpcs = <<<EOF
 SELECT o.id, o.enunciado, o.identificador, po.pregunta_id FROM {{PreguntaOpc}} po INNER JOIN {{Opcion}} o ON po.opcion_id = o.id INNER JOIN {{Pregunta}} p ON po.pregunta_id = p.id WHERE p.id IN (_ids_)
 EOF;
-        $paramsOpc = array_map(function($id){
-            return ":pregunta_$id";
-        },range(0,count($idPreguntas) - 1));
-        $sqlOpcs = strtr($sqlOpcs,array(
-            '_ids_' => implode(",",$paramsOpc)
-        ));
-        $commandOpc = Yii::app()->db->createCommand($sqlOpcs);
-        foreach ($idPreguntas as $i=>$val) {
-            $commandOpc->bindValue($paramsOpc[$i],$val);
+        if ($idPreguntas) {
+            $paramsOpc = array_map(function($id){
+                return ":pregunta_$id";
+            },range(0,count($idPreguntas) - 1));
+            $sqlOpcs = strtr($sqlOpcs,array(
+                '_ids_' => implode(",",$paramsOpc)
+            ));
+            $commandOpc = Yii::app()->db->createCommand($sqlOpcs);
+            foreach ($idPreguntas as $i=>$val) {
+                $commandOpc->bindValue($paramsOpc[$i],$val);
+            }
+            $opciones = $commandOpc->queryAll();
+        } else {
+            $paramsOpc = array();
+            $opciones = array();
         }
-        $opciones = $commandOpc->queryAll();
         $opcionesPorPreguntaID = Arrays::from($opciones)->group(function($val){
             return $val["pregunta_id"];
         })->obtain();
@@ -215,17 +220,23 @@ EOF;
 SELECT oc.id, oc.enunciado, goc.grupocomp_id FROM {{GrupocompOpcioncomp}} goc INNER JOIN {{Opcioncomp}} oc ON goc.opcioncomp_id = oc.id WHERE goc.grupocomp_id IN (_ids_)
 EOF;
         $idGrupoComps = Arrays::from($preguntas)->pluck('grupocomp_id')->obtain();
-        $paramsOpc = array_map(function($id){
-            return ":grupocomp_id_$id";
-        },range(0,count($idPreguntas) - 1));
-        $sqlOpcComp = strtr($sqlOpcComp,array(
-            '_ids_' => implode(",",$paramsOpc)
-        ));
-        $commandOpc = Yii::app()->db->createCommand($sqlOpcComp);
-        foreach ($idPreguntas as $i=>$val) {
-            $commandOpc->bindValue($paramsOpc[$i],$val);
+        if ($idPreguntas) {
+            $paramsOpc = array_map(function($id){
+                return ":grupocomp_id_$id";
+            },range(0,count($idPreguntas) - 1));
+            $sqlOpcComp = strtr($sqlOpcComp,array(
+                '_ids_' => implode(",",$paramsOpc)
+            ));
+            $commandOpc = Yii::app()->db->createCommand($sqlOpcComp);
+            foreach ($idPreguntas as $i=>$val) {
+                $commandOpc->bindValue($paramsOpc[$i],$val);
+            }
+            $opcionesComp = $commandOpc->queryAll();
+        } else {
+            $paramsOpc = array();
+            $opcionesComp = array();
         }
-        $opcionesComp = $commandOpc->queryAll();
+        
         $opcionesCompPorGrupoComp = Arrays::from($opcionesComp)->group(function($val){
             return $val["grupocomp_id"];
         })->obtain();
