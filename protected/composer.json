@@ -8,7 +8,8 @@
         "artem-frolov/yii-sass": "dev-master",
         "nineinchnick/yii-usr": "dev-master",
         "shiki/yii-firephp": "dev-master",
-        "anahkiasen/underscore-php": "dev-master"
+        "anahkiasen/underscore-php": "dev-master",
+        "nicmart/Tree": "~0.2"
     },
     "autoload": {
         "files": [

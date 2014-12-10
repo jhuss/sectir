@@ -844,7 +844,7 @@ class ColocarDatosCommand extends CConsoleCommand
             // Comienzo del grupo 23
             array(
                 'enunciado' =>'¿Cómo está compuesto? (para cada integrante, por favor señalar: Identificación, profesión, cargo, correo).?\n Nota: Si usted no tiene comité de Ética deje en blanco',
-                'identificador' => 'preg_comiteetica2_composicion_comp',
+                'identificador' => 'preg_comiteetica2_composicion_co',
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
@@ -1393,9 +1393,10 @@ class ColocarDatosCommand extends CConsoleCommand
             ),
             'infraestructura' => array(
                 'preg_infraestructura_comp',
+                'preg_infraestructura_subq',
                 'preg_infraestructura_activa',
                 'preg_infraestructura_espacios',
-                'preg_infraestructura_equipamiento',
+                'preg_infraestructura_equipamient',
                 'preg_infraestructura_usoinf_comp',
                 'preg_infraestructura_usodoc',
                 'preg_infraestructura_usoinv',
@@ -1411,7 +1412,7 @@ class ColocarDatosCommand extends CConsoleCommand
                 'preg_comiteetica_cual',
             ),
             'comiteetica2' => array(
-                'preg_comiteetica2_composicion_comp',
+                'preg_comiteetica2_composicion_co',
                 'preg_comiteetica2_ident',
                 'preg_comiteetica2_profesion',
                 'preg_comiteetica2_cargo',

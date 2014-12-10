@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7cd1717d3ad5a8c40db08a626521a4d4",
+    "hash": "4dc6cc0935de02569eed8246d94cec92",
     "packages": [
         {
             "name": "anahkiasen/underscore-php",
@@ -280,6 +280,44 @@
             "description": "Compass for scssphp",
             "homepage": "http://leafo.net/scssphp/",
             "time": "2012-08-02 02:04:32"
+        },
+        {
+            "name": "nicmart/tree",
+            "version": "v0.2.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nicmart/Tree.git",
+                "reference": "db8b5818e90da03d50662b5ed91ba19dd98e7c50"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nicmart/Tree/zipball/db8b5818e90da03d50662b5ed91ba19dd98e7c50",
+                "reference": "db8b5818e90da03d50662b5ed91ba19dd98e7c50",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Tree": "src/",
+                    "Tree\\Test": "tests"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolò Martini",
+                    "email": "nicmartnic@gmail.com",
+                    "homepage": "http://nicolo.martini.io"
+                }
+            ],
+            "description": "A basic but flexible php tree data structure and a fluent tree builder implementation.",
+            "time": "2014-06-16 20:34:42"
         },
         {
             "name": "nineinchnick/yii-usr",

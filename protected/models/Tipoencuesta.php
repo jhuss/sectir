@@ -18,6 +18,9 @@
  */
 
 use Underscore\Types\Arrays;
+use Tree\Node\Node;
+
+
 
 class Tipoencuesta extends CActiveRecord
 {
@@ -153,7 +156,7 @@ class Tipoencuesta extends CActiveRecord
         // Fixed query
         //Poner caching (Ya que es pesado)
         $sql = <<<EOF
-SELECT p.enunciado, p.id, p.identificador, p.compuesta, p.tipo, pc.lft, pc.rgt, pc.grupocomp_id, pc.cuenta, pg.grupo_id FROM {{PreguntaGrupo}} pg 
+SELECT p.enunciado, p.id, p.identificador, p.compuesta, p.tipo, pc.lft, pc.rgt, pc.grupocomp_id, pc.cuenta, pg.grupo_id, pg.peso FROM {{PreguntaGrupo}} pg 
 	INNER JOIN {{Grupo}} g ON pg.grupo_id = g.id 
     INNER JOIN {{TipoencuestaGrupo}} teg ON teg.grupo_id = g.id 
     INNER JOIN {{Tipoencuesta}} te ON teg.tipoencuesta_id = te.id 
@@ -168,6 +171,8 @@ EOF;
         $command = Yii::app()->db->createCommand($sql);
         $command->bindValue(":idencuesta",$this->id);
         $preguntas = $command->queryAll();
+        echo "Preguntas\n";
+        CVarDumper::dump($preguntas,3,true);
         $idPreguntas = Arrays::from($preguntas)->pluck('id')->obtain();
         /**
          * Obtenemos opciones
@@ -207,19 +212,73 @@ EOF;
         /**
          * Organizamos preguntas
          */
-        $arrayFinal = Arrays::from($preguntas)->sort(function($val){
-            return array(
-                (int) $val["grupo_id"],
-                (int) $val["grupocomp_id"],
-                (int) $val["lft"]
-            );
-        });
+        $groupFn = function($value)
+        {
+            return $value["grupo_id"];
+        };
+        $groupCompFn = function($value)
+        {
+            return $value["grupocomp_id"];
+        };
 
-        $arrayFinal = $arrayFinal->group(function($val){
-            return $val["grupo_id"] . "-" . (int) $val["grupocomp_id"];
-        });
-        var_dump($arrayFinal->obtain());
-
+        /**
+         * Obtenemos array de preguntas por id
+         */
+        $pesoFn = function ($val)
+        {
+            return $val["peso"];
+        };
+        $arrayPrgsOrdByGrupoId = Arrays::from($preguntas)->group($groupFn)->obtain();
+        $arrayAgrupadoYOrdPeso = array();
+        foreach ($arrayPrgsOrdByGrupoId as $grupo => $array) {    
+            $arrayAgrupadoYOrdPeso[$grupo] = Arrays::from($array)
+                ->sort($pesoFn)
+                ->group($groupCompFn)
+                ->obtain();
+        }
+        foreach ($arrayAgrupadoYOrdPeso as $idGrupo => &$grupoCompleto) {
+            foreach ($grupoCompleto as $idGrupoComp => &$grupoComp) {
+                /**
+                    * Estan indexados por idGrupoCompuesto
+                    * Si no existe este grupo, entonces
+                    * se debe continuar
+                 */
+                if (!$idGrupoComp) {
+                    continue;
+                }
+                $arrayTemp = Arrays::from($grupoComp)->sort(function($val){
+                    return $val["lft"];
+                })->each(function($val){
+                    return new Node($val);
+                })->group(function($val){
+                    return $val->getValue()["cuenta"];
+                })->obtain();
+                //echo "Array dumper al comenzar\n";
+                //CVarDumper::dump($arrayTemp,6, true);         
+                foreach ($arrayTemp as $grupo=>$elGrupo) {
+                    /**
+                        * No me interesa agregar un padre
+                        * a un valor con cuenta 1
+                     */
+                    if($grupo == 1)
+                        continue;
+                    foreach ($elGrupo as $preg) { 
+                        $pregVal = $preg->getValue();
+                        $findParent = function($value) use($pregVal){
+                            $par = $value->getValue();
+                            return $pregVal["lft"] > $par["lft"] && $pregVal["rgt"] < $par["rgt"];
+                        };
+                        $matching = Arrays::from($arrayTemp[$pregVal["cuenta"] - 1])
+                            ->filter($findParent)
+                            ->first()
+                            ->obtain();
+                        $matching->addChild($preg);
+                    }
+                }
+                $grupoComp = TreeUtils::getTreeArray(Arrays::from($arrayTemp)->first()->obtain());
+                //CVarDumper::dump($grupoComp,6, true);         
+            }
+        }
+        CVarDumper::dump($arrayAgrupadoYOrdPeso,10,true);
     }
-    
 }

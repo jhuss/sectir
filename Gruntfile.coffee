@@ -41,6 +41,8 @@ module.exports = (grunt) ->
                 command: "protected/yiic crearadmin"
             createAuthRoles:
                 command: "protected/yiic usr createAuthItems"
+            createCtags:
+                command: "ctags-patched -f php.tags -R --fields=+dfnaitmS --languages=php"
     grunt.loadNpmTasks 'grunt-bower-concat'
     grunt.loadNpmTasks 'grunt-contrib-copy'
     grunt.loadNpmTasks 'grunt-contrib-uglify'
@@ -55,6 +57,7 @@ module.exports = (grunt) ->
         "shell:createAuthRoles"
         "shell:colocarDatos"
     ]
+    grunt.registerTask "ctags", "shell:createCtags"
     grunt.registerTask "install", "bower:install"
     grunt.registerTask "default", [
         "bower_concat:all", "uglify:all" , "copy:main"
