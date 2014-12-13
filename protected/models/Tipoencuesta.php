@@ -304,9 +304,9 @@ EOF;
                             return $pregVal["lft"] > $par["lft"] && $pregVal["rgt"] < $par["rgt"];
                         };
                         $matching = Arrays::from($arrayTemp[$pregVal["cuenta"] - 1])
-                            ->filter($findParent)
-                            ->first()
-                            ->obtain();
+                        ->filter($findParent)
+                        ->first()
+                        ->obtain();
                         $matching->addChild($preg);
                     }
                 }
@@ -314,6 +314,39 @@ EOF;
                 $grupoComp = $temp;
             }
         }
-        return $arrayAgrupadoYOrdPeso;
+        unset($val);
+        $conGrupoComp = function($array2){
+            if(isset($array2["grupocomp_id"]))
+                    return true;
+            return false;
+        };
+        ;
+        xdebug_start_trace("/tmp/debug.log");
+        $arrayNuevo = array();
+        foreach ($arrayAgrupadoYOrdPeso as $z=>$variableX) {
+            //$arrayNuevo[$z] = array();
+            //$arrayNuevo[$z]["namespace"] = "namespace_$z";
+            $dummyArr = $variableX;
+            if (array_filter($dummyArr,$conGrupoComp)) {
+                foreach ($variableX as $i=>$valorGrupo) {
+                    $arrayNuevo[] = array(
+                        'type' => 'table',
+                        'values' => $valorGrupo,
+                        'namespace' => "namespace_$z\_$i",
+                    );
+                }
+            } else {
+                $arrayNuevo[] = array(
+                    'values' => Arrays::from($variableX)->first()->obtain(),
+                    'type' => 'input',
+                    'namespace' => "namespace_$z",
+                );
+            }
+                    
+            
+        }
+        xdebug_stop_trace();
+        //CVarDumper::dump($arrayNuevo,5,true);
+        return array_values($arrayNuevo);
     }
 }
