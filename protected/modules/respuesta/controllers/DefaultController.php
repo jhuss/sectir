@@ -9,10 +9,12 @@ class DefaultController extends Controller
             'users' => array('@')
         );
     }
-	public function actionIndex()
+	public function actionIndex($idTE=1)
     {
         Yii::app()->clientScript->registerPackage("sectir-input");
-		$this->render('index');
+        $this->render('index',array(
+            'idTE' => $idTE,
+        ));
     }
     public function actionPreguntas($idTE)
     {

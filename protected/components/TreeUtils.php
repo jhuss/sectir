@@ -10,7 +10,7 @@ use Underscore\Types\Arrays;
 class TreeUtils
 {
     /**
-     * Recorre arbo en prefijo
+     * Recorre arbol en prefijo
      * y luego lo retorna
      *
      * @return void
@@ -22,9 +22,14 @@ class TreeUtils
         }
         $value = $node->getValue();     
         $children = $node->getChildren();
-        $array = array($value);
+        $array = $value; 
+        /**
+        * Se coloca array vacío para evitar que
+        * Echo CJSON::encode mande un array en lugar de un objeto
+        * en getPreguntas
+         */
+        $array["children"] = array();
         if ($children) {
-            $array["children"] = array();
             foreach ($children as $child) {
                 $array["children"][] = static::getTreeArrayInternal($child);
             }

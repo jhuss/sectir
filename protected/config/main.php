@@ -89,7 +89,7 @@ $arrayConfig = array(
                 ),
                 'sectir-input' => array(
                     'basePath' => "webroot.js.sectir-input",
-                    'js' => array('sectir-input.min.js'),
+                    'js' => array('sectir-input.js'),
                     'depends' => array("angular"),
                 ),
 			),

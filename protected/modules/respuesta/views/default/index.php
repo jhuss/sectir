@@ -5,13 +5,21 @@ $this->breadcrumbs=array(
 	$this->module->id,
 );
 ?>
-<h1><?php echo $this->uniqueId . '/' . $this->action->id; ?></h1>
+<div ng-app="sectirRespuestaApp">
+        <div sectir-app>
+        </div>
+</div>
+<?php
 
-<p>
-This is the view content for action "<?php echo $this->action->id; ?>".
-The action belongs to the controller "<?php echo get_class($this); ?>"
-in the "<?php echo $this->module->id; ?>" module.
-</p>
-<p>
-You may customize this page by editing <tt><?php echo __FILE__; ?></tt>
-</p>
+$url = addslashes(Yii::app()->createAbsoluteUrl("respuesta/default/preguntas",array(
+    'idTE' => $idTE
+))); 
+
+$script = <<<EOF
+    console.log(sectirRApp);
+    sectirRApp.config(["sectirRespuestaConfigProviderProvider", function(sectirRespuestaConfig){
+    sectirRespuestaConfig.set("$url");
+}]);
+EOF;
+
+Yii::app()->clientScript->registerScript("sectirRespuesta",$script,CClientScript::POS_END);

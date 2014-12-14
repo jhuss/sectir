@@ -205,8 +205,9 @@ EOF;
         foreach ($preguntas as &$val) {
             if (array_key_exists($val["id"],$opcionesPorPreguntaID)) {
                 $opcs = $opcionesPorPreguntaID[$val["id"]];
-                $val["ng-options"] = 
-                    "o for o in {" . 
+                $val["options"] = array();
+                $val["options"]["ng-options"] = 
+                    "value for (key, value) in {" . 
                     implode(",",array_map($getOptionFn,
                        $opcs)) 
                     . "}";
@@ -217,7 +218,7 @@ EOF;
          * Obtenemos opciones compuestas
          */
         $sqlOpcComp = <<<EOF
-SELECT oc.id, oc.enunciado, goc.grupocomp_id FROM {{GrupocompOpcioncomp}} goc INNER JOIN {{Opcioncomp}} oc ON goc.opcioncomp_id = oc.id WHERE goc.grupocomp_id IN (_ids_)
+SELECT oc.id, oc.enunciado AS enunciadocomp, goc.grupocomp_id FROM {{GrupocompOpcioncomp}} goc INNER JOIN {{Opcioncomp}} oc ON goc.opcioncomp_id = oc.id WHERE goc.grupocomp_id IN (_ids_)
 EOF;
         $idGrupoComps = Arrays::from($preguntas)->pluck('grupocomp_id')->obtain();
         if ($idPreguntas) {
@@ -273,6 +274,7 @@ EOF;
                 ->group($groupCompFn)
                 ->obtain();
         }
+        $arrayDeOpcionesCompuestas = array();
         foreach ($arrayAgrupadoYOrdPeso as $idGrupo => &$grupoCompleto) {
             foreach ($grupoCompleto as $idGrupoComp => &$grupoComp) {
                 /**
@@ -295,9 +297,10 @@ EOF;
                         * No me interesa agregar un padre
                         * a un valor con cuenta 1
                      */
-                    if($grupo == 1)
+                    if($grupo == 1){
                         continue;
-                    foreach ($elGrupo as $preg) { 
+                    }
+                    foreach ($elGrupo as $preg) {
                         $pregVal = $preg->getValue();
                         $findParent = function($value) use($pregVal){
                             $par = $value->getValue();
@@ -324,15 +327,14 @@ EOF;
         xdebug_start_trace("/tmp/debug.log");
         $arrayNuevo = array();
         foreach ($arrayAgrupadoYOrdPeso as $z=>$variableX) {
-            //$arrayNuevo[$z] = array();
-            //$arrayNuevo[$z]["namespace"] = "namespace_$z";
             $dummyArr = $variableX;
             if (array_filter($dummyArr,$conGrupoComp)) {
                 foreach ($variableX as $i=>$valorGrupo) {
                     $arrayNuevo[] = array(
                         'type' => 'table',
                         'values' => $valorGrupo,
-                        'namespace' => "namespace_$z\_$i",
+                        'namespace' => "namespace_$z" . "_$i",
+                        
                     );
                 }
             } else {

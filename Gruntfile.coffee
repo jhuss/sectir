@@ -28,9 +28,11 @@ module.exports = (grunt) ->
 
         copy:
             main:
-                src: "tmp/sectir-input.min.js"
-                dest: "js/sectir-input/sectir-input.min.js"
+                src: "tmp/sectir-input.js"
+                dest: "js/sectir-input/sectir-input.js"
         shell:
+            deleteAssets:
+                command: "rm assets/* -rf"
             migrateDown:
                 command: "echo 'yes' | protected/yiic migrate down 10000"
             migrateUp:
@@ -57,9 +59,10 @@ module.exports = (grunt) ->
         "shell:createAuthRoles"
         "shell:colocarDatos"
     ]
+    grunt.registerTask "assets", "shell:deleteAssets"
     grunt.registerTask "ctags", "shell:createCtags"
     grunt.registerTask "install", "bower:install"
     grunt.registerTask "default", [
-        "bower_concat:all", "uglify:all" , "copy:main"
+        "assets", "bower_concat:all", "uglify:all" , "copy:main"
     ]
     grunt.registerTask "all", ["install", "default"]

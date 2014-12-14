@@ -15,6 +15,7 @@
     "tests"
   ],
   "dependencies": {
-      "sectir-table": "asdrubalivan/sectir-table"
+      "sectir-table": "asdrubalivan/sectir-table",
+      "sectir-respuesta-app": "asdrubalivan/sectir-respuesta-app"
   }
 }

@@ -1,4 +1,5 @@
 <?php
+ 
 
 /**
  * Class ColocarDatosCommand
@@ -48,7 +49,7 @@ class ColocarDatosCommand extends CConsoleCommand
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
-                'tipo' => 'list',
+                'tipo' => 'select',
                 'compuesta' => false,
             ),
             array(
@@ -75,7 +76,7 @@ class ColocarDatosCommand extends CConsoleCommand
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
-                'tipo' => 'list',
+                'tipo' => 'select',
                 'compuesta' => false,
             ),
             array(
@@ -84,7 +85,7 @@ class ColocarDatosCommand extends CConsoleCommand
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
-                'tipo' => 'list',
+                'tipo' => 'select',
                 'compuesta' => false,
             ),
             //FIN DE GRUPO 1
@@ -189,7 +190,7 @@ class ColocarDatosCommand extends CConsoleCommand
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
-                'tipo' => 'list',
+                'tipo' => 'select',
                 'compuesta' => true,
             ), 
             array(
@@ -198,7 +199,7 @@ class ColocarDatosCommand extends CConsoleCommand
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
-                'tipo' => 'list',
+                'tipo' => 'select',
                 'compuesta' => true,
             ),
             array(
@@ -243,7 +244,7 @@ class ColocarDatosCommand extends CConsoleCommand
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
-                'tipo' => 'list',
+                'tipo' => 'select',
                 'compuesta' => true,
             ), 
             array(
@@ -279,7 +280,7 @@ class ColocarDatosCommand extends CConsoleCommand
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
-                'tipo' => 'list',
+                'tipo' => 'select',
                 'compuesta' => true,
             ), 
             array(
@@ -288,7 +289,7 @@ class ColocarDatosCommand extends CConsoleCommand
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
-                'tipo' => 'list',
+                'tipo' => 'select',
                 'compuesta' => true,
             ),
             //Fin del grupo  4
@@ -618,7 +619,7 @@ class ColocarDatosCommand extends CConsoleCommand
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
-                'tipo' => 'list',
+                'tipo' => 'select',
                 'compuesta' => true,
             ), 
             array(
@@ -627,7 +628,7 @@ class ColocarDatosCommand extends CConsoleCommand
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
-                'tipo' => 'list',
+                'tipo' => 'select',
                 'compuesta' => true,
             ), 
             array(
@@ -676,7 +677,7 @@ class ColocarDatosCommand extends CConsoleCommand
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
-                'tipo' => 'list',
+                'tipo' => 'select',
                 'compuesta' => false,
             ), 
             array(
@@ -696,7 +697,7 @@ class ColocarDatosCommand extends CConsoleCommand
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
-                'tipo' => 'list',
+                'tipo' => 'select',
                 'compuesta' => false,
             ), 
             array(
@@ -743,7 +744,7 @@ class ColocarDatosCommand extends CConsoleCommand
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
-                'tipo' => 'list',
+                'tipo' => 'select',
                 'compuesta' => true,
             ), 
             array(
@@ -752,7 +753,7 @@ class ColocarDatosCommand extends CConsoleCommand
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
-                'tipo' => 'list',
+                'tipo' => 'select',
                 'compuesta' => true,
             ), 
             array(
@@ -790,7 +791,7 @@ class ColocarDatosCommand extends CConsoleCommand
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
-                'tipo' => 'list',
+                'tipo' => 'select',
                 'compuesta' => false,
             ),
             array(
@@ -799,7 +800,7 @@ class ColocarDatosCommand extends CConsoleCommand
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
-                'tipo' => 'list',
+                'tipo' => 'select',
                 'compuesta' => false,
             ),
             array(
@@ -808,7 +809,7 @@ class ColocarDatosCommand extends CConsoleCommand
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
-                'tipo' => 'list',
+                'tipo' => 'select',
                 'compuesta' => false,
             ),
             array(
@@ -817,7 +818,7 @@ class ColocarDatosCommand extends CConsoleCommand
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
-                'tipo' => 'list',
+                'tipo' => 'select',
                 'compuesta' => false,
             ),
             // Fin del grupo 21
@@ -828,7 +829,7 @@ class ColocarDatosCommand extends CConsoleCommand
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
-                'tipo' => 'list',
+                'tipo' => 'select',
                 'compuesta' => false,
             ),
             array(
@@ -949,7 +950,7 @@ class ColocarDatosCommand extends CConsoleCommand
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
-                'tipo' => 'list',
+                'tipo' => 'select',
                 'compuesta' => false,
             ),
             array(
