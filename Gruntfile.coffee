@@ -44,15 +44,27 @@ module.exports = (grunt) ->
             createAuthRoles:
                 command: "protected/yiic usr createAuthItems"
             createCtags:
-                command: "ctags-patched -f php.tags -R --fields=+dfnaitmS --languages=php"
+                command: "ctags-patched -f tags -R --fields=+dfnaitmS --languages=php"
+        confirm:
+            putdatabase:
+                options:
+                    question: '''
+                    ADVERTENCIA: ESTE COMANDO BORRARÁ EL CONTENIDO
+                    QUE ESTÁ ACTUALMENTE EN LA BASE DE DATOS
+                    ¿DESEA CONTINUAR? (Escriba "Si" para confirmar)
+                    '''
+                    continue: (answer) ->
+                        answer.toLowerCase() is "si"
     grunt.loadNpmTasks 'grunt-bower-concat'
     grunt.loadNpmTasks 'grunt-contrib-copy'
     grunt.loadNpmTasks 'grunt-contrib-uglify'
     grunt.loadNpmTasks 'grunt-shell'
+    grunt.loadNpmTasks 'grunt-confirm'
     grunt.loadNpmTasks 'grunt-bower-task'
     
     #Tasks
     grunt.registerTask "putdatabase", [
+        "confirm:putdatabase"
         "shell:migrateDown"
         "shell:migrateUp"
         "shell:crearAdmin"

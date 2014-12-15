@@ -1147,7 +1147,7 @@ module.exports = (function () {
   });
 
   sectirRApp.directive('sectirApp', [
-    "$compile", function($compile) {
+    "$compile", "sectirDataFactory", function($compile, SDF) {
       var isCompiled;
       isCompiled = false;
       return {
@@ -1157,7 +1157,9 @@ module.exports = (function () {
             var successFn;
             $scope.jsonData = false;
             $scope.datos = false;
-            $scope.finalFunc = function() {};
+            $scope.finalFunc = function() {
+              return console.log(SDF.data);
+            };
             successFn = function(data) {
               var arrayDatos, key, value, _ref;
               $scope.jsonData = data;
@@ -1185,7 +1187,7 @@ module.exports = (function () {
         ],
         link: function(scope, element, attrs, ctrl) {
           var elm, funcCompile;
-          elm = angular.element('<div sectir-pager\n    values="datos"\n    finalizeFunc ="finalFunc"\n    settings = "settings"\n</div>');
+          elm = angular.element('<div sectir-pager\n    values="datos"\n    finalizeFunc ="finalFunc()"\n    settings = "settings"\n</div>');
           funcCompile = function() {
             var compiled;
             if (!isCompiled && scope.datos) {
