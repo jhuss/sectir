@@ -141,7 +141,8 @@ $arrayConfig = array(
 		'defaultTitle' => 'Sistema Estadístico en Ciencia, Tecnología e Innovación del Estado Trujillo',
 		'adminUser' => $ADMIN_USER,
 		'adminEmail' => 'webmaster@example.com',
-	),
+	
+    )
 );
 
 if($GII_ACTIVATED)
@@ -152,6 +153,10 @@ if($GII_ACTIVATED)
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','::1')
     );
+}
+
+if (constant('YII_DEBUG')) {
+    $arrayConfig["components"]["db"]["enableParamLogging"] = true;
 }
 
 return $arrayConfig;

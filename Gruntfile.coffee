@@ -39,6 +39,8 @@ module.exports = (grunt) ->
                 command: "echo 'yes' | protected/yiic migrate up"
             colocarDatos:
                 command: "protected/yiic colocardatos"
+            crearEncuesta:
+                command: "protected/yiic crearencuesta"
             crearAdmin:
                 command: "protected/yiic crearadmin"
             createAuthRoles:
@@ -70,6 +72,7 @@ module.exports = (grunt) ->
         "shell:crearAdmin"
         "shell:createAuthRoles"
         "shell:colocarDatos"
+        "shell:crearEncuesta"
     ]
     grunt.registerTask "assets", "shell:deleteAssets"
     grunt.registerTask "ctags", "shell:createCtags"

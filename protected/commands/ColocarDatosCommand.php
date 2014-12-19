@@ -3370,7 +3370,29 @@ CARMONA)',
                 var_dump($commandPreguntaComp->execute());
             }
         }
-        
+
+        //Insertamos preguntas requeridas
+        //TODO poner preguntas que faltan
+        $sqlPreguntasRequeridas = <<<EOF
+INSERT INTO {{Requerimientos}} (pregunta_id, tipo_requerimiento, tipoencuesta_id) (SELECT p.id AS pregunta_id, :tiporequerimiento AS tipo_requerimiento, t.id FROM {{Pregunta}} p INNER JOIN {{Tipoencuesta}} t ON t.identificador = :tipoencuesta_id WHERE p.identificador = :pregunta_id)
+EOF;
+        $identificadorRequeridas = array(
+            'preg_datos_nom_entr',
+            'preg_datos_universidad_pertenece',
+            'preg_datos_ano_fundacion',
+            'preg_datos_universidad_ubicacion',
+            'preg_datos_municipio',
+            'preg_datos_caracterpublicoprivado'
+        );
+        $commandRequeridas = Yii::app()->db->createCommand($sqlPreguntasRequeridas);
+        foreach ($identificadorRequeridas as $v) {
+            echo "Ejecutando comando requeridas para $v\n";
+            $commandRequeridas->execute(array(
+                ':pregunta_id' => $v,
+                ':tiporequerimiento' => 'requerida',
+                ':tipoencuesta_id' => 'tipoencuesta_uni',//TODO poner otros tipos de encuesta
+            ));
+        }
         
     }
 

@@ -207,7 +207,7 @@ EOF;
                 $opcs = $opcionesPorPreguntaID[$val["id"]];
                 $val["options"] = array();
                 $val["options"]["ng-options"] = 
-                    "value for (key, value) in {" . 
+                    "key as value for (key, value) in {" . 
                     implode(",",array_map($getOptionFn,
                        $opcs)) 
                     . "}";

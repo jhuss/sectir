@@ -11,16 +11,6 @@ $this->breadcrumbs=array(
 </div>
 <?php
 
-$urlComienzo = Yii::app()->createAbsoluteUrl("respuesta/default/preguntas",array(
-    'idTE' => $idTE
-)); 
-
-$urlPost = Yii::app()->createAbsoluteUrl("respuesta/default/postrespuesta");
-
-//TODO Esto se hace por motivos de pruebas, el año debe venir de encuesta
-$anoFinal = 2014;
-$anoComienzo = $anoFinal - 12;
-
 $objeto = CJSON::encode(array(
     'anoFinal' => $anoFinal,
     'anoComienzo' => $anoComienzo,

@@ -22,8 +22,34 @@
  * @property Respuestanum[] $respuestanums
  * @property Respuestaopc[] $respuestaopcs
  */
+use Underscore\Types\Arrays;
+
 class Encuesta extends CActiveRecord
 {
+    /**
+     * Número de años a ser encuestados
+     */
+    const ANOS_ENCUESTADOS = 12;
+    /**
+     * Cola de preguntas
+     */
+    protected $_colaRespuestas = array();    
+    /**
+     * Cola de preguntas abiertas
+     */
+    protected $_colaRespuestasAbiertas = array();
+    /**
+     * Cola de preguntas opciones
+     */
+    protected $_colaRespuestasOpc = array();
+    /**
+     * Cola de preguntas numericas
+     */
+    protected $_colaRespuestasNum = array();
+    /**
+     * Cola de preguntas Anuales
+     */
+    protected $_colaRespuestasAno = array();
 	/**
 	 * @return string the associated database table name
 	 */
@@ -40,10 +66,11 @@ class Encuesta extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('tipoencuesta_id, enunciado, identificador', 'required'),
+			array('tipoencuesta_id, enunciado, ano, identificador', 'required'),
             array('tipoencuesta_id', 'exist', 'allowEmpty' => false, 'className' => 'Tipoencuesta', 'attributeName' => 'id'),
             array('enunciado', 'length', 'max'=>256),
             array('identificador', 'unique'),
+            array('ano', 'numerical', 'min' => 2014),
 			array('identificador', 'length', 'max'=>32),
 			array('fecha_inicial, fecha_final, actualizado_en', 'safe'),
             array('fecha_inicial, fecha_final', 'date'),
@@ -146,4 +173,393 @@ class Encuesta extends CActiveRecord
            ),
         );
     }
+    public function obtenerRespuestasEncuesta($entradas)
+    {
+        foreach ($entradas as $entrada) {
+            if (isset($entrada["values"])) {
+                if ($entrada["hasSubQ"] === false) {
+                    foreach ($entrada["values"] as $value) {
+                        foreach ($value as $indice=>$internalValue) {
+                            $this->meterColaRespuestas($indice,$internalValue);
+                        }
+                    }
+                }
+                else {
+                    foreach ($entrada["values"] as $indice=>$grupoRespuestas) {
+                        foreach ($grupoRespuestas as $indiceSubQ=>$value) {
+                            $this->meterColaRespuestas($indice,$value,$indiceSubQ);
+                        }
+                    }
+                }
+            } else {
+                foreach ($entrada as $indice=>$valorEntrada) {
+                    $this->meterColaRespuestas($indice,$valorEntrada);
+                }
+            }
+        }
+    }
+    public function validarColaPreguntas()
+    {
+        //Regexes Numeros
+        $numRealRegex = '/^\s*[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?\s*$/';
+        //Cola de errores
+        $errores = array();
+        //Creamos validadores
+        $emailValidator = new CEmailValidator;
+        $numberValidator = new CNumberValidator;
+        //Creamos función para crear parametros
+        $paramFunc = function($range){
+            $params = array();
+            for ($i = 0; $i < $range; $i++) {
+                $params[] = ":param_$i";
+            }
+            return implode(", ",$params);
+        };
+        //Funcion para agrupar por pregunta
+        $preguntaIdFn = function($val){
+            return $val["pregunta_id"];
+        };
+        //Obtenemos preguntas
+        $sqlPreguntas = <<<EOF
+SELECT p.id, p.tipo, p.enunciado, p.identificador FROM {{Pregunta}} p 
+	INNER JOIN {{PreguntaGrupo}} pg ON pg.pregunta_id = p.id 
+    INNER JOIN {{Grupo}} g ON pg.grupo_id = g.id
+    INNER JOIN {{TipoencuestaGrupo}} tg ON tg.grupo_id = g.id
+WHERE tg.tipoencuesta_id = :tipoencuestaid
+EOF;
+        $commandPreguntas = Yii::app()->db->createCommand($sqlPreguntas);
+        $commandPreguntas->bindValue(":tipoencuestaid", $this->tipoencuesta_id);
+        $preguntasSinIndexar = $commandPreguntas->queryAll();
+        $preguntasIndexadasPorPID = array();
+        foreach ($preguntasSinIndexar as $pregunta) {
+            $preguntasIndexadasPorPID[$pregunta["id"]] = $pregunta;
+        }
+        //Fin de obtención de preguntas
+        //Obtencion de opciones
+        $sqlOpcionesSinProc = <<<EOF
+SELECT o.id, o.enunciado, o.identificador, po.pregunta_id FROM {{Opcion}} o 
+	INNER JOIN {{PreguntaOpc}} po ON o.id = po.opcion_id
+WHERE po.pregunta_id IN (_ids_)
+EOF;
+        $sqlOpciones = strtr($sqlOpcionesSinProc,array(
+            '_ids_' => $paramFunc(count($preguntasSinIndexar)),
+        ));
+        $opcionesCommand = Yii::app()->db->createCommand($sqlOpciones);
+        foreach ($preguntasSinIndexar as $i=>$preg) {
+            $opcionesCommand->bindValue(":param_$i",$preg['id']);
+        }
+        $opcionesSinProcesar = $opcionesCommand->queryAll();
+        $opcionesPorPregunta = Arrays::from($opcionesSinProcesar)
+            ->group($preguntaIdFn)
+            ->obtain();
+        //Fin de obtención de opciones
+        //Obtencion de opciones Compuestas
+        $sqlOpcionesCompSinProc = <<<EOF
+SELECT o.id, o.enunciado, o.identificador, pc.pregunta_id FROM {{Opcioncomp}} o  
+	INNER JOIN {{GrupocompOpcioncomp}} gop ON gop.opcioncomp_id = o.id
+    INNER JOIN {{Preguntacompuesta}} pc ON pc.grupocomp_id = gop.grupocomp_id
+WHERE pc.pregunta_id IN (_ids_)
+EOF;
+        $sqlOpcionesComp = strtr($sqlOpcionesCompSinProc,array(
+            '_ids_' => $paramFunc(count($preguntasSinIndexar)),
+        ));
+        $opcionesCompCommand = Yii::app()->db->createCommand($sqlOpcionesComp);
+        foreach ($preguntasSinIndexar as $i=>$preg) {
+            $opcionesCompCommand->bindValue(":param_$i",$preg['id']);
+        }
+        $opcionesCompSinProcesar = $opcionesCompCommand->queryAll();
+        $opcionesCompPorPregunta = Arrays::from($opcionesCompSinProcesar)
+            ->group($preguntaIdFn)
+            ->obtain();
+        //Fin de obtención de opciones Comp
+        //Obtenemos preguntas Requeridas
+        $sqlPreguntasRequeridasSinProc = <<<EOF
+SELECT r.pregunta_id, r.tipo_requerimiento, r.datos FROM {{Requerimientos}} r WHERE r.pregunta_id IN (_ids_) 
+EOF;
+        $sqlPreguntasRequeridas = strtr($sqlPreguntasRequeridasSinProc, array(
+            '_ids_' => $paramFunc(count($preguntasSinIndexar)),
+        ));
+        $commandRequeridas = Yii::app()->db->createCommand($sqlPreguntasRequeridas);
+        foreach ($preguntasSinIndexar as $i=>$preg) {
+            $commandRequeridas->bindValue(":param_$i",$preg["id"]);
+        }
+        $requerimientos = $commandRequeridas->queryAll();
+        $requerimientosPorPregunta = Arrays::from($requerimientos)
+            ->group($preguntaIdFn)
+            ->obtain();
+        //Fin de preguntas requeridas
+        //Agrupamos datos
+        foreach ($preguntasSinIndexar as $i=>$preg) {
+            $commandRequeridas->bindValue(":param_$i",$preg['id']);
+        }
+        $preguntasRespondidas = array();
+        foreach ($this->_colaRespuestas as &$respuesta) {
+            //En caso de que la respuesta sea parte de un año, extraer indice de pregunta
+            if (strpos("-",$respuesta["idPregunta"]) !== false) {
+                $anoYPregunta = explode("-",$respuesta["idPregunta"]);
+                $idPregunta = $anoYPregunta[0]; //El id está en la primera parte de la pregunta
+            } else {
+                $idPregunta = $respuesta["idPregunta"];
+            }
+            if ($respuesta["valor"]) {
+                $preguntasRespondidas[] = $idPregunta;
+            }
+            if (isset($preguntasIndexadasPorPID[$idPregunta])) {
+                $preguntaActual = $preguntasIndexadasPorPID[$respuesta["idPregunta"]];
+            }
+            else {
+                $errores[] = "Pregunta no definida";
+                continue;
+            }
+            if ($respuesta["ano"] !== false) {
+                if ($respuesta["ano"] > $this->ano 
+                    || $respuesta["ano"] < ($this->ano - 12)) {
+                        $errores[] = "Año inválido en " . $preguntaActual["enunciado"];
+                    }
+            }
+            switch ($preguntaActual["tipo"]) {
+                case 'email':
+                    $respuesta["tipo"] = "email";
+                    $valido = 
+                        $emailValidator->validateValue($preguntaActual["valor"]);
+                    if (!$valido) {
+                        $errores[] = "El email " . $respuesta["valor"] . " en " . $preguntaActual["enunciado"] . " no es valido";
+                    } 
+                    break;
+                case 'number':
+                    $respuesta["tipo"] = "number";
+                    $valido =
+                        preg_match($numRealRegex,$respuesta["valor"]);
+                    if (!$valido) {
+                        $errores[] = "El número " . $respuesta["valor"] . " en " . $preguntaActual["enunciado"] . " no es valido";
+                    }
+                    break;
+                case 'select':
+                    $respuesta["tipo"] = "select";
+                    if (isset($opcionesPorPregunta[$preguntaActual['id']])) {
+                        $valido = false;
+                        foreach ($opcionesPorPregunta[$preguntaActual["id"]] as $opcion) {
+                            if ($opcion["identificador"] == $respuesta["valor"]) {
+                                $valido = true;
+                                break;
+                            }
+                        }
+                    }
+                    else {
+                        $valido = false;
+                    }
+                    if (!$valido) {
+                        if(isset($opcion["enunciado"]))
+                            $errores[] = 
+                                "La opcion " . $opcion["enunciado"] . " es inválida";
+                        else {
+                            $errores[] = "Opción invalida para pregunta " . $preguntaActual['id'];
+                        }
+                    }
+                    break;
+                default:
+                    $respuesta["tipo"] = "abierta";
+                    break;
+            }
+            //TODO Aquí tal vez hay errores
+            if (isset($respuesta["indiceSubQ"])) {
+                $valido = false;
+                if (isset($opcionesCompPorPregunta[$preguntaActual["id"]])) {
+                    foreach ($opcionesCompPorPregunta[$preguntaActual["id"]] as $opccomp) {
+                        if ($opccomp["id"] == $respuesta["indiceSubQ"]) {
+                            $valido = true;
+                            break;
+                        }
+                    }
+                }
+                if (!$valido) {
+                    $errores[] = 
+                        "Respuesta inválida en [" 
+                        . $preguntaActual["enunciado"] 
+                        . "]";
+                }
+            }
+        }
+        $preguntasRespondidas = array_unique($preguntasRespondidas);
+        foreach ($requerimientosPorPregunta as $idPregunta => $requerimientosDePreg) {
+            foreach ($requerimientosDePreg as $req) {
+                switch ($req["tipo_requerimiento"]) {
+                    case 'requerida':
+                        $valido = in_array($idPregunta,$preguntasRespondidas);
+                        if (!$valido) {
+                            $errores[] = "Pregunta " . $preguntasIndexadasPorPID[$idPregunta]["enunciado"] . " es requerida";
+                        }
+                        break;
+                    
+                    default:
+                        
+                        break;
+                }
+            }
+        }
+        return $errores;
+    }
+    public function meterColaRespuestas($indice,$valor,$indiceSubQ=false)
+    {
+        $trimmedIndice = trim((string) $indice);
+        $tieneAno = strpos($trimmedIndice,"-") !== false;
+        if ($tieneAno) {
+            $explodedArray = explode("-",$trimmedIndice);
+            $idPregunta = $explodedArray[0];
+            $ano = $explodedArray[1];
+        }
+        else {
+            $idPregunta = $trimmedIndice;
+            $ano = false;
+        }
+        $arrayPregunta = array(
+            'valor' => $valor,
+            'idPregunta' => $idPregunta,
+            'ano' => $ano,
+        );
+        if ($indiceSubQ !== false) {
+            $arrayPregunta["indiceSubQ"] = trim((string) $indiceSubQ);
+        }
+        $this->_colaRespuestas[] = $arrayPregunta;
+    }
+    public function meterColaDeInsercion()
+    {
+        foreach ($this->_colaRespuestas as $respuesta) {
+            if ($respuesta["ano"] === false) {
+                switch ($respuesta["tipo"]) {
+                    case 'email':
+                    case 'abierta':
+                        $this->_colaRespuestasAbiertas[] = $respuesta;
+                        break;
+                    case 'number':
+                        $this->_colaRespuestasNum[] = $respuesta;
+                        break;
+                    case 'select':
+                        $this->_colaRespuestasOpc[] = $respuesta;
+                        break;
+                    default:
+                        $this->_colaRespuestasAbiertas[] = $respuesta;      
+                        break;
+                }
+            } else {
+                $this->_colaRespuestasAno[] = $respuesta;
+            }
+        }        
+    }
+    protected function insertarPreguntasAbiertas()
+    {
+        $valoresAInsertar = array();
+        foreach ($this->_colaRespuestasAbiertas as $respuesta) {
+            $valoresAInsertar[] = array(
+                'valor' => $respuesta["valor"],
+                'user_id' => Yii::app()->user->id,
+                'pregunta_id'  => $respuesta["idPregunta"],
+                'encuesta_id' => $this->id,              
+                'opcioncomp_id' => 
+                    isset($respuesta["indiceSubQ"]) ? $respuesta["indiceSubQ"] : null,
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+            );
+        }
+        $command = Yii::app()
+            ->db
+            ->commandBuilder
+            ->createMultipleInsertCommand("{{Respuestaabierta}}",$valoresAInsertar);
+        return $command->execute();
+    }
+    protected function insertarPreguntasNum()
+    {
+        $valoresAInsertar = array();
+        foreach ($this->_colaRespuestasNum as $respuesta) {
+            $valoresAInsertar[] = array(
+                'valor' => $respuesta["valor"],
+                'user_id' => Yii::app()->user->id,
+                'pregunta_id'  => $respuesta["idPregunta"],
+                'encuesta_id' => $this->id,              
+                'opcioncomp_id' => 
+                    isset($respuesta["indiceSubQ"]) ? $respuesta["indiceSubQ"] : null,
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+            );
+        }
+        $command = Yii::app()
+            ->db
+            ->commandBuilder
+            ->createMultipleInsertCommand("{{Respuestanum}}",$valoresAInsertar);
+        return $command->execute();
+    }
+    protected function insertarPreguntasOpc()    
+    {
+        //Obtenemos valores de estas opciones
+        $valoresRespuesta = Arrays::from($this->_colaRespuestasOpc)
+            ->pluck("valor")
+            ->unique()
+            ->obtain();
+        $opcionesSinIndexar = Yii::app()->db
+            ->createCommand()
+            ->select(array("id","identificador"))
+            ->from("{{Opcion}}")
+            ->where(array("in",'identificador',$valoresRespuesta))
+            ->queryAll();
+        $opcionesIndexadasPorIdentificador = Arrays::from($opcionesSinIndexar)
+            ->group(function($val){
+                return $val["identificador"];
+            })->obtain();
+        //Insertamos
+        $valoresAInsertar = array();
+        foreach ($this->_colaRespuestasOpc as $respuesta) {
+            if (isset($opcionesIndexadasPorIdentificador[$respuesta["valor"]])) {
+                $opcion_id =
+                    $opcionesIndexadasPorIdentificador[$respuesta["valor"]][0]["id"];
+            } else {
+                throw new CException("Error al insertar opciones");
+            }
+            $valoresAInsertar[] = array(
+                'opcion_id' => $opcion_id,
+                'user_id' => Yii::app()->user->id,
+                'pregunta_id'  => $respuesta["idPregunta"],
+                'encuesta_id' => $this->id,              
+                'opcioncomp_id' => 
+                    isset($respuesta["indiceSubQ"]) ? $respuesta["indiceSubQ"] : null,
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+            );
+        }
+        $command = Yii::app()
+            ->db
+            ->commandBuilder
+            ->createMultipleInsertCommand("{{Respuestaopc}}",$valoresAInsertar);
+        return $command->execute();
+    }
+    protected function insertarPreguntasAno()
+    {
+        $valoresAInsertar = array();
+        foreach ($this->_colaRespuestasAno as $respuesta) {
+            $valoresAInsertar[] = array(
+                'valor' => $respuesta["valor"],
+                'ano' => $respuesta["ano"],
+                'user_id' => Yii::app()->user->id,
+                'pregunta_id'  => $respuesta["idPregunta"],
+                'encuesta_id' => $this->id,              
+                'opcioncomp_id' => 
+                    isset($respuesta["indiceSubQ"]) ? $respuesta["indiceSubQ"] : null,
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+            );
+        }
+        $command = Yii::app()
+            ->db
+            ->commandBuilder
+            ->createMultipleInsertCommand("{{Respuestaano}}",$valoresAInsertar);
+        return $command->execute();
+    }
+    public function insertarDatos()
+    {
+        $this->meterColaDeInsercion();
+        $this->insertarPreguntasNum();
+        $this->insertarPreguntasAbiertas();
+        $this->insertarPreguntasAno();
+        $this->insertarPreguntasOpc();
+    }
+    
 }

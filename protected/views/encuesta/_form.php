@@ -38,6 +38,11 @@
 	</div>
 
 	<div class="row">
+		<?php echo $form->labelEx($model,'ano'); ?>
+		<?php echo $form->textField($model,'ano'); ?>
+		<?php echo $form->error($model,'ano'); ?>
+	</div>
+	<div class="row">
 		<?php echo $form->labelEx($model,'fecha_inicial'); ?>
 		<?php echo $form->textField($model,'fecha_inicial'); ?>
 		<?php echo $form->error($model,'fecha_inicial'); ?>

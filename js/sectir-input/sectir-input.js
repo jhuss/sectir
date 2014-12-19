@@ -634,12 +634,36 @@ module.exports = (function () {
         },
         controller: [
           "$scope", function($scope) {
+            var key, value;
+            for (key in defaultValues) {
+              value = defaultValues[key];
+              if (!angular.isDefined($scope[key])) {
+                $scope[key] = value;
+              }
+            }
             $scope.answersObject = {};
-            if (!$scope.subquestions) {
+            $scope.needObject = function() {
+              var aTree, first, subQFn;
+              subQFn = function(node) {
+                return node.model[$scope.typefield] === "subq";
+              };
+              aTree = treeModelFactory.parse($scope.tabledata);
+              first = aTree.first(subQFn);
+              return $scope.subquestions instanceof Array || first;
+            };
+            if (!$scope.needObject()) {
+              $scope.answersIsArray = true;
+              $scope.answersObject.hasSubQ = false;
               $scope.answersObject.values = [];
+            } else {
+              $scope.answersIsArray = false;
+              $scope.answersObject.hasSubQ = true;
+              $scope.answersObject.values = {};
             }
             $scope.addAnswer = function() {
-              return $scope.answersObject.values.push({});
+              if ($scope.answersIsArray) {
+                return $scope.answersObject.values.push({});
+              }
             };
             $scope.deleteAnswer = function(index) {
               $scope.answersObject.values.splice(index, 1);
@@ -647,22 +671,13 @@ module.exports = (function () {
                 return $scope.addAnswer();
               }
             };
-            $scope.haveSubQuestions = function() {
-              return $scope.subquestions instanceof Array;
-            };
             return $scope.subqtitle = "Opciones";
           }
         ],
         link: function(scope, element, attrs, ctrl) {
           var linkFn, watchFn;
           linkFn = function() {
-            var dropRefactorFn, elm, elmAdd, field, firstRow, forEachRefactorFn, haveSubQuestions, headers, key, ngModelRow, remainingTable, row, rows, rowspan, spanAddLabel, spanDeleteLabel, subQ, subQNodes, table, templateAnswers, templateAnswersFn, tr, trRows, treeHeight, treeToBeRefactored, val, value, _i, _j, _k, _l, _len, _len1, _len2, _len3, _len4, _m, _ref;
-            for (key in defaultValues) {
-              value = defaultValues[key];
-              if (!angular.isDefined(scope[key])) {
-                scope[key] = value;
-              }
-            }
+            var dropRefactorFn, elm, elmAdd, field, firstRow, forEachRefactorFn, haveSubQuestions, headers, ngModelRow, remainingTable, row, rows, rowspan, spanAddLabel, spanDeleteLabel, subQ, subQNodes, table, templateAnswers, templateAnswersFn, tr, trRows, treeHeight, treeToBeRefactored, val, _i, _j, _k, _l, _len, _len1, _len2, _len3, _len4, _m, _ref;
             sectirTreeFactory.addTree(scope.tabledata, scope.namespace, scope.titlefield, scope.typefield);
             treeToBeRefactored = sectirTreeFactory.trees[scope.namespace];
             console.log(treeToBeRefactored);
@@ -678,9 +693,9 @@ module.exports = (function () {
             if (subQNodes.length) {
               scope.subquestions = subQNodes;
             }
-            rows = sectirTreeFactory.getRows(scope.namespace);
-            haveSubQuestions = scope.haveSubQuestions() || subQNodes.length;
+            haveSubQuestions = scope.subquestions || subQNodes.length;
             sectirTreeFactory.addTree(scope.tabledata, scope.namespace, scope.titlefield, scope.typefield, scope.anocomienzo, scope.anofinal);
+            rows = sectirTreeFactory.getRows(scope.namespace);
             remainingTable = element.find("table");
             if (angular.isElement(remainingTable)) {
               remainingTable.remove();
@@ -779,7 +794,7 @@ module.exports = (function () {
               rowRepeat.addClass("sectir-ans-row");
               leafsByPre = sectirTreeFactory.getLeafs(scope.namespace, "pre");
               insertHeaders = function() {
-                var headerRepeat, headerSubQ, iEl, input, l, options, rowModel, typefieldDefined, _len4, _m;
+                var headerRepeat, headerSubQ, iEl, input, key, l, options, rowModel, typefieldDefined, value, _len4, _m;
                 if (subQuestion) {
                   headerSubQ = angular.element("<th>");
                   headerSubQ.text(subQuestion[scope.subqenun]);
@@ -1127,20 +1142,38 @@ module.exports = (function () {
 }).call(this);
 
 (function() {
-  var sectirRApp, url;
+  var anoComienzo, anoFinal, sectirRApp, url, urlPost;
 
   sectirRApp = angular.module('sectirRespuestaApp', ['sectirTableModule']);
 
   url = false;
 
+  urlPost = false;
+
+  anoComienzo = false;
+
+  anoFinal = false;
+
   sectirRApp.provider('sectirRespuestaConfigProvider', {
-    set: function(myURL) {
-      return url = myURL;
+    set: function(data) {
+      url = data.url;
+      urlPost = data.urlPost;
+      anoComienzo = data.anoComienzo;
+      return anoFinal = data.anoFinal;
     },
     $get: function() {
       return {
         getURL: function() {
           return url;
+        },
+        getURLPost: function() {
+          return urlPost;
+        },
+        getAnos: function() {
+          return {
+            anoComienzo: anoComienzo,
+            anoFinal: anoFinal
+          };
         }
       };
     }
@@ -1154,11 +1187,17 @@ module.exports = (function () {
         restrict: "EA",
         controller: [
           "$http", "$scope", "sectirRespuestaConfigProvider", function($http, $scope, SRC) {
-            var successFn;
+            var successFn, successPostFn;
             $scope.jsonData = false;
+            $scope.anos = SRC.getAnos();
             $scope.datos = false;
+            successPostFn = function(data, status) {
+              console.log(data);
+              return console.log(status);
+            };
             $scope.finalFunc = function() {
-              return console.log(SDF.data);
+              console.log(SDF.data);
+              return $http.post(SRC.getURLPost(), SDF.data).success(successPostFn);
             };
             successFn = function(data) {
               var arrayDatos, key, value, _ref;
@@ -1183,6 +1222,10 @@ module.exports = (function () {
                 typefield: "tipo"
               }
             };
+            if ($scope.anos) {
+              $scope.settings.table.anocomienzo = $scope.anos.anoComienzo;
+              $scope.settings.table.anofinal = $scope.anos.anoFinal;
+            }
           }
         ],
         link: function(scope, element, attrs, ctrl) {
