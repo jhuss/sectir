@@ -10,7 +10,7 @@ return array(
 
 	'commandMap' => array(
 		'usr' => array(
-			'class' => 'application.vendor.nineinchnick.yii-usr.commands.UsrCommand',
+			'class' => 'application.commands.SectirUsrCommand',
         ),
         'migrate' => array(
             'class' => 'application.vendor.yiisoft.yii.framework.cli.commands.MigrateCommand',

@@ -14,15 +14,4 @@ class m150105_135911_tipoencuesta_field_activo extends CDbMigration
         $this->dropIndex("{{Tipoencuesta}}_activo","{{Tipoencuesta}}");
         $this->dropColumn("{{Tipoencuesta}}","activo");
 	}
-
-	/*
-	// Use safeUp/safeDown to do migration with transaction
-	public function safeUp()
-	{
-	}
-
-	public function safeDown()
-	{
-	}
-	*/
 }
