@@ -1,0 +1,4 @@
+vendor/illuminate/support/Illuminate/Support/SerializableClosure.php
+vendor/illuminate/support/Illuminate/Support/Traits/CapsuleManagerTrait.php
+vendor/illuminate/support/Illuminate/Support/Traits/MacroableTrait.php
+vendor/nicmart/tree/src/Tree/Node/NodeTrait.php

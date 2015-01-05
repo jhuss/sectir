@@ -361,7 +361,6 @@ EOF;
                     $respuesta["tipo"] = "abierta";
                     break;
             }
-            //TODO Aquí tal vez hay errores
             if (isset($respuesta["indiceSubQ"])) {
                 $valido = false;
                 if (isset($opcionesCompPorPregunta[$preguntaActual["id"]])) {
