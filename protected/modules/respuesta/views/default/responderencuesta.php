@@ -16,6 +16,7 @@ $objeto = CJSON::encode(array(
     'anoComienzo' => $anoComienzo,
     'url' => $urlComienzo,
     'urlPost'=>$urlPost,
+    'urlRetorno'=>$urlRetorno,
 ));
 
 

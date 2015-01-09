@@ -54,8 +54,6 @@ class Tipoencuesta extends CActiveRecord
 	 */
 	public function relations()
 	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
 		return array(
 			'encuestas' => array(self::HAS_MANY, 'Encuesta', 'tipoencuesta_id'),
 			'user' => array(self::BELONGS_TO, 'Users', 'user_id'),
@@ -221,15 +219,15 @@ EOF;
 SELECT oc.id, oc.enunciado AS enunciadocomp, goc.grupocomp_id FROM {{GrupocompOpcioncomp}} goc INNER JOIN {{Opcioncomp}} oc ON goc.opcioncomp_id = oc.id WHERE goc.grupocomp_id IN (_ids_)
 EOF;
         $idGrupoComps = Arrays::from($preguntas)->pluck('grupocomp_id')->obtain();
-        if ($idPreguntas) {
+        if ($idGrupoComps) {
             $paramsOpc = array_map(function($id){
                 return ":grupocomp_id_$id";
-            },range(0,count($idPreguntas) - 1));
+            },range(0,count($idGrupoComps) - 1));
             $sqlOpcComp = strtr($sqlOpcComp,array(
                 '_ids_' => implode(",",$paramsOpc)
             ));
             $commandOpc = Yii::app()->db->createCommand($sqlOpcComp);
-            foreach ($idPreguntas as $i=>$val) {
+            foreach ($idGrupoComps as $i=>$val) {
                 $commandOpc->bindValue($paramsOpc[$i],$val);
             }
             $opcionesComp = $commandOpc->queryAll();
@@ -324,7 +322,6 @@ EOF;
             return false;
         };
         ;
-        xdebug_start_trace("/tmp/debug.log");
         $arrayNuevo = array();
         foreach ($arrayAgrupadoYOrdPeso as $z=>$variableX) {
             $dummyArr = $variableX;
@@ -347,7 +344,6 @@ EOF;
                     
             
         }
-        xdebug_stop_trace();
         //CVarDumper::dump($arrayNuevo,5,true);
         return array_values($arrayNuevo);
     }

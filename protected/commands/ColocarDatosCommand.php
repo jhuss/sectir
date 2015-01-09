@@ -53,6 +53,15 @@ class ColocarDatosCommand extends CConsoleCommand
                 'compuesta' => false,
             ),
             array(
+                'enunciado' => 'Otra universidad',
+                'identificador' => 'preg_datos_universidad_perten_otro',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+                'tipo' => 'text',
+                'compuesta' => false,
+            ),
+            array(
                 'enunciado' => 'Año de fundación',
                 'identificador' => 'preg_datos_ano_fundacion',
                 'creado_en' => new CDbExpression('NOW()'),
@@ -89,6 +98,35 @@ class ColocarDatosCommand extends CConsoleCommand
                 'compuesta' => false,
             ),
             //FIN DE GRUPO 1
+            //@note
+            //Areas de experiencia del grupo
+            array(
+                'enunciado' => 'Areas de experiencia',
+                'identificador' => 'preg_areas_exp_comp',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+                'tipo' => 'compuesta',
+                'compuesta' => true,
+            ),
+            array(
+                'enunciado' => 'Areas de experiencia del instituto centro o laboratorio',
+                'identificador' => 'preg_areas_exp_subq',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+                'tipo' => 'subq',
+                'compuesta' => true,
+            ),
+            array(
+                'enunciado' => 'X',
+                'identificador' => 'preg_areas_exp_sino',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+                'tipo' => 'checkbox',
+                'compuesta' => true,
+            ),
             //COMIENZO DE GRUPO 2
             array(
                 'enunciado' => 'Número de nucleos y sedes',
@@ -431,6 +469,35 @@ class ColocarDatosCommand extends CConsoleCommand
             array(
                 'enunciado' => 'Número de proyectos aprobados',
                 'identificador' => 'preg_proyectosaprob_num',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+                'tipo' => 'ano',
+                'compuesta' => true,
+            ), 
+            //Fin del grupo 9
+            //Comienzo del grupo de beneficiarios 
+            array(
+                'enunciado' => 'Beneficiarios de proyectos de ciencia y tecnología',
+                'identificador' => 'preg_benef_comp',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+                'tipo' => 'compuesta',
+                'compuesta' => true,
+            ), 
+            array(
+                'enunciado' => 'Tipos de beneficiarios',
+                'identificador' => 'preg_benef_subq',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+                'tipo' => 'subq',
+                'compuesta' => true,
+            ), 
+            array(
+                'enunciado' => 'Total de beneficiarios',
+                'identificador' => 'preg_benef_num',
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
@@ -1033,6 +1100,13 @@ class ColocarDatosCommand extends CConsoleCommand
                 'user_id' => $idUser,
             ),
             array(
+                'enunciado' => 'Beneficios',
+                'identificador' => 'benef',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
                 'enunciado' => 'Recursos aprobados en la universidad',
                 'identificador' => 'recursosaprob',
                 'creado_en' => new CDbExpression('NOW()'),
@@ -1172,6 +1246,13 @@ class ColocarDatosCommand extends CConsoleCommand
             array(
                 'enunciado' => 'Programas de doctorado',
                 'identificador' => 'doctorado',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Beneficiarios',
+                'identificador' => 'benef',
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
@@ -1344,6 +1425,12 @@ class ColocarDatosCommand extends CConsoleCommand
                 'preg_proyectosaprob_subq',
                 'preg_proyectosaprob_num',
             ),
+            //TODO Vamos aquí
+            'benef' => array(
+                'preg_benef_comp',
+                'preg_benef_subq',
+                'preg_benef_num',
+            ),
             'recursosaprob' => array(
                 'preg_recursosaprob_comp',
                 'preg_recursosaprob_subq',
@@ -1452,6 +1539,29 @@ class ColocarDatosCommand extends CConsoleCommand
                 'maestria',
                 'especialidades',
                 'pregrado',
+                'proyectosaprob',
+                'recursosaprob',
+                'proyectosaprob_area',
+                'recursosaprob_area',
+                'patentes',
+                'patentes2',
+                'revistas',
+                'lineas_inv',
+                'actores',
+                'red_tem',
+                'problematica',
+                'infraestructura',
+                'internet',
+                'comiteetica',
+                'comiteetica2',
+                'comiteetica3',
+            ),
+            'tipoencuesta_otros' => array(
+                'datos',
+                'sedenucleo',
+                'actividadesciencia',
+                'benef',
+                'talentohumano',
                 'proyectosaprob',
                 'recursosaprob',
                 'proyectosaprob_area',
@@ -1701,6 +1811,119 @@ class ColocarDatosCommand extends CConsoleCommand
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
             ),
+            // Beneficiarios
+            array(
+                'enunciado' => 'Asociación o Gremio de la Producción',
+                'identificador' => 'benef_asocgremio',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Centro de investigación',
+                'identificador' => 'benef_centroinv',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Centro de investigación privado',
+                'identificador' => 'benef_centroinv_priv',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Comunidades',
+                'identificador' => 'benef_comunidades',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Mujeres',
+                'identificador' => 'benef_mujeres',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Jóvenes',
+                'identificador' => 'benef_jovenes',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Hombres',
+                'identificador' => 'benef_hombres',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Niños',
+                'identificador' => 'benef_ninos',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Consejos comunales',
+                'identificador' => 'benef_consejoscom',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Empresa privada',
+                'identificador' => 'benef_emppriv',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Empresa pública',
+                'identificador' => 'benef_emppub',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Entes gubernamentales',
+                'identificador' => 'benef_entes',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Instituto de Investigación Público',
+                'identificador' => 'benef_investig_pub',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Universidad Pública',
+                'identificador' => 'benef_univpublica',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Recuperación de ambientes naturales',
+                'identificador' => 'benef_recupeambientes',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Otros ¿Cual?',
+                'identificador' => 'benef_otros',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
             // Infraestructura 
             array(
                 'enunciado' => 'Laboratorios de informática',
@@ -1897,6 +2120,24 @@ class ColocarDatosCommand extends CConsoleCommand
                 'area_desarrollo',
                 'area_humanidades',
                 'area_otros'
+            ),
+            'benef' => array(
+                'benef_asocgremio',
+                'benef_centroinv',
+                'benef_centroinv_priv',
+                'benef_comunidades',
+                'benef_mujeres',
+                'benef_jovenes',
+                'benef_hombres',
+                'benef_ninos',
+                'benef_consejoscom',
+                'benef_emppriv',
+                'benef_emppub',
+                'benef_entes',
+                'benef_investig_pub',
+                'benef_univpublica',
+                'benef_recupeambientes',
+                'benef_otros',
             ),
         );
         $sqlGrupocompOpcion = "INSERT INTO {{GrupocompOpcioncomp}} (grupocomp_id, opcioncomp_id, peso) (SELECT g.id AS grupocomp_id, o.id AS opcioncomp_id, :peso AS peso FROM {{Opcioncomp}} o JOIN {{Grupocomp}} g ON g.identificador=:grupoid WHERE o.identificador =:opcionid)";
@@ -2192,6 +2433,15 @@ CARMONA)',
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
             ),
+            array(
+                'enunciado' => 'Otro',
+                'identificador' => 'uni_otro',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            //NOTE Finalizados institutos
+            /**
             //NOTE Finalizados institutos
             /**
              * Municipios
@@ -2757,6 +3007,7 @@ CARMONA)',
                 'uni_upel',
                 'uni_unermb',
                 'uni_unefa',
+                'uni_otro',
             ),
             'preg_datos_municipio' => array( 
                 'muni_andresbello',
@@ -3104,6 +3355,27 @@ CARMONA)',
                 ),
                 array(
                     'preguntaid' => 'preg_pregrado_numero',
+                    'lft' => 4,
+                    'rgt' => 5,
+                ),
+
+            ),
+            /**
+             * Beneficiarios 
+             */
+            'benef' => array(
+                array(
+                    'preguntaid' => 'preg_benef_comp',
+                    'lft' => 1,
+                    'rgt' => 6,
+                ),
+                array(
+                    'preguntaid' => 'preg_benef_subq',
+                    'lft' => 2,
+                    'rgt' => 3,
+                ),
+                array(
+                    'preguntaid' => 'preg_benef_num',
                     'lft' => 4,
                     'rgt' => 5,
                 ),

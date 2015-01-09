@@ -25,6 +25,14 @@
 		<?php echo $form->error($model,'tipoencuesta_id'); ?>
 	</div>
 
+
+    <div class="row">
+        <?php echo $form->labelEx($model,'agrupacionenc_id'); ?>
+        <?php echo $form->dropDownList($model,'agrupacionenc_id',
+            (new Agrupacionenc)->identificadoresGrupoEnc); ?>
+        <?php echo $form->error($model,'agrupacionenc_id'); ?>
+    </div>
+
 	<div class="row">
 		<?php echo $form->labelEx($model,'enunciado'); ?>
 		<?php echo $form->textField($model,'enunciado',array('size'=>60,'maxlength'=>256)); ?>

@@ -5,14 +5,18 @@ class DefaultController extends Controller
     public function accessRules()
     {
         return array('allow',
-            'actions' => array('index','preguntas','postrespuesta'),
+            'actions' => array('index','preguntas',
+            "responderEncuesta",'postrespuesta'),
             'users' => array('@')
         );
     }
     public function filters()
     {
         return array(
-            //'ajaxOnly + postrespuesta'
+            array(
+                'SectirEncuestaFilter + responderEncuesta, postrespuesta',
+                'encuestaParam' => 'encuestaId',
+            ),
         );
     }
 	public function actionResponderencuesta($encuestaId)
@@ -26,12 +30,15 @@ class DefaultController extends Controller
         $urlComienzo = Yii::app()->createAbsoluteUrl("/respuesta/default/preguntas",array(
             'idTE' => $encuesta->tipoencuesta_id
         )); 
+        $urlRetorno = Yii::app()
+            ->createAbsoluteUrl('/respuesta/default/exito');
         $anoFinal = $encuesta->ano;
         $anoComienzo = $encuesta->ano - Encuesta::ANOS_ENCUESTADOS;
         $this->render('responderencuesta',array(
             'idTE' => $encuesta->tipoencuesta_id,
             'urlPost' => $postRespuestaUrl,
             'urlComienzo' => $urlComienzo,
+            'urlRetorno' => $urlRetorno,
             'anoFinal' => $anoFinal,
             'anoComienzo' => $anoComienzo,
         ));
@@ -52,5 +59,9 @@ class DefaultController extends Controller
         CVarDumper::dump($post);
         CVarDumper::dump($errores);
 
+    }
+    public function actionExito()
+    {
+        $this->render("exito");
     }
 }

@@ -66,8 +66,9 @@ class Encuesta extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('tipoencuesta_id, enunciado, ano, identificador', 'required'),
+			array('agrupacionenc_id, tipoencuesta_id, enunciado, ano, identificador', 'required'),
             array('tipoencuesta_id', 'exist', 'allowEmpty' => false, 'className' => 'Tipoencuesta', 'attributeName' => 'id'),
+            array('agrupacionenc_id', 'exist', 'allowEmpty' => false, 'className' => 'Agrupacionenc', 'attributeName' => 'id'),
             array('enunciado', 'length', 'max'=>256),
             array('identificador', 'unique'),
             array('ano', 'numerical', 'min' => 2014),
@@ -85,10 +86,10 @@ class Encuesta extends CActiveRecord
 	 */
 	public function relations()
 	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
 		return array(
 			'tipoencuesta' => array(self::BELONGS_TO, 'Tipoencuesta', 'tipoencuesta_id'),
+            'agrupacionenc' => array(self::BELONGS_TO, 'Agrupacionenc',
+                'agrupacionenc_id'),
 			'user' => array(self::BELONGS_TO, 'Users', 'user_id'),
 			'respuestaabiertas' => array(self::HAS_MANY, 'Respuestaabierta', 'encuesta_id'),
 			'respuestaanos' => array(self::HAS_MANY, 'Respuestaano', 'encuesta_id'),
@@ -552,6 +553,18 @@ EOF;
             ->createMultipleInsertCommand("{{Respuestaano}}",$valoresAInsertar);
         return $command->execute();
     }
+    public function insertarEncuestaFinalizada()
+    {
+        $sql = <<<EOF
+INSERT INTO {{Encuestarespondida}} (encuesta_id,user_id,fecha_respuesta) VALUES
+    (:encuesta_id, :user_id, CURRENT_TIMESTAMP);
+EOF;
+        $command = Yii::app()->db->createCommand($sql);
+        return $command->execute(array(
+            ':user_id' => Yii::app()->user->id,
+            ':encuesta_id' => $this->id,
+        ));
+    }
     public function insertarDatos()
     {
         $this->meterColaDeInsercion();
@@ -559,6 +572,7 @@ EOF;
         $this->insertarPreguntasAbiertas();
         $this->insertarPreguntasAno();
         $this->insertarPreguntasOpc();
+        $this->insertarEncuestaFinalizada();
     }
     
 }
