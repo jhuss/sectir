@@ -798,16 +798,25 @@ class ColocarDatosCommand extends CConsoleCommand
             //Comienzo del grupo 19
             array(
                 'enunciado' => 'Cuál es la problemática que se presenta en la universidad/institutos tecnológicos/escuelas técnicas/otros?',
-                'identificador' => 'preg_problematica_cual',
+                'identificador' => 'preg_problematica_comp',
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
-                'tipo' => 'select',
-                'compuesta' => false,
+                'tipo' => 'compuesta',
+                'compuesta' => true,
             ), 
             array(
-                'enunciado' => 'Describa',
-                'identificador' => 'preg_problematica_describa',
+                'enunciado' => 'Problema',
+                'identificador' => 'preg_problematica_subq',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+                'tipo' => 'subq',
+                'compuesta' => true,
+            ), 
+            array(
+                'enunciado' => 'X',
+                'identificador' => 'preg_problematica_sino',
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
@@ -1103,6 +1112,13 @@ class ColocarDatosCommand extends CConsoleCommand
                 'user_id' => $idUser,
             ),
             array(
+                'enunciado' => 'Problemática',
+                'identificador' => 'problematica',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
                 'enunciado' => 'Areas de experiencia',
                 'identificador' => 'areas_exp',
                 'creado_en' => new CDbExpression('NOW()'),
@@ -1223,13 +1239,6 @@ class ColocarDatosCommand extends CConsoleCommand
                 'user_id' => $idUser,
             ),
             array(
-                'enunciado' => 'Problemáticas',
-                'identificador' => 'problematica',
-                'creado_en' => new CDbExpression('NOW()'),
-                'actualizado_en' => new CDbExpression('NOW()'),
-                'user_id' => $idUser,
-            ),
-            array(
                 'enunciado' => 'Infraestructura',
                 'identificador' => 'infraestructura',
                 'creado_en' => new CDbExpression('NOW()'),
@@ -1326,6 +1335,13 @@ class ColocarDatosCommand extends CConsoleCommand
                 'user_id' => $idUser,
             ),
             array(
+                'enunciado' => 'Problemática',
+                'identificador' => 'problematica',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
                 'enunciado' => 'Programas de maestría',
                 'identificador' => 'maestria',
                 'creado_en' => new CDbExpression('NOW()'),
@@ -1398,13 +1414,6 @@ class ColocarDatosCommand extends CConsoleCommand
             array(
                 'enunciado' => 'Redes temáticas',
                 'identificador' => 'red_tem',
-                'creado_en' => new CDbExpression('NOW()'),
-                'actualizado_en' => new CDbExpression('NOW()'),
-                'user_id' => $idUser,
-            ),
-            array(
-                'enunciado' => 'Problemáticas enfrentadas',
-                'identificador' => 'problematica',
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
@@ -1503,6 +1512,11 @@ class ColocarDatosCommand extends CConsoleCommand
                 'preg_benef_subq',
                 'preg_benef_num',
             ),
+            'problematica' => array(
+                'preg_problematica_comp',
+                'preg_problematica_subq',
+                'preg_problematica_sino',
+            ),
             'servcient' => array(
                 'preg_servcient_comp',
                 'preg_servcient_subq',
@@ -1554,8 +1568,9 @@ class ColocarDatosCommand extends CConsoleCommand
                 'preg_red_tem_mencione',
             ),
             'problematica' => array(
-                'preg_problematica_cual',
-                'preg_problematica_describa',
+                'preg_problematica_comp',
+                'preg_problematica_subq',
+                'preg_problematica_sino',
             ),
             'infraestructura' => array(
                 'preg_infraestructura_comp',
@@ -1887,6 +1902,63 @@ class ColocarDatosCommand extends CConsoleCommand
             array(
                 'enunciado' => 'Otros ¿Cuál?',
                 'identificador' => 'area_otros',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            //Problematica
+            array(
+                'enunciado' => 'Escaso financiamiento',
+                'identificador' => 'problematica_fin',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Poca participación de sus integrantes',
+                'identificador' => 'problematica_pocapart',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Deficiente infraestructura',
+                'identificador' => 'problematica_definf',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Dispersión de recursos',
+                'identificador' => 'problematica_recursos',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Falta de articulación con otros actores',
+                'identificador' => 'problematica_actores',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Insuficiencia de recursos bibliográficos y/o tecnológicos',
+                'identificador' => 'problematica_recursosbib',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Recurso humano insuficiente',
+                'identificador' => 'problematica_rrhh',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Otros',
+                'identificador' => 'problematica_otros',
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
@@ -2265,8 +2337,6 @@ class ColocarDatosCommand extends CConsoleCommand
             ),
             'red_tem' => array(
             ),
-            'problematica' => array(
-            ),
             'infraestructura' => array(
                 'infraestructura_inform',
                 'infraestructura_analisis',
@@ -2322,6 +2392,16 @@ class ColocarDatosCommand extends CConsoleCommand
                 'servcient_locali',
                 'servcient_laboratorio',
                 'servcient_prod',
+            ),
+            'problematica' => array(
+                'problematica_fin',
+                'problematica_pocapart',
+                'problematica_definf',
+                'problematica_recursos',
+                'problematica_actores',
+                'problematica_recursosbib',
+                'problematica_rrhh',
+                'problematica_otros',
             ),
             'benef' => array(
                 'benef_asocgremio',
@@ -3047,62 +3127,6 @@ CARMONA)',
             /**
              * Fin redes temáticas
              */
-            array(
-                'enunciado' => 'Escaso financiamiento',
-                'identificador' => 'problematica_fin',
-                'creado_en' => new CDbExpression('NOW()'),
-                'actualizado_en' => new CDbExpression('NOW()'),
-                'user_id' => $idUser,
-            ),
-            array(
-                'enunciado' => 'Poca participación de sus integrantes',
-                'identificador' => 'problematica_pocapart',
-                'creado_en' => new CDbExpression('NOW()'),
-                'actualizado_en' => new CDbExpression('NOW()'),
-                'user_id' => $idUser,
-            ),
-            array(
-                'enunciado' => 'Deficiente infraestructura',
-                'identificador' => 'problematica_definf',
-                'creado_en' => new CDbExpression('NOW()'),
-                'actualizado_en' => new CDbExpression('NOW()'),
-                'user_id' => $idUser,
-            ),
-            array(
-                'enunciado' => 'Dispersión de recursos',
-                'identificador' => 'problematica_recursos',
-                'creado_en' => new CDbExpression('NOW()'),
-                'actualizado_en' => new CDbExpression('NOW()'),
-                'user_id' => $idUser,
-            ),
-            array(
-                'enunciado' => 'Falta de articulación con otros actores',
-                'identificador' => 'problematica_actores',
-                'creado_en' => new CDbExpression('NOW()'),
-                'actualizado_en' => new CDbExpression('NOW()'),
-                'user_id' => $idUser,
-            ),
-            array(
-                'enunciado' => 'Insuficiencia de recursos bibliográficos y/o tecnológicos',
-                'identificador' => 'problematica_recursosbib',
-                'creado_en' => new CDbExpression('NOW()'),
-                'actualizado_en' => new CDbExpression('NOW()'),
-                'user_id' => $idUser,
-            ),
-            array(
-                'enunciado' => 'Recurso humano insuficiente',
-                'identificador' => 'problematica_rrhh',
-                'creado_en' => new CDbExpression('NOW()'),
-                'actualizado_en' => new CDbExpression('NOW()'),
-                'user_id' => $idUser,
-            ),
-            array(
-                'enunciado' => 'Otros',
-                'identificador' => 'problematica_otros',
-                'creado_en' => new CDbExpression('NOW()'),
-                'actualizado_en' => new CDbExpression('NOW()'),
-                'user_id' => $idUser,
-            ),
             /**
              * Nivel de satisfacción
              */
@@ -3281,16 +3305,6 @@ CARMONA)',
                 'redtem_regional',
                 'redtem_local',
                 'redtem_internacional',
-            ),
-            'preg_problematica_cual' => array(             
-                'problematica_fin',
-                'problematica_pocapart',
-                'problematica_definf',
-                'problematica_recursos',
-                'problematica_actores',
-                'problematica_recursosbib',
-                'problematica_rrhh',
-                'problematica_otros',
             ),
             'preg_infraestructura_espacios' => array(
                 'satisfaccion_excelente',
@@ -3598,6 +3612,26 @@ CARMONA)',
                 ),
                 array(
                     'preguntaid' => 'preg_benef_num',
+                    'lft' => 4,
+                    'rgt' => 5,
+                ),
+            ),
+            /**
+             * Beneficiarios 
+             */
+            'problematica' => array(
+                array(
+                    'preguntaid' => 'preg_problematica_comp',
+                    'lft' => 1,
+                    'rgt' => 6,
+                ),
+                array(
+                    'preguntaid' => 'preg_problematica_subq',
+                    'lft' => 2,
+                    'rgt' => 3,
+                ),
+                array(
+                    'preguntaid' => 'preg_problematica_sino',
                     'lft' => 4,
                     'rgt' => 5,
                 ),
