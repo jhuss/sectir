@@ -159,6 +159,21 @@ class Encuesta extends CActiveRecord
 	{
 		return parent::model($className);
     }
+    /**
+     * Retornar encuestas activas
+     *
+     * @return array
+     */
+    public static function getEncuestasActivas()
+    {
+        $sql = <<<EOF
+SELECT e.id, e.enunciado FROM {{Encuesta}} e WHERE e.activa = :actparam
+EOF;
+        $command = Yii::app()->db->createCommand($sql);
+        $command->bindValue(':actparam',1);
+        return $command->queryAll();
+    }
+    
     public function behaviors()
     {
         return array(
