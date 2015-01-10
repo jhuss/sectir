@@ -194,6 +194,44 @@ class ColocarDatosCommand extends CConsoleCommand
                 'compuesta' => true,
             ), 
             // FIN DE GRUPO 3
+            //COMIENZO DE GRUPO de servicios 
+            array(
+                'enunciado' => 'Servicios Científicos, Tecnológicos e Innovación y de Información que presta el instituto, centro, laboratorio, otro',
+                'identificador' => 'preg_servcient_comp',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+                'tipo' => 'compuesta',
+                'compuesta' => true,
+            ),
+            array(
+                'enunciado' => 'Tipo de servicio',
+                'identificador' => 'preg_servcient_subq',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+                'tipo' => 'subq',
+                'compuesta' => true,
+            ),
+            array(
+                'enunciado' => 'Si/No',
+                'identificador' => 'preg_servcient_sino',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+                'tipo' => 'checkbox',
+                'compuesta' => true,
+            ),
+            array(
+                'enunciado' => 'Mencione el tipo de servicio',
+                'identificador' => 'preg_servcient_cuales',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+                'tipo' => 'text',
+                'compuesta' => true,
+            ), 
+            // FIN DE GRUPO de servicios
             // COMIENZO DE GRUPO 4
             array(
                 'enunciado' => 'Talento Humano en Ciencia, Tecnología e Innovación de la universidad/institutos tecnológicos/escuelas técnicas/otros',
@@ -503,7 +541,7 @@ class ColocarDatosCommand extends CConsoleCommand
                 'user_id' => $idUser,
                 'tipo' => 'ano',
                 'compuesta' => true,
-            ), 
+            ),
             //Fin del grupo 9
             //Comienzo del grupo 10
             array(
@@ -1065,6 +1103,13 @@ class ColocarDatosCommand extends CConsoleCommand
                 'user_id' => $idUser,
             ),
             array(
+                'enunciado' => 'Areas de experiencia',
+                'identificador' => 'areas_exp',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
                 'enunciado' => 'Programas de doctorado',
                 'identificador' => 'doctorado',
                 'creado_en' => new CDbExpression('NOW()'),
@@ -1106,6 +1151,14 @@ class ColocarDatosCommand extends CConsoleCommand
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
             ),
+            array(
+                'enunciado' => 'Servicios Cientificos',
+                'identificador' => 'servcient',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+
             array(
                 'enunciado' => 'Recursos aprobados en la universidad',
                 'identificador' => 'recursosaprob',
@@ -1250,6 +1303,21 @@ class ColocarDatosCommand extends CConsoleCommand
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
             ),
+            
+            array(
+                'enunciado' => 'Areas de experiencia',
+                'identificador' => 'areas_exp',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Servicios cientificos',
+                'identificador' => 'servcient',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
             array(
                 'enunciado' => 'Beneficiarios',
                 'identificador' => 'benef',
@@ -1372,6 +1440,11 @@ class ColocarDatosCommand extends CConsoleCommand
                 'preg_datos_municipio',
                 'preg_datos_caracterpublicoprivado',
             ),
+            'areas_exp' => array( 
+                'preg_areas_exp_comp',
+                'preg_areas_exp_subq',
+                'preg_areas_exp_sino',
+            ),
             'sedenucleo' => array(
                 'preg_sedenucleo_compuesta',
                 'preg_sedenucleo',
@@ -1425,11 +1498,16 @@ class ColocarDatosCommand extends CConsoleCommand
                 'preg_proyectosaprob_subq',
                 'preg_proyectosaprob_num',
             ),
-            //TODO Vamos aquí
             'benef' => array(
                 'preg_benef_comp',
                 'preg_benef_subq',
                 'preg_benef_num',
+            ),
+            'servcient' => array(
+                'preg_servcient_comp',
+                'preg_servcient_subq',
+                'preg_servcient_sino',
+                'preg_servcient_cuales'
             ),
             'recursosaprob' => array(
                 'preg_recursosaprob_comp',
@@ -1559,6 +1637,7 @@ class ColocarDatosCommand extends CConsoleCommand
             'tipoencuesta_otros' => array(
                 'datos',
                 'sedenucleo',
+                'areas_exp',
                 'actividadesciencia',
                 'benef',
                 'talentohumano',
@@ -1566,6 +1645,7 @@ class ColocarDatosCommand extends CConsoleCommand
                 'recursosaprob',
                 'proyectosaprob_area',
                 'recursosaprob_area',
+                'servcient',
                 'patentes',
                 'patentes2',
                 'revistas',
@@ -1924,6 +2004,98 @@ class ColocarDatosCommand extends CConsoleCommand
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
             ),
+            //Servicios cientificos
+            array(
+                'enunciado' => 'Asesorías, consultorías y asistencias técnicas',
+                'identificador' => 'servcient_asesorias',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Diagnósticos, estudios de factibilidad y viabilidad',
+                'identificador' => 'servcient_diagnost',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Servicios de museos de ciencia y tecnología, y otras colecciones',
+                'identificador' => 'servcient_servmus',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Transferencias de tecnología',
+                'identificador' => 'servcient_transf',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Levantamiento, observaciones, inventarios en actividades de ciencia y tecnología',
+                'identificador' => 'servcient_levant',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Recolección de información (Censos encuestas y estudios de mercado)',
+                'identificador' => 'servcient_recol',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Traducción y edición de libros en ciencia y tecnología',
+                'identificador' => 'servcient_traducc',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Servicios de bibliotecas, archivos, centros de información y documentación',
+                'identificador' => 'servcient_biblioteca',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Actividades de difusión y divulgación',
+                'identificador' => 'servcient_difusi',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Ensayos, normalización, metrología y control de calidad',
+                'identificador' => 'servcient_ensayos',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Localización y busqueda de recursos petroleros y minero',
+                'identificador' => 'servcient_locali',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Analisis de laboratorio',
+                'identificador' => 'servcient_laboratorio',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Producción, alimentos vacunas',
+                'identificador' => 'servcient_prod',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
             // Infraestructura 
             array(
                 'enunciado' => 'Laboratorios de informática',
@@ -2027,6 +2199,21 @@ class ColocarDatosCommand extends CConsoleCommand
                 'organizacion_fondo',
                 'organizacion_otro',
             ),
+            'areas_exp' => array(
+                'area_alimentos',
+                'area_agricola',
+                'area_ambiente',
+                'area_energiaalt',
+                'area_biologiasal',
+                'area_cienciastierra',
+                'area_fisicaquimicamat',
+                'area_ciencias_ec_soc',
+                'area_artes',
+                'area_educacion',
+                'area_desarrollo',
+                'area_humanidades',
+                'area_otros'
+            ),
             'proyectosaprob_area' => array(
                 'area_alimentos',
                 'area_agricola',
@@ -2120,6 +2307,21 @@ class ColocarDatosCommand extends CConsoleCommand
                 'area_desarrollo',
                 'area_humanidades',
                 'area_otros'
+            ),
+            'servcient' => array(
+                'servcient_asesorias',
+                'servcient_diagnost',
+                'servcient_servmus',
+                'servcient_transf',
+                'servcient_levant',
+                'servcient_recol',
+                'servcient_traducc',
+                'servcient_biblioteca',
+                'servcient_difusi',
+                'servcient_ensayos',
+                'servcient_locali',
+                'servcient_laboratorio',
+                'servcient_prod',
             ),
             'benef' => array(
                 'benef_asocgremio',
@@ -3171,6 +3373,26 @@ CARMONA)',
                 ),
             ),
             /**
+             * Sede nucleo
+             */
+            'areas_exp' => array(
+                array(
+                    'preguntaid' => 'preg_areas_exp_comp',
+                    'lft' => 1,
+                    'rgt' => 6,
+                ),
+                array(
+                    'preguntaid' => 'preg_areas_exp_subq',
+                    'lft' => 2,
+                    'rgt' => 3,
+                ),
+                array(
+                    'preguntaid' => 'preg_areas_exp_sino',
+                    'lft' => 4,
+                    'rgt' => 5,
+                ),
+            ),
+            /**
              * actividades ciencia
              *
              */
@@ -3379,7 +3601,31 @@ CARMONA)',
                     'lft' => 4,
                     'rgt' => 5,
                 ),
-
+            ),
+            /**
+             * Servicios cientificos 
+             */
+            'servcient' => array(
+                array(
+                    'preguntaid' => 'preg_servcient_comp',
+                    'lft' => 1,
+                    'rgt' => 8,
+                ),
+                array(
+                    'preguntaid' => 'preg_servcient_subq',
+                    'lft' => 2,
+                    'rgt' => 3,
+                ),
+                array(
+                    'preguntaid' => 'preg_servcient_sino',
+                    'lft' => 4,
+                    'rgt' => 5,
+                ),
+                array(
+                    'preguntaid' => 'preg_servcient_cuales',
+                    'lft' => 6,
+                    'rgt' => 7,
+                ),
             ),
             /**
              * Proyectos aprobados
