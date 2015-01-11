@@ -196,20 +196,45 @@ EOF;
                 if ($entrada["hasSubQ"] === false) {
                     foreach ($entrada["values"] as $value) {
                         foreach ($value as $indice=>$internalValue) {
-                            $this->meterColaRespuestas($indice,$internalValue);
+                            if (is_array($internalValue)) {
+                                foreach ($internalValue as $v) {
+                                    $this->meterColaRespuestas($v['text']);
+                                }
+                            }
+                            else {
+                                $this->meterColaRespuestas($indice,$internalValue);
+                            }
                         }
                     }
                 }
                 else {
                     foreach ($entrada["values"] as $indice=>$grupoRespuestas) {
                         foreach ($grupoRespuestas as $indiceSubQ=>$value) {
-                            $this->meterColaRespuestas($indice,$value,$indiceSubQ);
+                            if (!is_array($value)) {
+                                // code...
+                                $this->meterColaRespuestas($indice,$value,$indiceSubQ);
+                            }
+                            else {
+                                foreach ($value as $v) {
+                                    $this->meterColaRespuestas($indice,
+                                        $v['text'],$indiceSubQ);
+                                }
+                            }
                         }
                     }
                 }
             } else {
                 foreach ($entrada as $indice=>$valorEntrada) {
-                    $this->meterColaRespuestas($indice,$valorEntrada);
+                    //TODO revisar si esto funciona para tags
+                    if (is_array($valorEntrada)) {
+                        foreach ($valorEntrada as $v) {
+                            $this->meterColaRespuestas($indice,$v['text']);
+                            
+                        }
+                    }
+                    else {
+                        $this->meterColaRespuestas($indice,$valorEntrada);
+                    }
                 }
             }
         }
@@ -452,6 +477,7 @@ EOF;
                     case 'select':
                         $this->_colaRespuestasOpc[] = $respuesta;
                         break;
+                        
                     default:
                         $this->_colaRespuestasAbiertas[] = $respuesta;      
                         break;
