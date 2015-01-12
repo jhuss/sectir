@@ -176,18 +176,21 @@ EOF;
     
     public function behaviors()
     {
-        return array(
-           'timestamp' => array(
+        $behaviors = array(
+            'timestamp' => array(
                'class' => 'zii.behaviors.CTimestampBehavior',
                'createAttribute' => 'creado_en',
                'updateAttribute' => 'actualizado_en',
-           ),
-           'defaultValue' => array(
-               'class' => 'DefaultValueBehavior',
-               'attribute' => 'user_id',
-               'value' => Yii::app()->user->id,
-           ),
+            ),
         );
+        if (Yii::app() instanceof CWebApplication) {
+            $behaviors["defaultValue"] = array(
+                'class' => 'DefaultValueBehavior',
+                'attribute' => 'user_id',
+                'value' => Yii::app()->user->id,
+                );
+        }
+        return $behaviors;
     }
     public function obtenerRespuestasEncuesta($entradas)
     {
@@ -616,4 +619,118 @@ EOF;
         $this->insertarEncuestaFinalizada();
     }
     
+    public function getProyectosInnovacion($groupBy)
+    {
+        $sql = <<<EOF
+SELECT COUNT(ra.valor), opc.identificador FROM {{Respuestaabierta}} ra
+	INNER JOIN {{Opcioncomp}} opc ON ra.opcioncomp_id = opc.id
+    INNER JOIN {{Pregunta}} p ON ra.pregunta_id = p.id
+    INNER JOIN (
+        SELECT _ra.opcioncomp_id AS id, _ra.user_id, _ra.encuesta_id FROM {{Respuestaabierta}} _ra
+        	INNER JOIN {{Pregunta}} _p ON _ra.pregunta_id = _p.id
+        WHERE _ra.valor = 1 AND _p.identificador = :identificador_int
+    ) sub ON sub.id = ra.opcioncomp_id AND sub.user_id = ra.user_id AND sub.encuesta_id = ra.encuesta_id
+WHERE ra.encuesta_id = :encuesta_id AND ra.valor <> :valor AND p.identificador = :identificador_ext
+GROUP BY _group_
+EOF;
+        $sql = strtr($sql,array('_group_'=>$groupBy));
+        $command = Yii::app()->db->createCommand($sql);
+        $command->bindValue(":valor","");
+        $command->bindValue(":encuesta_id",$this->id);
+        $command->bindValue(":identificador_int","preg_actividadesciencia_sino");
+        $command->bindValue(":identificador_ext","preg_actividadesciencia_cuales");
+        return $command->queryAll();
+    }
+    public function getEstadisticasPorOpcion($identificadores)
+    {
+        $fn = function($val){
+            return ":param_$val";
+        };
+        $sql = <<<EOF
+        SELECT COUNT(ro.opcion_id),ro.user_id, o.identificador,o.enunciado FROM {{Respuestaopc}} ro
+	INNER JOIN {{Pregunta}} p ON ro.pregunta_id = p.id
+    INNER JOIN {{Opcion}} o ON ro.opcion_id = o.id
+WHERE ro.encuesta_id = :encuesta_id AND p.identificador IN (_ids_)
+GROUP BY ro.user_id, ro.opcion_id
+EOF;
+        $sql = strtr($sql,array(
+            '_ids_' => implode(",",array_map($fn,range(0,count($identificadores) - 1))),
+        ));
+        $command = Yii::app()->db->createCommand($sql);
+        $command->bindValue(":encuesta_id",$this->id);
+        foreach ($identificadores as $i=>$id) {
+            $command->bindValue($fn($i),$id);
+        }
+        return $command->queryAll();
+
+    }
+    public function getEstadisticasPorCheckbox($identificadores)
+    {
+        $sql = <<<EOF
+SELECT COUNT(ra.valor), p.identificador, p.user_id FROM {{Respuestaabierta}} ra
+	INNER JOIN {{Pregunta}} p ON ra.pregunta_id = p.id
+WHERE ra.valor = :valor AND ra.encuesta_id = :encuesta_id AND p.identificador 
+    IN (_ids_)
+GROUP BY ra.user_id,p.id
+
+EOF;
+
+        $fn = function($val){
+            return ":param_$val";
+        };
+        $sql = strtr($sql,array(
+            '_ids_' => implode(",",array_map($fn,range(0,count($identificadores) - 1))),
+        ));
+        $command = Yii::app()->db->createCommand($sql);
+        $command->bindValue(":encuesta_id",$this->id);
+        $command->bindValue(":valor",1);
+        foreach ($identificadores as $i=>$id) {
+            $command->bindValue($fn($i),$id);
+        }
+        return $command->queryAll();
+
+    }
+    public function getEstadisticasSumaRespuestaAno($identificadores)
+    {
+        $sql = <<<EOF
+SELECT SUM(ra.valor) AS suma, p.identificador FROM {{Respuestaano}} ra
+    INNER JOIN {{Pregunta}} p ON ra.pregunta_id = p.id
+WHERE ra.encuesta_id = :encuesta_id AND p.identificador IN (_ids_)
+GROUP BY ra.pregunta_id,ra.ano
+EOF;
+        $fn = function($val){
+            return ":param_$val";
+        };
+        $sql = strtr($sql,array(
+            '_ids_' => implode(",",array_map($fn,range(0,count($identificadores) - 1))),
+        ));
+        $command = Yii::app()->db->createCommand($sql);
+        $command->bindValue(":encuesta_id",$this->id);
+        foreach ($identificadores as $i=>$id) {
+            $command->bindValue($fn($i),$id);
+        }
+        return $command->queryAll();
+    }
+    public function getPublicacionesRevista()
+    {
+        $sql = <<<EOF
+SELECT SUM(ra.valor), opc.identificador FROM {{Respuestaano}} ra
+    INNER JOIN {{Opcioncomp}} opc ON ra.opcioncomp_id = opc.id
+    INNER JOIN {{Pregunta}} p ON ra.pregunta_id = p.id
+    INNER JOIN (
+        SELECT _ra.opcioncomp_id AS id, _ra.user_id, _ra.encuesta_id FROM {{Respuestaabierta}} _ra
+            INNER JOIN {{Pregunta}} _p ON _ra.pregunta_id = _p.id
+        WHERE _ra.valor <> :valor_int AND _p.identificador = :identificador_int
+    ) sub ON sub.id = ra.opcioncomp_id AND sub.user_id = ra.user_id AND sub.encuesta_id = ra.encuesta_id
+WHERE ra.encuesta_id = :encuesta_id AND ra.valor <> :valor AND p.identificador = :identificador_ext
+GROUP BY opc.id, ra.user_id
+EOF;
+        $command = Yii::app()->db->createCommand($sql);
+        $command->bindValue(":valor_int","");
+        $command->bindValue(":valor","");
+        $command->bindValue(":identificador_int","preg_revistas_area_revista");
+        $command->bindValue(":identificador_ext","preg_revistas_area_num");
+        $command->bindValue(":encuesta_id",$this->id);
+        return $command->queryAll();
+    } 
 }

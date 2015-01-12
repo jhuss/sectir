@@ -28,6 +28,7 @@ WHERE ro.encuesta_id = 1 AND p.identificador = 'preg_talentohumano_nivelac'
 GROUP BY ro.user_id, ro.opcion_id
 
 -- Items 15-17 Solucionados aquí
+-- NOTE Hecho
 SELECT COUNT(ra.valor), p.identificador, p.user_id FROM `sectir_Respuestaabierta` ra
 	INNER JOIN `sectir_Pregunta` p ON ra.pregunta_id = p.id
 WHERE ra.valor = "1" AND ra.encuesta_id = 1 AND p.identificador 
@@ -43,6 +44,7 @@ WHERE ro.encuesta_id = 1 AND p.identificador = 'preg_talentohumano_fuentefin'
 GROUP BY ro.user_id, ro.opcion_id
 
 -- Items 19-22 Solucionados
+-- hecho NOTE
 SELECT COUNT(ra.valor), p.identificador FROM `sectir_Respuestaabierta` ra
 	INNER JOIN `sectir_Pregunta` p ON ra.pregunta_id = p.id
 WHERE p.identificador IN 
