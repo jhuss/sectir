@@ -74,6 +74,10 @@ $arrayConfig = array(
 					'baseUrl' => '//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/',
 					'js' => array('ui-bootstrap.min.js'),
 				),
+                'd3' => array(
+                    'baseUrl' => '//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/',
+                    'js' => array('d3.min.js'),
+                ),
 				'jquery' => array(
 					'baseUrl' => '//ajax.googleapis.com/ajax/libs/jquery/1.11.1/',
 					'js' => array('jquery.min.js'),
