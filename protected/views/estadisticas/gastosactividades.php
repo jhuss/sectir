@@ -5,10 +5,14 @@ $this->breadcrumbs=array(
 	'Estadisticas'=>array('/estadisticas'),
 	'Gastosactividades',
 );
-?>
-<h1><?php echo $this->id . '/' . $this->action->id; ?></h1>
 
-<p>
-	You may change the content of this page by modifying
-	the file <tt><?php echo __FILE__; ?></tt>.
-</p>
+$lang = Yii::app()->language;
+
+$data = array(array(
+    'x' => 1,
+    'y' => 2,
+),
+array('x' => 3, 'y' => 4)
+);
+
+$this->widget("SectirHorizontalChart",array("data"=>$data));

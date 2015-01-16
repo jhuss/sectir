@@ -10,7 +10,8 @@ class EstadisticasController extends Controller
         return parent::beforeAction($action);
     }
 	public function actionGastosactividades()
-	{
+    {
+        //TODO Prueba aquí
 		$this->render('gastosactividades');
 	}
 
