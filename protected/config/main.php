@@ -78,6 +78,12 @@ $arrayConfig = array(
                     'baseUrl' => '//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/',
                     'js' => array('d3.min.js'),
                 ),
+                'xcharts' => array(
+                    'baseUrl' => '//cdn.jsdelivr.net/xcharts/0.1.3/',
+                    'js' => array('xcharts.min.js'),
+                    'css' => array('xcharts.min.css'),
+                    'depends' => array('d3'),
+                ),
 				'jquery' => array(
 					'baseUrl' => '//ajax.googleapis.com/ajax/libs/jquery/1.11.1/',
 					'js' => array('jquery.min.js'),
