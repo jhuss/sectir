@@ -3,16 +3,25 @@
 
 $this->breadcrumbs=array(
 	'Estadisticas'=>array('/estadisticas'),
-	'Gastosactividades',
+	'Proyectosinvestigacion',
 );
 
-$lang = Yii::app()->language;
+?>
 
-$data = array(array(
-    'x' => 1,
-    'y' => 2,
-),
-array('x' => 3, 'y' => 4)
-);
+<h1>Recursos aprobados por ente de financiamiento</h1>
 
-$this->widget("SectirHorizontalChart",array("data"=>$data));
+<?php 
+$this->widget("SectirPointChart",array(
+    'data' => $proyectosaprob,
+    'chartId' => "chart_proyabrob",
+    "scriptId" => "chart_proyabrob"
+));
+?>
+<h1>Recursos aprobados por área de experiencia</h1>
+<?php 
+$this->widget("SectirPointChart",array(
+    'data' => $proyectosaprobArea,
+    'chartId' => "chart_area",
+    "scriptId" => "chart_area"
+));
+?>

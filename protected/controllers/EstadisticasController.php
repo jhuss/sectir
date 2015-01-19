@@ -22,9 +22,25 @@ class EstadisticasController extends Controller
             throw new CHttpException(404,"No existe encuesta");
         }
     }
-	public function actionGastosactividades()
+	public function actionGastosactividades($id)
     {
-		$this->render('gastosactividades');
+        $this->loadEncuesta($id);
+        $proyectosaprob = $this->encuesta->getEstadisticasSumaRespuestaAno(array(
+            'preg_recursosaprob_num'
+        ),"o.id");
+        $proyectosaprobArea = $this->encuesta->getEstadisticasSumaRespuestaAno(array(
+            'preg_recursosaprob_area_num'
+        ),"o.id");
+        if ($proyectosaprob) {
+            $proyectosaprob = $this->agruparDatos($proyectosaprob,"enunciado_comp","suma");
+        }
+        if ($proyectosaprobArea) {
+            $proyectosaprobArea = $this->agruparDatos($proyectosaprobArea,"enunciado_comp","suma");
+        }
+        $this->render('gastosactividades',array(
+            "proyectosaprob" => $proyectosaprob,
+            "proyectosaprobArea" => $proyectosaprobArea,
+        ));
 	}
 
 	public function actionInfraestructura()
@@ -47,9 +63,25 @@ class EstadisticasController extends Controller
 		$this->render('productostecnologicos');
 	}
 
-	public function actionProyectosinvestigacion()
+	public function actionProyectosinvestigacion($id)
 	{
-		$this->render('proyectosinvestigacion');
+        $this->loadEncuesta($id);
+        $proyectosaprob = $this->encuesta->getEstadisticasSumaRespuestaAno(array(
+            'preg_proyectosaprob_num'
+        ),"o.id");
+        $proyectosaprobArea = $this->encuesta->getEstadisticasSumaRespuestaAno(array(
+            'preg_proyectosaprob_area_num'
+        ),"o.id");
+        if ($proyectosaprob) {
+            $proyectosaprob = $this->agruparDatos($proyectosaprob,"enunciado_comp","suma");
+        }
+        if ($proyectosaprobArea) {
+            $proyectosaprobArea = $this->agruparDatos($proyectosaprobArea,"enunciado_comp","suma");
+        }
+        $this->render('proyectosinvestigacion',array(
+            "proyectosaprob" => $proyectosaprob,
+            "proyectosaprobArea" => $proyectosaprobArea,
+        ));
 	}
 
 	public function actionRecursoshumanos($id)

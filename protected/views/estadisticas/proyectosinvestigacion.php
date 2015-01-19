@@ -5,10 +5,23 @@ $this->breadcrumbs=array(
 	'Estadisticas'=>array('/estadisticas'),
 	'Proyectosinvestigacion',
 );
-?>
-<h1><?php echo $this->id . '/' . $this->action->id; ?></h1>
 
-<p>
-	You may change the content of this page by modifying
-	the file <tt><?php echo __FILE__; ?></tt>.
-</p>
+?>
+
+<h1>Proyectos aprobados por ente de financiamiento</h1>
+
+<?php 
+$this->widget("SectirPointChart",array(
+    'data' => $proyectosaprob,
+    'chartId' => "chart_proyabrob",
+    "scriptId" => "chart_proyabrob"
+));
+?>
+<h1>Proyectos aprobados por área de experiencia</h1>
+<?php 
+$this->widget("SectirPointChart",array(
+    'data' => $proyectosaprobArea,
+    'chartId' => "chart_area",
+    "scriptId" => "chart_area"
+));
+?>

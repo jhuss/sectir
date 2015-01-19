@@ -690,13 +690,14 @@ EOF;
         return $command->queryAll();
 
     }
-    public function getEstadisticasSumaRespuestaAno($identificadores)
+    public function getEstadisticasSumaRespuestaAno($identificadores,$group = "ra.pregunta_id")
     {
         $sql = <<<EOF
-SELECT SUM(ra.valor) AS suma, p.identificador FROM {{Respuestaano}} ra
+SELECT SUM(ra.valor) AS suma, p.enunciado, o.enunciado AS enunciado_comp FROM {{Respuestaano}} ra
     INNER JOIN {{Pregunta}} p ON ra.pregunta_id = p.id
+    LEFT JOIN {{Opcioncomp}} o ON ra.opcioncomp_id = o.id
 WHERE ra.encuesta_id = :encuesta_id AND p.identificador IN (_ids_)
-GROUP BY ra.pregunta_id,ra.ano
+GROUP BY $group
 EOF;
         $fn = function($val){
             return ":param_$val";
