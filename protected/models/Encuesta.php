@@ -647,11 +647,11 @@ EOF;
             return ":param_$val";
         };
         $sql = <<<EOF
-        SELECT COUNT(ro.opcion_id),ro.user_id, o.identificador,o.enunciado FROM {{Respuestaopc}} ro
+        SELECT COUNT(ro.opcion_id) AS cuenta,ro.user_id, o.identificador,o.enunciado FROM {{Respuestaopc}} ro
 	INNER JOIN {{Pregunta}} p ON ro.pregunta_id = p.id
     INNER JOIN {{Opcion}} o ON ro.opcion_id = o.id
 WHERE ro.encuesta_id = :encuesta_id AND p.identificador IN (_ids_)
-GROUP BY ro.user_id, ro.opcion_id
+GROUP BY ro.opcion_id
 EOF;
         $sql = strtr($sql,array(
             '_ids_' => implode(",",array_map($fn,range(0,count($identificadores) - 1))),
@@ -664,15 +664,15 @@ EOF;
         return $command->queryAll();
 
     }
-    public function getEstadisticasPorCheckbox($identificadores)
+    public function getEstadisticasPorCheckbox($identificadores,$valor=1,$comparador = "=")
     {
         $sql = <<<EOF
-SELECT COUNT(ra.valor), p.identificador, p.user_id FROM {{Respuestaabierta}} ra
+SELECT COUNT(ra.valor) AS cuenta, p.identificador AS preg_ident, p.enunciado AS preg_enun, op.enunciado FROM {{Respuestaabierta}} ra
 	INNER JOIN {{Pregunta}} p ON ra.pregunta_id = p.id
-WHERE ra.valor = :valor AND ra.encuesta_id = :encuesta_id AND p.identificador 
+    LEFT JOIN {{Opcioncomp}} op ON ra.opcioncomp_id = op.id 
+WHERE ra.valor $comparador :valor AND ra.encuesta_id = :encuesta_id AND p.identificador
     IN (_ids_)
-GROUP BY ra.user_id,p.id
-
+GROUP BY p.id, op.id
 EOF;
 
         $fn = function($val){
@@ -683,7 +683,7 @@ EOF;
         ));
         $command = Yii::app()->db->createCommand($sql);
         $command->bindValue(":encuesta_id",$this->id);
-        $command->bindValue(":valor",1);
+        $command->bindValue(":valor",$valor);
         foreach ($identificadores as $i=>$id) {
             $command->bindValue($fn($i),$id);
         }

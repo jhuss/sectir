@@ -7,16 +7,17 @@ tt.className = 'ex-tooltip';
 document.body.appendChild(tt);
 
 var data = {
-  "xScale": "time",
+  "xScale": "ordinal",
   "yScale": "linear",
-  "main": $data,
+  "main": [{
+        "className": ".test",
+        "data": $data,
+  }]
 };
 var opts = {
-  "dataFormatX": function (x) { return d3.time.format('%Y-%m-%d').parse(x); },
-  "tickFormatX": function (x) { return d3.time.format('%A')(x); },
   "mouseover": function (d, i) {
     var pos = $(this).offset();
-    $(tt).text($this->textMouseOver)
+    $(tt).text("" + d.x + ":" + d.y )
       .css({top: topOffset + pos.top, left: pos.left + leftOffset})
       .show();
   },
@@ -29,4 +30,4 @@ EOF;
 
     Yii::app()->clientScript->registerScript($this->scriptId,$script);
 ?>
-    <div id="<?php echo $this->chartId; ?>"></div>
+<figure style="width: <?php echo $this->chartWidth; ?>; height: <?php echo $this->chartHeight; ?>;" id="<?php echo $this->chartId; ?>"></figure>

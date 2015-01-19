@@ -2,16 +2,28 @@
 
 class EstadisticasController extends Controller
 {
-    protected function beforeAction($action)
+    public $encuesta = null;
+    protected function agruparDatos($datos,$x,$y)
     {
-        Yii::app()
-            ->clientScript
-            ->registerPackage("d3");
-        return parent::beforeAction($action);
+        $retVal = array();
+        foreach ($datos as $d) {
+            $retVal[] = array(
+                "x" => $d[$x],
+                "y" => $d[$y],
+            );
+        }
+        return $retVal;
+    }
+    protected function loadEncuesta($id)
+    {
+        $this->encuesta = Encuesta::model()
+            ->findByPk($id);
+        if ($this->encuesta === null) {
+            throw new CHttpException(404,"No existe encuesta");
+        }
     }
 	public function actionGastosactividades()
     {
-        //TODO Prueba aquí
 		$this->render('gastosactividades');
 	}
 
@@ -20,9 +32,14 @@ class EstadisticasController extends Controller
 		$this->render('infraestructura');
 	}
 
-	public function actionProblematicas()
-	{
-		$this->render('problematicas');
+	public function actionProblematicas($id)
+    {
+        $this->loadEncuesta($id);
+        $datos = $this->encuesta->getEstadisticasPorCheckbox(array(
+            'preg_problematica_sino'
+        ),"","<>");
+        $datos = $this->agruparDatos($datos,"enunciado","cuenta");
+		$this->render('problematicas',array("datos"=>$datos));
 	}
 
 	public function actionProductostecnologicos()
@@ -35,35 +52,25 @@ class EstadisticasController extends Controller
 		$this->render('proyectosinvestigacion');
 	}
 
-	public function actionRecursoshumanos()
+	public function actionRecursoshumanos($id)
 	{
-		$this->render('recursoshumanos');
+        $this->loadEncuesta($id);
+        $datos = $this->encuesta->getEstadisticasPorCheckbox(array(
+            'preg_talentohumano_pei_inv',
+            'preg_talentohumano_pei_inn',
+        ));
+        $datosExp = $this->encuesta->getEstadisticasPorOpcion(array(
+            'preg_talentohumano_exp_area'
+        ));
+        if ($datos) {
+            $datos = $this->agruparDatos($datos,"preg_enun","cuenta");
+        }
+        if ($datosExp) {
+            $datosExp = $this->agruparDatos($datosExp,"enunciado","cuenta");
+        }
+        $this->render('recursoshumanos',array(
+            "datosPorCat" => $datos,
+            "datosExp" => $datosExp,
+        ));
 	}
-
-	// Uncomment the following methods and override them if needed
-	/*
-	public function filters()
-	{
-		// return the filter configuration for this controller, e.g.:
-		return array(
-			'inlineFilterName',
-			array(
-				'class'=>'path.to.FilterClass',
-				'propertyName'=>'propertyValue',
-			),
-		);
-	}
-
-	public function actions()
-	{
-		// return external action classes, e.g.:
-		return array(
-			'action1'=>'path.to.ActionClass',
-			'action2'=>array(
-				'class'=>'path.to.AnotherActionClass',
-				'propertyName'=>'propertyValue',
-			),
-		);
-	}
-	*/
 }

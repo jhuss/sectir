@@ -6,9 +6,12 @@ $this->breadcrumbs=array(
 	'Problematicas',
 );
 ?>
-<h1><?php echo $this->id . '/' . $this->action->id; ?></h1>
 
-<p>
-	You may change the content of this page by modifying
-	the file <tt><?php echo __FILE__; ?></tt>.
-</p>
+<h1>Problemáticas en los institutos de ciencia y tecnología</h1>
+
+<?php
+
+$this->widget("SectirPointChart",array(
+    'data' => $datos,
+));
+?>
