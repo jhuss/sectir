@@ -622,7 +622,7 @@ EOF;
     public function getProyectosInnovacion($groupBy)
     {
         $sql = <<<EOF
-SELECT COUNT(ra.valor), opc.identificador FROM {{Respuestaabierta}} ra
+SELECT COUNT(ra.valor) AS cuenta, opc.enunciado FROM {{Respuestaabierta}} ra
 	INNER JOIN {{Opcioncomp}} opc ON ra.opcioncomp_id = opc.id
     INNER JOIN {{Pregunta}} p ON ra.pregunta_id = p.id
     INNER JOIN (
@@ -630,12 +630,11 @@ SELECT COUNT(ra.valor), opc.identificador FROM {{Respuestaabierta}} ra
         	INNER JOIN {{Pregunta}} _p ON _ra.pregunta_id = _p.id
         WHERE _ra.valor = 1 AND _p.identificador = :identificador_int
     ) sub ON sub.id = ra.opcioncomp_id AND sub.user_id = ra.user_id AND sub.encuesta_id = ra.encuesta_id
-WHERE ra.encuesta_id = :encuesta_id AND ra.valor <> :valor AND p.identificador = :identificador_ext
-GROUP BY _group_
+WHERE ra.encuesta_id = :encuesta_id AND ra.valor <> :valor_vacio AND p.identificador = :identificador_ext
+GROUP BY $groupBy
 EOF;
-        $sql = strtr($sql,array('_group_'=>$groupBy));
         $command = Yii::app()->db->createCommand($sql);
-        $command->bindValue(":valor","");
+        $command->bindValue(":valor_vacio","");
         $command->bindValue(":encuesta_id",$this->id);
         $command->bindValue(":identificador_int","preg_actividadesciencia_sino");
         $command->bindValue(":identificador_ext","preg_actividadesciencia_cuales");
@@ -647,7 +646,7 @@ EOF;
             return ":param_$val";
         };
         $sql = <<<EOF
-        SELECT COUNT(ro.opcion_id) AS cuenta,ro.user_id, o.identificador,o.enunciado FROM {{Respuestaopc}} ro
+        SELECT COUNT(ro.opcion_id) AS cuenta,o.enunciado FROM {{Respuestaopc}} ro
 	INNER JOIN {{Pregunta}} p ON ro.pregunta_id = p.id
     INNER JOIN {{Opcion}} o ON ro.opcion_id = o.id
 WHERE ro.encuesta_id = :encuesta_id AND p.identificador IN (_ids_)
@@ -664,7 +663,7 @@ EOF;
         return $command->queryAll();
 
     }
-    public function getEstadisticasPorCheckbox($identificadores,$valor=1,$comparador = "=")
+    public function getEstadisticasPorCheckbox($identificadores,$valor=1,$comparador = "=",$useOpcionComp = true)
     {
         $sql = <<<EOF
 SELECT COUNT(ra.valor) AS cuenta, p.identificador AS preg_ident, p.enunciado AS preg_enun, op.enunciado FROM {{Respuestaabierta}} ra
@@ -715,7 +714,7 @@ EOF;
     public function getPublicacionesRevista()
     {
         $sql = <<<EOF
-SELECT SUM(ra.valor), opc.identificador FROM {{Respuestaano}} ra
+SELECT SUM(ra.valor) AS suma, opc.enunciado FROM {{Respuestaano}} ra
     INNER JOIN {{Opcioncomp}} opc ON ra.opcioncomp_id = opc.id
     INNER JOIN {{Pregunta}} p ON ra.pregunta_id = p.id
     INNER JOIN (
@@ -724,7 +723,7 @@ SELECT SUM(ra.valor), opc.identificador FROM {{Respuestaano}} ra
         WHERE _ra.valor <> :valor_int AND _p.identificador = :identificador_int
     ) sub ON sub.id = ra.opcioncomp_id AND sub.user_id = ra.user_id AND sub.encuesta_id = ra.encuesta_id
 WHERE ra.encuesta_id = :encuesta_id AND ra.valor <> :valor AND p.identificador = :identificador_ext
-GROUP BY opc.id, ra.user_id
+GROUP BY opc.id
 EOF;
         $command = Yii::app()->db->createCommand($sql);
         $command->bindValue(":valor_int","");
@@ -734,4 +733,44 @@ EOF;
         $command->bindValue(":encuesta_id",$this->id);
         return $command->queryAll();
     } 
+    public function getRevistasPorArea()
+    {
+        $sql = <<<EOF
+SELECT COUNT(ra.valor) AS cuenta, opc.enunciado, opc.identificador FROM {{Respuestaabierta}} ra 
+    INNER JOIN {{Pregunta}} p ON p.id = ra.pregunta_id 
+    INNER JOIN {{Opcioncomp}} opc ON opc.id = ra.opcioncomp_id 
+
+WHERE ra.encuesta_id = :encuesta_id AND p.identificador = "preg_revistas_area_revista" AND ra.valor <> "" GROUP BY opc.id
+EOF;
+        $command = Yii::app()->db->createCommand($sql);
+        $command->bindValue(":encuesta_id",$this->id);
+        return $command->queryAll();
+
+    }
+    public function getPostgradosMaestria()
+    {
+        $sql = <<<EOF
+SELECT COUNT(ra.valor) AS cuenta, p.enunciado FROM {{Respuestaabierta}} ra
+	INNER JOIN {{Pregunta}} p ON ra.pregunta_id = p.id
+WHERE p.identificador IN 
+	('preg_doctorado_existente', 'preg_maestria_existente', 'preg_especialidades_existente', 'preg_pregrado_existente')
+AND ra.encuesta_id = :encuesta_id AND ra.valor <> ""
+GROUP BY p.id
+EOF;
+        $command = Yii::app()->db->createCommand($sql);
+        $command->bindValue(":encuesta_id",$this->id);
+        return $command->queryAll();
+    }
+    public function getEgresadosProgramas()
+    {
+        $sql = <<<EOF
+SELECT SUM(ra.valor) AS suma, p.identificador FROM {{Respuestaano}} ra
+	INNER JOIN {{Pregunta}} p ON ra.pregunta_id = p.id
+WHERE ra.encuesta_id = 1 AND p.identificador IN ('preg_doctorado_numero', 'preg_maestria_numero', 'preg_especialidades_numero', 'preg_pregrado_numero')
+GROUP BY ra.pregunta_id
+EOF;
+        $command = Yii::app()->db->createCommand($sql);
+        $command->bindValue(":encuesta_id",$this->id);
+        return $command->queryAll();
+    }
 }

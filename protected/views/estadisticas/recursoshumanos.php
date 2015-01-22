@@ -27,3 +27,19 @@ $this->widget("SectirPointChart",array(
     "scriptId" => "chart_exp"
 ));
 ?>
+<h2>Talento humano por formación universitaria</h2>
+<?php 
+$this->widget("SectirPointChart",array(
+    'data' => $datosUni,
+    'chartId' => "chart_uni",
+    "scriptId" => "chart_uni"
+));
+?>
+<h2>Talento humano por fuente de financiamiento</h2>
+<?php 
+$this->widget("SectirPointChart",array(
+    'data' => $datosFuenteFin,
+    'chartId' => "chart_fuentefin",
+    "scriptId" => "chart_fuentefin"
+));
+?>
