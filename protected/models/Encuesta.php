@@ -197,7 +197,7 @@ EOF;
         foreach ($entradas as $entrada) {
             if (isset($entrada["values"])) {
                 if ($entrada["hasSubQ"] === false) {
-                    foreach ($entrada["values"] as $value) {
+                    foreach ($entrada["values"] as $indiceEntrada=>$value) {
                         foreach ($value as $indice=>$internalValue) {
                             if (is_array($internalValue)) {
                                 foreach ($internalValue as $v) {
@@ -205,7 +205,11 @@ EOF;
                                 }
                             }
                             else {
-                                $this->meterColaRespuestas($indice,$internalValue);
+                                $this->meterColaRespuestas($indice,
+                                    $internalValue,
+                                    false, //hasSubQ
+                                    $indiceEntrada
+                                );
                             }
                         }
                     }
@@ -442,7 +446,8 @@ EOF;
         }
         return $errores;
     }
-    public function meterColaRespuestas($indice,$valor,$indiceSubQ=false)
+    public function meterColaRespuestas($indice,$valor,$indiceSubQ=false, 
+        $indiceEntrada = false)
     {
         $trimmedIndice = trim((string) $indice);
         $tieneAno = strpos($trimmedIndice,"-") !== false;
@@ -462,6 +467,9 @@ EOF;
         );
         if ($indiceSubQ !== false) {
             $arrayPregunta["indiceSubQ"] = trim((string) $indiceSubQ);
+        }
+        if ($indiceEntrada !== false) {
+            $arrayPregunta["posicion"] = $indiceEntrada;
         }
         $this->_colaRespuestas[] = $arrayPregunta;
     }
@@ -503,6 +511,8 @@ EOF;
                     isset($respuesta["indiceSubQ"]) ? $respuesta["indiceSubQ"] : null,
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
+                'posicion' => 
+                    isset($respuesta["posicion"]) ? $respuesta["posicion"] : null,
             );
         }
         $command = Yii::app()
@@ -524,6 +534,8 @@ EOF;
                     isset($respuesta["indiceSubQ"]) ? $respuesta["indiceSubQ"] : null,
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
+                'posicion' => 
+                    isset($respuesta["posicion"]) ? $respuesta["posicion"] : null,
             );
         }
         $command = Yii::app()
@@ -567,6 +579,8 @@ EOF;
                     isset($respuesta["indiceSubQ"]) ? $respuesta["indiceSubQ"] : null,
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
+                'posicion' => 
+                    isset($respuesta["posicion"]) ? $respuesta["posicion"] : null,
             );
         }
         $command = Yii::app()
@@ -589,6 +603,8 @@ EOF;
                     isset($respuesta["indiceSubQ"]) ? $respuesta["indiceSubQ"] : null,
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
+                'posicion' => 
+                    isset($respuesta["posicion"]) ? $respuesta["posicion"] : null,
             );
         }
         $command = Yii::app()
