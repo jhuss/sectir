@@ -90,7 +90,7 @@ class ColocarDatosCommand extends CConsoleCommand
             ),
             array(
                 'enunciado' => 'Caracter',
-                'identificador' => 'preg_datos_caracterpublicoprivado',
+                'identificador' => 'preg_datos_caracterpub',
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
@@ -918,6 +918,15 @@ class ColocarDatosCommand extends CConsoleCommand
                 'compuesta' => false,
             ),
             array(
+                'enunciado' => 'Tipo de proveedor',
+                'identificador' => 'preg_internet_tipo',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+                'tipo' => 'select',
+                'compuesta' => false,
+            ),
+            array(
                 'enunciado' => '¿Cual proveedor?',
                 'identificador' => 'preg_internet_cualprov',
                 'creado_en' => new CDbExpression('NOW()'),
@@ -1447,7 +1456,7 @@ class ColocarDatosCommand extends CConsoleCommand
                 'preg_datos_ano_fundacion',
                 'preg_datos_universidad_ubicacion',
                 'preg_datos_municipio',
-                'preg_datos_caracterpublicoprivado',
+                'preg_datos_caracterpub',
             ),
             'areas_exp' => array( 
                 'preg_areas_exp_comp',
@@ -1585,6 +1594,7 @@ class ColocarDatosCommand extends CConsoleCommand
             'internet' => array(
                 'preg_internet_servint',
                 'preg_internet_proveedorint',
+                'preg_internet_tipo',
                 'preg_internet_cualprov',
                 'preg_internet_usoinv',
             ),
@@ -1651,7 +1661,6 @@ class ColocarDatosCommand extends CConsoleCommand
             ),
             'tipoencuesta_otros' => array(
                 'datos',
-                'sedenucleo',
                 'areas_exp',
                 'actividadesciencia',
                 'benef',
@@ -3097,6 +3106,13 @@ CARMONA)',
              * Redes temáticas
              */
             array(
+                'enunciado' => 'Ninguna',
+                'identificador' => 'redtem_ninguna',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
                 'enunciado' => 'Nacional',
                 'identificador' => 'redtem_nacional',
                 'creado_en' => new CDbExpression('NOW()'),
@@ -3257,7 +3273,7 @@ CARMONA)',
                 'muni_urdaneta',
                 'muni_valera',
             ),
-            'preg_datos_caracterpublicoprivad' => array( 
+            'preg_datos_caracterpub' => array( 
                 'caracter_publico',
                 'caracter_privado',
             ),
@@ -3301,6 +3317,7 @@ CARMONA)',
                 'ejetem_3',
             ),
             'preg_red_tem_pert' => array( 
+                'redtem_ninguna',
                 'redtem_nacional',
                 'redtem_regional',
                 'redtem_local',
@@ -3328,11 +3345,16 @@ CARMONA)',
                 'bool_si',
                 'bool_no',
             ),
+            //Proveedor
             'preg_internet_cualprov' => array( 
                 'tipointernet_bandaancha',
                 'tipointernet_satelital',
                 'tipointernet_fibraoptica',
                 'tipointernet_cable',
+            ),
+            'preg_internet_tipo' => array( 
+                'caracter_publico',
+                'caracter_privado',
             ),
             //TODO Pondremos mientras lo mismo de tipo de conexiones
             'preg_internet_proveedorint' => array(
@@ -3934,7 +3956,7 @@ EOF;
             'preg_datos_ano_fundacion',
             'preg_datos_universidad_ubicacion',
             'preg_datos_municipio',
-            'preg_datos_caracterpublicoprivado'
+            'preg_datos_caracterpub'
         );
         $commandRequeridas = Yii::app()->db->createCommand($sqlPreguntasRequeridas);
         foreach ($identificadorRequeridas as $v) {

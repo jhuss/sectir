@@ -165,6 +165,7 @@ SELECT p.enunciado, p.id, p.identificador, p.compuesta, p.tipo, pc.lft, pc.rgt, 
     	GROUP BY node.pregunta_id,node.grupocomp_id
         ) AS pc ON p.id = pc.pregunta_id 
 WHERE te.id = :idencuesta
+ORDER BY teg.peso, pg.peso
 EOF;
         $command = Yii::app()->db->createCommand($sql);
         $command->bindValue(":idencuesta",$this->id);
@@ -174,7 +175,10 @@ EOF;
          * Obtenemos opciones
          */
         $sqlOpcs = <<<EOF
-SELECT o.id, o.enunciado, o.identificador, po.pregunta_id FROM {{PreguntaOpc}} po INNER JOIN {{Opcion}} o ON po.opcion_id = o.id INNER JOIN {{Pregunta}} p ON po.pregunta_id = p.id WHERE p.id IN (_ids_)
+SELECT o.id, o.enunciado, o.identificador,po.peso, po.pregunta_id FROM {{PreguntaOpc}} po 
+    INNER JOIN {{Opcion}} o ON po.opcion_id = o.id 
+    INNER JOIN {{Pregunta}} p ON po.pregunta_id = p.id 
+WHERE p.id IN (_ids_)
 EOF;
         if ($idPreguntas) {
             $paramsOpc = array_map(function($id){
@@ -192,23 +196,29 @@ EOF;
             $paramsOpc = array();
             $opciones = array();
         }
-        $opcionesPorPreguntaID = Arrays::from($opciones)->group(function($val){
-            return $val["pregunta_id"];
-        })->obtain();
+        $opcionesPorPreguntaID = Arrays::from($opciones)
+            ->sort(function($val){
+                return $val["peso"];
+            })
+            ->group(function($val){
+                return $val["pregunta_id"];
+            })
+                ->obtain();
         $getOptionFn = function($val){
-            return StringUtils::getQuotedSurroundedStr($val["identificador"]) 
-                . ":"
-                . StringUtils::getQuotedSurroundedStr($val["enunciado"]);
+            return "[" . StringUtils::getQuotedSurroundedStr($val["identificador"]) 
+                . ","
+                . StringUtils::getQuotedSurroundedStr($val["enunciado"])
+                . "]";
         }; 
         foreach ($preguntas as &$val) {
             if (array_key_exists($val["id"],$opcionesPorPreguntaID)) {
                 $opcs = $opcionesPorPreguntaID[$val["id"]];
                 $val["options"] = array();
                 $val["options"]["ng-options"] = 
-                    "key as value for (key, value) in {" . 
+                    "value[0] as value[1] for value in [" . 
                     implode(",",array_map($getOptionFn,
                        $opcs)) 
-                    . "}";
+                    . "]";
             }
         }
         unset($val);
@@ -216,7 +226,7 @@ EOF;
          * Obtenemos opciones compuestas
          */
         $sqlOpcComp = <<<EOF
-SELECT oc.id, oc.enunciado AS enunciadocomp, goc.grupocomp_id FROM {{GrupocompOpcioncomp}} goc INNER JOIN {{Opcioncomp}} oc ON goc.opcioncomp_id = oc.id WHERE goc.grupocomp_id IN (_ids_)
+SELECT oc.id, oc.enunciado AS enunciadocomp, goc.grupocomp_id, goc.peso FROM {{GrupocompOpcioncomp}} goc INNER JOIN {{Opcioncomp}} oc ON goc.opcioncomp_id = oc.id WHERE goc.grupocomp_id IN (_ids_) 
 EOF;
         $idGrupoComps = Arrays::from($preguntas)->pluck('grupocomp_id')->obtain();
         if ($idGrupoComps) {
@@ -236,8 +246,12 @@ EOF;
             $opcionesComp = array();
         }
         
-        $opcionesCompPorGrupoComp = Arrays::from($opcionesComp)->group(function($val){
-            return $val["grupocomp_id"];
+        $opcionesCompPorGrupoComp = Arrays::from($opcionesComp)
+            ->sort(function($val){
+                return $val["peso"];
+            })
+            ->group(function($val){
+                return $val["grupocomp_id"];
         })->obtain();
         foreach ($preguntas as &$ref) {
             if ($ref["tipo"] === "subq" && array_key_exists($ref["grupocomp_id"],$opcionesCompPorGrupoComp)) {
