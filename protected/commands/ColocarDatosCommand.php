@@ -194,6 +194,62 @@ class ColocarDatosCommand extends CConsoleCommand
                 'compuesta' => true,
             ), 
             // FIN DE GRUPO 3
+            //COMIENZO DE GRUPO 3 
+            array(
+                'enunciado' => 'Revistas arbitradas',
+                'identificador' => 'preg_revotro_comp',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+                'tipo' => 'compuesta',
+                'compuesta' => true,
+            ),
+            array(
+                'enunciado' => 'Area de especialización',
+                'identificador' => 'preg_revotro_area',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+                'tipo' => 'subq',
+                'compuesta' => true,
+            ),
+            array(
+                'enunciado' => 'Nombre de la revista',
+                'identificador' => 'preg_revotro_nombre',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+                'tipo' => 'text',
+                'compuesta' => true,
+            ),
+            array(
+                'enunciado' => 'Tipo de revista',
+                'identificador' => 'preg_revotro_tipo',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+                'tipo' => 'select',
+                'compuesta' => true,
+            ), 
+            array(
+                'enunciado' => 'Distribución',
+                'identificador' => 'preg_revotro_dist',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+                'tipo' => 'select',
+                'compuesta' => true,
+            ), 
+            array(
+                'enunciado' => 'Periodicidad',
+                'identificador' => 'preg_revotro_peri',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+                'tipo' => 'select',
+                'compuesta' => true,
+            ), 
+            // FIN DE GRUPO 3
             //COMIENZO DE GRUPO de servicios 
             array(
                 'enunciado' => 'Servicios Científicos, Tecnológicos e Innovación y de Información que presta el instituto, centro, laboratorio, otro',
@@ -369,6 +425,35 @@ class ColocarDatosCommand extends CConsoleCommand
                 'compuesta' => true,
             ),
             //Fin del grupo  4
+            //Comienzo del grupo de productos resultantes 
+            array(
+                'enunciado' => 'Total de productos resultantes',
+                'identificador' => 'preg_productos_compuesta',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+                'tipo' => 'compuesta',
+                'compuesta' => true,
+            ), 
+            array(
+                'enunciado' => 'Productos',
+                'identificador' => 'preg_productos_prod',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+                'tipo' => 'subq',
+                'compuesta' => true,
+            ), 
+            array(
+                'enunciado' => 'Número',
+                'identificador' => 'preg_productos_numero',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+                'tipo' => 'ano',
+                'compuesta' => true,
+            ), 
+            //Fin del grupo de productos resultantes 
             //Comienzo del grupo 5
             array(
                 'enunciado' => 'Numero de egresados de programas de doctorado en los últimos 12 años',
@@ -1156,6 +1241,13 @@ class ColocarDatosCommand extends CConsoleCommand
                 'user_id' => $idUser,
             ), 
             array(
+                'enunciado' => 'Productos',
+                'identificador' => 'productos',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ), 
+            array(
                 'enunciado' => 'Programas de pregrado',
                 'identificador' => 'pregrado',
                 'creado_en' => new CDbExpression('NOW()'),
@@ -1222,6 +1314,13 @@ class ColocarDatosCommand extends CConsoleCommand
             array(
                 'enunciado' => 'Revistas arbitradas e indexadas',
                 'identificador' => 'revistas',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Revistas (Otros)',
+                'identificador' => 'revotro',
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
@@ -1315,8 +1414,22 @@ class ColocarDatosCommand extends CConsoleCommand
                 'user_id' => $idUser,
             ),
             array(
+                'enunciado' => 'Revistas arbitradas',
+                'identificador' => 'revotro',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
                 'enunciado' => 'Programas de doctorado',
                 'identificador' => 'doctorado',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Productos',
+                'identificador' => 'productos',
                 'creado_en' => new CDbExpression('NOW()'),
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
@@ -1474,6 +1587,11 @@ class ColocarDatosCommand extends CConsoleCommand
                 'preg_actividadesciencia_sino',
                 'preg_actividadesciencia_cuales',
             ),
+            'productos' => array(
+                'preg_productos_compuesta',
+                'preg_productos_prod',
+                'preg_productos_numero'
+            ),
             'talentohumano' => array(
                 'preg_talentohumano_compuesta',
                 'preg_talentohumano_nombre',
@@ -1560,6 +1678,14 @@ class ColocarDatosCommand extends CConsoleCommand
                 'preg_revistas_area_subq',
                 'preg_revistas_area_revista',
                 'preg_revistas_area_num',
+            ),
+            'revotro' => array(
+                'preg_revotro_comp',
+                'preg_revotro_area',
+                'preg_revotro_nombre',
+                'preg_revotro_tipo',
+                'preg_revotro_dist',
+                'preg_revotro_peri',
             ),
             'lineas_inv' => array(
                 'preg_lineas_inv_comp',
@@ -1670,9 +1796,10 @@ class ColocarDatosCommand extends CConsoleCommand
                 'proyectosaprob_area',
                 'recursosaprob_area',
                 'servcient',
+                'productos',
                 'patentes',
                 'patentes2',
-                'revistas',
+                'revotro',
                 'lineas_inv',
                 'actores',
                 'red_tem',
@@ -2085,6 +2212,149 @@ class ColocarDatosCommand extends CConsoleCommand
                 'actualizado_en' => new CDbExpression('NOW()'),
                 'user_id' => $idUser,
             ),
+            // Productos resultantes
+            
+            array(
+                'enunciado' => 'Publicaciones',
+                'identificador' => 'productos_pub',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Libros',
+                'identificador' => 'productos_lib',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Literatura gris (Informes, papers)',
+                'identificador' => 'productos_papers',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Capítulo de Memoria',
+                'identificador' => 'productos_capmem',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Capítulo de libro',
+                'identificador' => 'productos_caplib',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Tesis',
+                'identificador' => 'productos_tesis',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Trabajos de ascensos',
+                'identificador' => 'productos_trabasc',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Productos Tecnológicos',
+                'identificador' => 'productos_tecno',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Procesos o Técnicas',
+                'identificador' => 'productos_proctec',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Composición y arreglos musicales',
+                'identificador' => 'productos_comparr',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Obras de arte',
+                'identificador' => 'productos_obrasarte',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Videos',
+                'identificador' => 'productos_videos',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Conferencias, charlas, talleres',
+                'identificador' => 'productos_conf',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Organización de eventos',
+                'identificador' => 'productos_orgeventos',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Base de datos',
+                'identificador' => 'productos_basedatos',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Sistemas de información',
+                'identificador' => 'productos_sisinf',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Software',
+                'identificador' => 'productos_software',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Desarrollo de materiales didácticos',
+                'identificador' => 'productos_matdid',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Prototipo industrial',
+                'identificador' => 'productos_prot',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Otros',
+                'identificador' => 'productos_otros',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+
             //Servicios cientificos
             array(
                 'enunciado' => 'Asesorías, consultorías y asistencias técnicas',
@@ -2387,6 +2657,21 @@ class ColocarDatosCommand extends CConsoleCommand
                 'area_humanidades',
                 'area_otros'
             ),
+            'revotro' => array(
+                'area_alimentos',
+                'area_agricola',
+                'area_ambiente',
+                'area_energiaalt',
+                'area_biologiasal',
+                'area_cienciastierra',
+                'area_fisicaquimicamat',
+                'area_ciencias_ec_soc',
+                'area_artes',
+                'area_educacion',
+                'area_desarrollo',
+                'area_humanidades',
+                'area_otros'
+            ),
             'servcient' => array(
                 'servcient_asesorias',
                 'servcient_diagnost',
@@ -2429,6 +2714,28 @@ class ColocarDatosCommand extends CConsoleCommand
                 'benef_univpublica',
                 'benef_recupeambientes',
                 'benef_otros',
+            ),
+            'productos' => array(
+                'productos_pub',
+                'productos_lib',
+                'productos_papers',
+                'productos_capmem',
+                'productos_caplib',
+                'productos_tesis',
+                'productos_trabasc',
+                'productos_tecno',
+                'productos_proctec',
+                'productos_comparr',
+                'productos_obrasarte',
+                'productos_videos',
+                'productos_conf',
+                'productos_orgeventos',
+                'productos_basedatos',
+                'productos_sisinf',
+                'productos_software',
+                'productos_matdid',
+                'productos_prot',
+                'productos_otros',
             ),
         );
         $sqlGrupocompOpcion = "INSERT INTO {{GrupocompOpcioncomp}} (grupocomp_id, opcioncomp_id, peso) (SELECT g.id AS grupocomp_id, o.id AS opcioncomp_id, :peso AS peso FROM {{Opcioncomp}} o JOIN {{Grupocomp}} g ON g.identificador=:grupoid WHERE o.identificador =:opcionid)";
@@ -2968,6 +3275,84 @@ CARMONA)',
             /**
              * Fin sexo
              */
+            /* Tipo de revista
+             */
+            array(
+                'enunciado' => 'Arbitrada',
+                'identificador' => 'revotro_arbitrada',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Indexada',
+                'identificador' => 'revotro_indexada',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Arbitrada e Indexada',
+                'identificador' => 'revotro_ambos',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            /*
+             * Distribución de la revista
+             */
+            array(
+                'enunciado' => 'Físico',
+                'identificador' => 'revotro_fisico',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Online',
+                'identificador' => 'revotro_online',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Físico y Online',
+                'identificador' => 'revotro_ambos_online',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            /*
+             * Periodicidad
+             */
+            array(
+                'enunciado' => 'Mensual',
+                'identificador' => 'revotro_mensual',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Trimestral',
+                'identificador' => 'revotro_trimestral',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Semestral',
+                'identificador' => 'revotro_semestral',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Anual',
+                'identificador' => 'revotro_anual',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
             /*
              * Fuente financiamiento
              * TODO Colocar fuentes reales
@@ -3276,6 +3661,22 @@ CARMONA)',
             'preg_datos_caracterpub' => array( 
                 'caracter_publico',
                 'caracter_privado',
+            ),
+            'preg_revotro_tipo' => array(
+                'revotro_arbitrada',
+                'revotro_indexada',
+                'revotro_ambos',
+            ),
+            'preg_revotro_dist' => array(
+                'revotro_fisico',
+                'revotro_online',
+                'revotro_ambos_online',
+            ),
+            'preg_revotro_peri' => array(
+                'revotro_mensual',
+                'revotro_trimestral',
+                'revotro_semestral',
+                'revotro_anual',
             ),
             'preg_talentohumano_sexo' => array(
                 'sexo_masculino',
@@ -3784,6 +4185,26 @@ CARMONA)',
                 ),
             ),
             /**
+             * productos
+             */
+            'productos' => array(
+                array(
+                    'preguntaid' => 'preg_productos_compuesta',
+                    'lft' => 1,
+                    'rgt' => 6,
+                ),
+                array(
+                    'preguntaid' => 'preg_productos_prod',
+                    'lft' => 2,
+                    'rgt' => 3,
+                ),
+                array(
+                    'preguntaid' => 'preg_productos_numero',
+                    'lft' => 4,
+                    'rgt' => 5,
+                ),
+            ),
+            /**
              * Revistas
              */
             'revistas' => array(
@@ -3926,6 +4347,41 @@ CARMONA)',
                     'preguntaid' => 'preg_comiteetica2_correo',
                     'lft' => 8,
                     'rgt' => 9,
+                ),
+            ),
+            /**
+             *  Revistas (Otros)
+             */
+            'revotro' => array(
+                array(
+                    'preguntaid' => 'preg_revotro_comp',
+                    'lft' => 1,
+                    'rgt' => 12,
+                ),
+                array(
+                    'preguntaid' => 'preg_revotro_area',
+                    'lft' => 2,
+                    'rgt' => 3,
+                ),
+                array(
+                    'preguntaid' => 'preg_revotro_nombre',
+                    'lft' => 4,
+                    'rgt' => 5,
+                ),
+                array(
+                    'preguntaid' => 'preg_revotro_tipo',
+                    'lft' => 6,
+                    'rgt' => 7,
+                ),
+                array(
+                    'preguntaid' => 'preg_revotro_peri',
+                    'lft' => 8,
+                    'rgt' => 9,
+                ),
+                array(
+                    'preguntaid' => 'preg_revotro_dist',
+                    'lft' => 10,
+                    'rgt' => 11,
                 ),
             ),
             
