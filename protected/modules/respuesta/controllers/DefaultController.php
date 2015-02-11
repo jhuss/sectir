@@ -4,15 +4,19 @@ class DefaultController extends Controller
 {
     public function accessRules()
     {
-        return array('allow',
-            'actions' => array('index','preguntas',
-            "responderEncuesta",'postrespuesta'),
-            'users' => array('@')
+        return array(
+            array('allow',
+                'actions' => array('index','preguntas',
+                "responderEncuesta",'postrespuesta'),
+                'users' => array('@')
+            ),
+            array('deny'),
         );
     }
     public function filters()
     {
         return array(
+            'accessControl',
             array(
                 'SectirEncuestaFilter + responderEncuesta, postrespuesta',
                 'encuestaParam' => 'encuestaId',
