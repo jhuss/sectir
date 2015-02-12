@@ -97,6 +97,15 @@ class ColocarDatosCommand extends CConsoleCommand
                 'tipo' => 'select',
                 'compuesta' => false,
             ),
+            array(
+                'enunciado' => 'Tipo de Instituto',
+                'identificador' => 'preg_datos_tipoinst',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+                'tipo' => 'select',
+                'compuesta' => false,
+            ),
             //FIN DE GRUPO 1
             //@note
             //Areas de experiencia del grupo
@@ -1570,6 +1579,7 @@ class ColocarDatosCommand extends CConsoleCommand
                 'preg_datos_universidad_ubicacion',
                 'preg_datos_municipio',
                 'preg_datos_caracterpub',
+                'preg_datos_tipoinst'
             ),
             'areas_exp' => array( 
                 'preg_areas_exp_comp',
@@ -3208,6 +3218,54 @@ CARMONA)',
              * Fin de caracter
              */
             /**
+             * Tipo de instituto
+             */
+            array(
+                'enunciado' => 'Universidad',
+                'identificador' => 'tipoinst_uni',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Instituto',
+                'identificador' => 'tipoinst_inst',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Centro',
+                'identificador' => 'tipoinst_centro',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Grupo',
+                'identificador' => 'tipoinst_grupo',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Laboratorio',
+                'identificador' => 'tipoinst_lab',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            array(
+                'enunciado' => 'Otro',
+                'identificador' => 'tipoinst_otro',
+                'creado_en' => new CDbExpression('NOW()'),
+                'actualizado_en' => new CDbExpression('NOW()'),
+                'user_id' => $idUser,
+            ),
+            /**
+             * Fin de tipo de instituo
+             */
+            /**
              * Nivel académico
              */
             array(
@@ -3661,6 +3719,14 @@ CARMONA)',
             'preg_datos_caracterpub' => array( 
                 'caracter_publico',
                 'caracter_privado',
+            ),
+            'preg_datos_tipoinst' => array(
+                'tipoinst_uni',
+                'tipoinst_inst',
+                'tipoinst_centro',
+                'tipoinst_grupo',
+                'tipoinst_lab',
+                'tipoinst_otro',
             ),
             'preg_revotro_tipo' => array(
                 'revotro_arbitrada',
@@ -4412,7 +4478,8 @@ EOF;
             'preg_datos_ano_fundacion',
             'preg_datos_universidad_ubicacion',
             'preg_datos_municipio',
-            'preg_datos_caracterpub'
+            'preg_datos_caracterpub',
+            'preg_datos_tipoinst',
         );
         $commandRequeridas = Yii::app()->db->createCommand($sqlPreguntasRequeridas);
         foreach ($identificadorRequeridas as $v) {
