@@ -635,7 +635,7 @@ EOF;
         $this->insertarEncuestaFinalizada();
     }
     
-    public function getProyectosInnovacion($groupBy)
+    public function getProyectosInnovacion($groupBy,$actividadesCiencia=true)
     {
         $sql = <<<EOF
 SELECT COUNT(ra.valor) AS cuenta, opc.enunciado FROM {{Respuestaabierta}} ra
@@ -652,8 +652,16 @@ EOF;
         $command = Yii::app()->db->createCommand($sql);
         $command->bindValue(":valor_vacio","");
         $command->bindValue(":encuesta_id",$this->id);
-        $command->bindValue(":identificador_int","preg_actividadesciencia_sino");
-        $command->bindValue(":identificador_ext","preg_actividadesciencia_cuales");
+        if ($actividadesCiencia) {
+            // Buscamos actividades de ciencia
+            $command->bindValue(":identificador_int","preg_actividadesciencia_sino");
+            $command->bindValue(":identificador_ext","preg_actividadesciencia_cuales");
+        }
+        else { 
+            //Buscamos servicios
+            $command->bindValue(":identificador_int","preg_servcient_sino");
+            $command->bindValue(":identificador_ext","preg_servicient_cuales");
+        }
         return $command->queryAll();
     }
     public function getEstadisticasPorOpcion($identificadores)

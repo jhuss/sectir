@@ -256,4 +256,50 @@ class EstadisticasController extends Controller
             "datosComiteEtica" => $datosComiteEtica,
         ));
     }
+    public function actionTipoPatrimonio($id)
+    {
+        $this->loadEncuesta($id);
+        $datosPorPatrimonio = $this->encuesta->getEstadisticasPorOpcion(array(
+            'preg_datos_caracterpub'
+        )); 
+        if ($datosPorPatrimonio) {
+            $datosPorPatrimonio = $this->agruparDatos($datosPorPatrimonio,"enunciado","cuenta");
+        }
+        $this->render("tipopatrimonio",array(
+            "datosPorPatrimonio" => $datosPorPatrimonio,
+        ));
+    }
+    public function actionExperiencia($id)
+    {
+        $this->loadEncuesta($id);
+        $datos = $this->encuesta->getEstadisticasPorCheckbox(array(
+               'preg_areas_exp_sino'
+        ));
+        $datos = $this->agruparDatos($datos,"enunciado","cuenta");
+        $this->render('problematicas',array("datos"=>$datos));
+    }
+    public function actionBeneficiarios($id)
+    {
+        $this->loadEncuesta($id);
+        $benefNum = $this->encuesta->getEstadisticasSumaRespuestaAno(array(
+            'preg_benef_num'
+        ),"o.id");
+        if ($benefNum) {
+            $benefNum = $this->agruparDatos($benefNum,"enunciado_comp","suma");
+        }
+        $this->render("beneficiarios",array(
+            "benefNum" => $benefNum,
+        ));
+    }
+    public function actionServicios($id)
+    {
+        $this->loadEncuesta($id);
+        $datos = $this->encuesta->getProyectosInnovacion("opc.id",false);
+        if ($datos) {
+            $datos = $this->agruparDatos($datos,"enunciado","cuenta");
+        }
+        $this->render("servicios",array(
+            "datos" => $datos,
+        ));
+    }
 }
