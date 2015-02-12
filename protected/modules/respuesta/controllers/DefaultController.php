@@ -7,7 +7,9 @@ class DefaultController extends Controller
         return array(
             array('allow',
                 'actions' => array('index','preguntas',
-                "responderEncuesta",'postrespuesta'),
+                "responderEncuesta",'postrespuesta',
+                "exito"
+            ),
                 'users' => array('@')
             ),
             array('deny'),
@@ -60,8 +62,8 @@ class DefaultController extends Controller
         $encuesta->obtenerRespuestasEncuesta($post);
         $errores = $encuesta->validarColaPreguntas();
         $encuesta->insertarDatos();
-        CVarDumper::dump($post);
-        CVarDumper::dump($errores);
+        /* CVarDumper::dump($post); */
+        /* CVarDumper::dump($errores); */
 
     }
     public function actionExito()
