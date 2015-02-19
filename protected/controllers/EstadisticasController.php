@@ -1,4 +1,5 @@
 <?php
+use Underscore\Types\Arrays;
 
 class EstadisticasController extends Controller
 {
@@ -6,11 +7,37 @@ class EstadisticasController extends Controller
     protected function agruparDatos($datos,$x,$y)
     {
         $retVal = array();
-        foreach ($datos as $d) {
-            $retVal[] = array(
-                "x" => $d[$x],
-                "y" => $d[$y],
-            );
+        if (!is_array($x)) {
+            foreach ($datos as $d) {
+                $retVal[] = array(
+                    "x" => $d[$x],
+                    "y" => $d[$y],
+                );
+            }
+        } else {
+            foreach ($datos as $d) {
+                $indiceX = "";
+                foreach ($x as $elX) {
+                    $indiceX .= $d[$elX];
+                    $indiceX .= ":";
+                }
+                $indiceX = rtrim($indiceX,": ");
+                $retVal[] = array(
+                    "x" => $indiceX,
+                    "y" => $d[$y],
+                );
+            }
+        }
+        return $retVal;
+    }
+    public function agruparDatosPorArray($datos,$group,$x,$y)
+    {
+        $temp = Arrays::from($datos)->group(function($val) use ($group){
+            return $val[$group];
+        })->obtain();
+        $retVal = array();
+        foreach ($temp as $i=>$val) {
+            $retVal[$i] = $this->agruparDatos($val,$x,$y);
         }
         return $retVal;
     }
@@ -22,28 +49,65 @@ class EstadisticasController extends Controller
             throw new CHttpException(404,"No existe encuesta");
         }
     }
-	public function actionGastosactividades($id)
+	public function actionGastosactividades($id,$porEnte=0)
     {
         $this->loadEncuesta($id);
-        $proyectosaprob = $this->encuesta->getEstadisticasSumaRespuestaAno(array(
-            'preg_recursosaprob_num'
-        ),"o.id");
-        $proyectosaprobArea = $this->encuesta->getEstadisticasSumaRespuestaAno(array(
-            'preg_recursosaprob_area_num'
-        ),"o.id");
-        if ($proyectosaprob) {
-            $proyectosaprob = $this->agruparDatos($proyectosaprob,"enunciado_comp","suma");
+        if (!$porEnte) {
+            $proyectosaprob = $this->encuesta->getEstadisticasSumaRespuestaAno(array(
+                'preg_recursosaprob_num'
+            ),"o.id");
+            if ($proyectosaprob) {
+                $proyectosaprob = $this->agruparDatos($proyectosaprob,"enunciado_comp","suma");
+            }
+            $proyectosaprobArea = $this->encuesta->getEstadisticasSumaRespuestaAno(array(
+                'preg_recursosaprob_area_num'
+            ),"o.id");
+            if ($proyectosaprobArea) {
+                $proyectosaprobArea = $this->agruparDatos($proyectosaprobArea,"enunciado_comp","suma");
+            }
+            $this->render('gastosactividades',array(
+                "proyectosaprob" => $proyectosaprob,
+                "proyectosaprobArea" => $proyectosaprobArea,
+            ));
+        } else {
+            $proyectosaprob = $this->encuesta->getEstadisticasSumaRespuestaAno(array(
+                'preg_recursosaprob_num'
+            ),"o.id, sub2.opcion_id",true);
+            $proyectosaprobArea = $this->encuesta->getEstadisticasSumaRespuestaAno(array(
+                'preg_recursosaprob_area_num'
+            ),"o.id, sub2.opcion_id",true);
+            $tempAprob = $this->agruparDatosPorArray(
+                $proyectosaprob,"sub2_enunciado",
+                "enunciado_comp","suma"
+            );
+            $tempArea = $this->agruparDatosPorArray(
+                $proyectosaprobArea,"sub2_enunciado",
+                "enunciado_comp","suma"
+            );
+            $dataAprob = $this->dataChartView($tempAprob,"Recursos aprobados para {val}");
+            $dataArea = $this->dataChartView($tempArea,"Recursos aprobados para {val} por area");
+            $this->render('chartview',array(
+                'pageName' => 'Gastos Actividades',
+                'datos' => array_merge($dataAprob,$dataArea),
+            ));
+
         }
-        if ($proyectosaprobArea) {
-            $proyectosaprobArea = $this->agruparDatos($proyectosaprobArea,"enunciado_comp","suma");
-        }
-        $this->render('gastosactividades',array(
-            "proyectosaprob" => $proyectosaprob,
-            "proyectosaprobArea" => $proyectosaprobArea,
-        ));
 	}
 
-	public function actionInfraestructura($id)
+    public function actionIdentificacionPorEnte($id)
+    {
+        $this->loadEncuesta($id);
+        $datos = $this->encuesta
+            ->getEstadisticasPorOpcion(array("preg_datos_tipoinst"));
+        $datosAgrup = $this->agruparDatos($datos,"enunciado","cuenta");
+        $this->render("chartview",array("datos"=>array(
+            array(
+                "titulo" => "Entes que respondieron encuesta, por tipo",
+                "data" => $datosAgrup,
+            )
+        )));
+    }
+	public function actionInfraestructura($id,$porEnte=0)
 	{
         $this->loadEncuesta($id);
         $datosInfraestructura = $this
@@ -55,7 +119,7 @@ class EstadisticasController extends Controller
 		$this->render('infraestructura',array('datos'=>$datos));
 	}
 
-	public function actionProblematicas($id)
+	public function actionProblematicas($id,$porEnte=0)
     {
         $this->loadEncuesta($id);
         $datos = $this->encuesta->getEstadisticasPorCheckbox(array(
@@ -64,7 +128,7 @@ class EstadisticasController extends Controller
         $datos = $this->agruparDatos($datos,"enunciado","cuenta");
 		$this->render('problematicas',array("datos"=>$datos));
 	}
-    public function actionActiva($id)
+    public function actionActiva($id,$porEnte=0)
     {
         $this->loadEncuesta($id);
         $datos = $this->encuesta->getEstadisticasPorCheckbox(array(
@@ -79,7 +143,7 @@ class EstadisticasController extends Controller
 		$this->render('productostecnologicos');
 	}
 
-	public function actionProyectosinvestigacion($id)
+	public function actionProyectosinvestigacion($id,$porEnte=0)
 	{
         $this->loadEncuesta($id);
         $proyectosaprob = $this->encuesta->getEstadisticasSumaRespuestaAno(array(
@@ -101,23 +165,8 @@ class EstadisticasController extends Controller
 	}
 
 	public function actionRecursoshumanos($id)
-	{
-        $this->loadEncuesta($id);
-        $datos = $this->encuesta->getEstadisticasPorCheckbox(array(
-            'preg_talentohumano_pei_inv',
-            'preg_talentohumano_pei_inn',
-        ));
-        $datosUni = $this->encuesta->getEstadisticasPorCheckbox(array(
-            'preg_talentohumano_nacionalpub', 
-            'preg_talentohumano_nacionalpri', 
-            'preg_talentohumano_internacional'
-        ));
-        $datosExp = $this->encuesta->getEstadisticasPorOpcion(array(
-            'preg_talentohumano_exp_area'
-        ));
-        $datosFuenteFin = $this->encuesta->getEstadisticasPorOpcion(array(
-            'preg_talentohumano_fuentefin'
-        ));
+    {
+        extract( $this->getRecursosHumanos($id) );
         if ($datos) {
             $datos = $this->agruparDatos($datos,"preg_enun","cuenta");
         }
@@ -137,7 +186,82 @@ class EstadisticasController extends Controller
             "datosFuenteFin" => $datosFuenteFin,
         ));
 	}
-    public function actionActores($id)
+    public function actionRecursosHumanosPorEnte($id)
+    {
+        extract($this->getRecursosHumanos($id,true)); 
+        $datos = $this->agruparDatosPorArray(
+            $datos,"sub2_enunciado",
+            "preg_enun", "cuenta"
+        );
+        $datos = $this->dataChartView($datos,"Talento humano para categoría PEI por {val}");
+        $datosExp = $this->agruparDatosPorArray(
+            $datosExp,"sub2_enunciado",
+            "enunciado", "cuenta"
+        );
+        $datosExp = $this->dataChartView($datosExp,"Talento humano por experiencia PEI para {val}");
+        $datosUni = $this->agruparDatosPorArray(
+            $datosUni,"sub2_enunciado",
+            "preg_enun", "cuenta"
+        );
+        $datosUni = $this->dataChartView($datosUni,"Talento humano por formación universitaria para {val}");
+        $datosFuenteFin = $this->agruparDatosPorArray(
+            $datosFuenteFin,"sub2_enunciado",
+            "enunciado", "cuenta"
+        );
+        $datosFuenteFin = $this->dataChartView($datosFuenteFin,"Talento humano por fuente de financiamiento para {val}");
+
+        $this->render("chartview",array(
+            "datos" => array_merge(
+                $datos,$datosExp,$datosUni,$datosFuenteFin
+            )
+        ));
+    }
+
+    private function getRecursosHumanos($id, $ente = false)
+    {
+        $this->loadEncuesta($id);
+        if (!$ente) {
+            $datos = $this->encuesta->getEstadisticasPorCheckbox(array(
+                'preg_talentohumano_pei_inv',
+                'preg_talentohumano_pei_inn',
+            ));
+            $datosUni = $this->encuesta->getEstadisticasPorCheckbox(array(
+                'preg_talentohumano_nacionalpub', 
+                'preg_talentohumano_nacionalpri', 
+                'preg_talentohumano_internacional'
+            ));
+            $datosExp = $this->encuesta->getEstadisticasPorOpcion(array(
+                'preg_talentohumano_exp_area'
+            ));
+            $datosFuenteFin = $this->encuesta->getEstadisticasPorOpcion(array(
+                'preg_talentohumano_fuentefin'
+            ));
+        } else {
+            $datos = $this->encuesta->getEstadisticasPorCheckbox(array(
+            'preg_talentohumano_pei_inv',
+            'preg_talentohumano_pei_inn',
+            ),1,"=",true,true);
+            $datosUni = $this->encuesta->getEstadisticasPorCheckbox(array(
+                'preg_talentohumano_nacionalpub', 
+                'preg_talentohumano_nacionalpri', 
+                'preg_talentohumano_internacional'
+            ),1,"=",true,true);
+            $datosExp = $this->encuesta->getEstadisticasPorOpcion(array(
+                'preg_talentohumano_exp_area'
+            ),1,"=",true,true);
+            $datosFuenteFin = $this->encuesta->getEstadisticasPorOpcion(array(
+                'preg_talentohumano_fuentefin'
+            ),1,"=",true,true);
+
+        }
+        return array(
+            'datos' => $datos,
+            'datosUni' => $datosUni,
+            'datosExp' => $datosExp,
+            'datosFuenteFin' => $datosFuenteFin,
+        );
+    }
+    public function actionActores($id,$porEnte=0)
     {
         $this->loadEncuesta($id);
         $datos = $this->encuesta->getEstadisticasPorCheckbox(array(
@@ -149,18 +273,28 @@ class EstadisticasController extends Controller
         }
         $this->render("actores",array('datos'=>$datos));
     }
-    public function actionCooperacion($id)
+    public function actionCooperacion($id,$porEnte=0)
     {
         $this->loadEncuesta($id);
         $datos = $this->encuesta->getEstadisticasPorOpcion(array(
             "preg_red_tem_pert"
-        ));
+        ),$porEnte);
         if ($datos) {
-            $datos = $this->agruparDatos($datos,"enunciado","cuenta");
+            if (!$porEnte) {
+                $datos = $this->agruparDatos($datos,"enunciado","cuenta");
+                $this->render("cooperacion",array("datos"=>$datos));
+            } else {
+                $datos = $this->agruparDatosPorArray($datos,"sub2_enunciado",
+                "enunciado", "cuenta");
+                $datos = $this->dataChartView($datos,"Cooperación para {val}");
+                $this->render("chartview",array('pageName'=>'Cooperación',
+                'datos'=>$datos));
+
+
+            }
         }
-        $this->render("cooperacion",array("datos"=>$datos));
     }
-    public function actionProyectosInnovacion($id)
+    public function actionProyectosInnovacion($id,$porEnte=0)
     {
         $this->loadEncuesta($id);
         $datos = $this->encuesta->getProyectosInnovacion("opc.id");
@@ -169,7 +303,7 @@ class EstadisticasController extends Controller
         }
         $this->render("proyectosinnovacion",array("datos"=>$datos));
     }
-    public function actionProgramasExistentes($id)
+    public function actionProgramasExistentes($id,$porEnte=0)
     {
         $this->loadEncuesta($id);       
         $datos = $this->encuesta->getPostgradosMaestria();
@@ -182,7 +316,7 @@ class EstadisticasController extends Controller
         }
         $this->render("programasexistentes",array("datos"=>$datos,"datosEgresados"=>$datosEgresados));
     }
-    public function actionRevistas($id)
+    public function actionRevistas($id,$porEnte=0)
     {
         $this->loadEncuesta($id);
         $datos = $this->encuesta->getPublicacionesRevista();
@@ -195,7 +329,7 @@ class EstadisticasController extends Controller
         }
         $this->render("revistas",array("datos"=>$datos,"datosPorArea"=>$datosPorArea));
     }
-    public function actionCondiciones($id)
+    public function actionCondiciones($id,$porEnte=0)
     {
         $this->loadEncuesta($id);
         $datosEspacios = $this->encuesta->getEstadisticasPorOpcion(array(
@@ -215,7 +349,7 @@ class EstadisticasController extends Controller
             'datosEquipamiento' => $datosEquipamiento,
         ));
     }
-    public function actionInternet($id)
+    public function actionInternet($id,$porEnte=0)
     {
         $this->loadEncuesta($id);
         $datosTieneInternet = $this->encuesta->getEstadisticasPorOpcion(array(
@@ -243,7 +377,7 @@ class EstadisticasController extends Controller
         ));
 
     }
-    public function actionComiteetica($id)
+    public function actionComiteetica($id,$porEnte=0)
     {
         $this->loadEncuesta($id);
         $datosComiteEtica = $this->encuesta->getEstadisticasPorOpcion(array(
@@ -256,7 +390,7 @@ class EstadisticasController extends Controller
             "datosComiteEtica" => $datosComiteEtica,
         ));
     }
-    public function actionTipoPatrimonio($id)
+    public function actionTipoPatrimonio($id,$porEnte=0)
     {
         $this->loadEncuesta($id);
         $datosPorPatrimonio = $this->encuesta->getEstadisticasPorOpcion(array(
@@ -269,16 +403,44 @@ class EstadisticasController extends Controller
             "datosPorPatrimonio" => $datosPorPatrimonio,
         ));
     }
-    public function actionExperiencia($id)
+    public function actionExperiencia($id,$porEnte=0)
     {
         $this->loadEncuesta($id);
-        $datos = $this->encuesta->getEstadisticasPorCheckbox(array(
-               'preg_areas_exp_sino'
-        ));
-        $datos = $this->agruparDatos($datos,"enunciado","cuenta");
-        $this->render('problematicas',array("datos"=>$datos));
+        if (!$porEnte) { 
+            $datos = $this->encuesta->getEstadisticasPorCheckbox(array(
+                   'preg_areas_exp_sino'
+            ));
+            $datos = $this->agruparDatos($datos,"enunciado","cuenta");
+            $this->render('problematicas',array("datos"=>$datos));
+        }
+        else {
+            $datos = $this->encuesta->getEstadisticasPorCheckbox(array(
+                   'preg_areas_exp_sino'
+            ),1,"=",true,true);
+            $temp = $this->agruparDatosPorArray(
+                $datos,"sub2_enunciado",
+                "enunciado","cuenta"
+            );
+            $data = $this->dataChartView($temp,"Experiencia para {val}");
+            $this->render("chartview",array('pageName'=>'Experiencia',
+            'datos'=>$data));
+
+            
+        }
     }
-    public function actionBeneficiarios($id)
+
+    private function dataChartView($temp,$titulo)
+    {
+        $data = array();
+        foreach ($temp as $i=>$t) {
+            $data[] = array(
+                'titulo' => strtr($titulo,array("{val}"=>$i)),
+                'data' => $t,
+            );
+        }
+        return $data;
+    }
+    public function actionBeneficiarios($id,$porEnte=0)
     {
         $this->loadEncuesta($id);
         $benefNum = $this->encuesta->getEstadisticasSumaRespuestaAno(array(
@@ -291,7 +453,22 @@ class EstadisticasController extends Controller
             "benefNum" => $benefNum,
         ));
     }
-    public function actionServicios($id)
+    public function actionBeneficiariosPorEnte($id)
+    {
+        $this->loadEncuesta($id);
+        $benefNum = $this->encuesta->getEstadisticasSumaRespuestaAno(array(
+            'preg_benef_num'
+        ),"o.id, sub2.opcion_id",true);
+        $temp = $this->agruparDatosPorArray(
+            $benefNum,"sub2_enunciado",
+            "enunciado_comp","suma"
+        );
+        $data = $this->dataChartView($temp,"Beneficiarios para {val}");
+        $this->render("chartview",array('pageName'=>'Beneficiarios',
+        'datos'=>$data));
+
+    }
+    public function actionServicios($id,$porEnte=0)
     {
         $this->loadEncuesta($id);
         $datos = $this->encuesta->getProyectosInnovacion("opc.id",false);
@@ -301,5 +478,18 @@ class EstadisticasController extends Controller
         $this->render("servicios",array(
             "datos" => $datos,
         ));
+    }
+    public function actionServiciosPorEnte($id)
+    {
+        $this->loadEncuesta($id);
+        $datos = $this->encuesta->getProyectosInnovacion("opc.id",false, false);
+        $temp = $this->agruparDatosPorArray(
+
+            $datos,"sub2_enunciado",
+            "enunciado_comp","suma"
+        );
+        $data = $this->dataChartView($temp,"Servicios por {val}");
+        $this->render("chartview",array('pageName'=>'Servicios',
+        'datos'=>$data)); 
     }
 }
