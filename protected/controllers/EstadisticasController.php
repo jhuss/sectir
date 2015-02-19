@@ -138,10 +138,38 @@ class EstadisticasController extends Controller
         $this->render('activa',array("datos"=>$datos));
     }
 
-	public function actionProductostecnologicos()
+	public function actionProductostecnologicos($id)
 	{
-		$this->render('productostecnologicos');
+        $this->loadEncuesta($id);
+        $datosAgrup = $this->prepareProductosTecnologicos("sub2.opcion_id",true,"sub2_enunciado");
+        $datosPorProducto = $this->prepareProductosTecnologicos("o.enunciado",false,"enunciado_comp");
+        $datosPorPeriodo = $this->prepareProductosTecnologicos("ra.ano",false,"ano");
+
+        $this->render('chartview',array(
+            "datos" => array(
+                array(
+                    "titulo" => "Productos tecnológicos por ente",
+                    "data" => $datosAgrup,
+                ),
+                array(
+                    "titulo" => "Cantidad de productos por tipo",
+                    "data" => $datosPorProducto,
+                ),
+                array(
+                    "titulo" => "Cantidad de productos por año",
+                    "data" => $datosPorPeriodo,
+                ),
+            )
+        ));
 	}
+
+    private function prepareProductosTecnologicos($groupBy,$ente,$agruparArray)
+    {
+        $estadisticasPorEnte = $this->encuesta
+            ->getEstadisticasSumaRespuestaAno(array("preg_productos_numero"),$groupBy,$ente);
+        $datosAgrup = $this->agruparDatos($estadisticasPorEnte,$agruparArray,"suma");
+        return $datosAgrup;
+    }
 
 	public function actionProyectosinvestigacion($id,$porEnte=0)
 	{

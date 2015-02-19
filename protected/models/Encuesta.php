@@ -640,13 +640,13 @@ EOF;
         if ($replaceData) {
             $subJoin = <<<EOF
         INNER JOIN (
-            SELECT _rc.user_id, _rc.opcion_id, _rc.encuesta_id FROM {{Respuestaopc}} _rc
+            SELECT _rc.user_id, _rc.opcion_id, _opc.enunciado, _rc.encuesta_id FROM {{Respuestaopc}} _rc
                 INNER JOIN {{Opcion}} _opc ON _rc.opcion_id = _opc.id
                 INNER JOIN {{Pregunta}} _p2 ON _rc.pregunta_id = _p2.id
             WHERE _p2.identificador = 'preg_datos_tipoinst'
         ) sub2 ON sub2.encuesta_id = ra.encuesta_id AND sub2.user_id = ra.user_id
 EOF;
-            $subParams = 'sub2.opcion_id';
+            $subParams = ', sub2.enunciado AS sub2_enunciado';
         }
         else {
             $subJoin = "";
@@ -661,7 +661,7 @@ EOF;
     public function getProyectosInnovacion($groupBy,$actividadesCiencia=true, $ente = false)
     {
         $sql = <<<EOF
-SELECT COUNT(ra.valor) AS cuenta, opc.enunciado, _subparams_ FROM {{Respuestaabierta}} ra
+SELECT COUNT(ra.valor) AS cuenta, opc.enunciado _subparams_ FROM {{Respuestaabierta}} ra
 	INNER JOIN {{Opcioncomp}} opc ON ra.opcioncomp_id = opc.id
     INNER JOIN {{Pregunta}} p ON ra.pregunta_id = p.id
     INNER JOIN (
@@ -695,12 +695,12 @@ EOF;
             return ":param_$val";
         };
         $sql = <<<EOF
-        SELECT COUNT(ro.opcion_id) AS cuenta,o.enunciado, _subparams_ FROM {{Respuestaopc}} ro
-	INNER JOIN {{Pregunta}} p ON ro.pregunta_id = p.id
-    INNER JOIN {{Opcion}} o ON ro.opcion_id = o.id
+        SELECT COUNT(ra.opcion_id) AS cuenta,o.enunciado _subparams_ FROM {{Respuestaopc}} ra
+	INNER JOIN {{Pregunta}} p ON ra.pregunta_id = p.id
+    INNER JOIN {{Opcion}} o ON ra.opcion_id = o.id
     _subjoin_
-WHERE ro.encuesta_id = :encuesta_id AND p.identificador IN (_ids_)
-GROUP BY ro.opcion_id
+WHERE ra.encuesta_id = :encuesta_id AND p.identificador IN (_ids_)
+GROUP BY ra.opcion_id
 EOF;
         $sql = strtr($sql,array(
             '_ids_' => implode(",",array_map($fn,range(0,count($identificadores) - 1))),
@@ -717,13 +717,13 @@ EOF;
     public function getEstadisticasPorCheckbox($identificadores,$valor=1,$comparador = "=",$useOpcionComp = true, $ente = false)
     {
         $sql = <<<EOF
-SELECT COUNT(ra.valor) AS cuenta, p.identificador AS preg_ident, p.enunciado AS preg_enun, op.enunciado, _subparams_ FROM {{Respuestaabierta}} ra
+SELECT COUNT(ra.valor) AS cuenta, p.identificador AS preg_ident, p.enunciado AS preg_enun, op.enunciado _subparams_ FROM {{Respuestaabierta}} ra
 	INNER JOIN {{Pregunta}} p ON ra.pregunta_id = p.id
     _subjoin_
     LEFT JOIN {{Opcioncomp}} op ON ra.opcioncomp_id = op.id 
 WHERE ra.valor $comparador :valor AND ra.encuesta_id = :encuesta_id AND p.identificador
     IN (_ids_)
-GROUP BY p.id, op.id
+GROUP BY p.id, op.id _group_
 EOF;
 
         $fn = function($val){
@@ -732,6 +732,12 @@ EOF;
         $sql = strtr($sql,array(
             '_ids_' => implode(",",array_map($fn,range(0,count($identificadores) - 1))),
         ));
+        $sql = $this->putOpcSubQuery($sql,$ente);
+        if ($ente) {
+           $sql = strtr($sql,array('_group_'=>', sub2.opcion_id'));
+        } else {
+            $sql = strtr($sql,array('_group_'=>''));
+        }
         $command = Yii::app()->db->createCommand($sql);
         $command->bindValue(":encuesta_id",$this->id);
         $command->bindValue(":valor",$valor);
@@ -744,7 +750,7 @@ EOF;
     public function getEstadisticasSumaRespuestaAno($identificadores,$group = "ra.pregunta_id", $ente = false)
     {
         $sql = <<<EOF
-SELECT SUM(ra.valor) AS suma, p.enunciado, o.enunciado AS enunciado_comp, _subparams_ FROM {{Respuestaano}} ra
+SELECT SUM(ra.valor) AS suma, ra.ano , p.enunciado, o.enunciado AS enunciado_comp _subparams_ FROM {{Respuestaano}} ra
     INNER JOIN {{Pregunta}} p ON ra.pregunta_id = p.id
     _subjoin_
     LEFT JOIN {{Opcioncomp}} o ON ra.opcioncomp_id = o.id
