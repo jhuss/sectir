@@ -43,6 +43,9 @@ class EstadisticasController extends Controller
     }
     protected function loadEncuesta($id)
     {
+        if ($this->encuesta !== null) {
+            return;
+        }
         $this->encuesta = Encuesta::model()
             ->findByPk($id);
         if ($this->encuesta === null) {
@@ -322,6 +325,32 @@ class EstadisticasController extends Controller
             }
         }
     }
+    public function actionLineasInvestigacionEnte($id)
+    {
+        $datos = $this->getEstadisticasOpcionEnte($id,array("preg_lineas_inv_lineasinv"));
+
+        $datos = $this->dataChartView($datos,"Lineas de investigación para {val}");
+        $this->render("chartview",array("datos"=>$datos));
+        
+    }
+    public function actionRedesCooperacionEnte($id)
+    {
+        
+        $datos = $this->getEstadisticasOpcionEnte($id,array("preg_red_tem_pert"));
+        $datos = $this->dataChartView($datos,"Redes temáticas de cooperación para {val}");
+        $this->render("chartview",array("datos"=>$datos));
+    }
+
+    private function getEstadisticasOpcionEnte($id,$preguntas)
+    {
+        $this->loadEncuesta($id);
+        $estadisticas = $this->encuesta->getEstadisticasPorOpcion($preguntas,true);
+        $datos = $this->agruparDatosPorArray(
+            $estadisticas,"sub2_enunciado",
+            "enunciado", "cuenta"
+        );
+        return $datos;
+    }
     public function actionProyectosInnovacion($id,$porEnte=0)
     {
         $this->loadEncuesta($id);
@@ -468,7 +497,7 @@ class EstadisticasController extends Controller
         }
         return $data;
     }
-    public function actionBeneficiarios($id,$porEnte=0)
+    public function actionBeneficiarios($id)
     {
         $this->loadEncuesta($id);
         $benefNum = $this->encuesta->getEstadisticasSumaRespuestaAno(array(
