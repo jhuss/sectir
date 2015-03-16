@@ -167,7 +167,7 @@ class Encuesta extends CActiveRecord
     public static function getEncuestasActivas()
     {
         $sql = <<<EOF
-SELECT e.id, e.enunciado FROM {{Encuesta}} e WHERE e.activa = :actparam
+SELECT e.id, e.enunciado, e.tipoencuesta_id FROM {{Encuesta}} e WHERE e.activa = :actparam
 EOF;
         $command = Yii::app()->db->createCommand($sql);
         $command->bindValue(':actparam',1);

@@ -7,8 +7,8 @@
 class CrearEncuestaCommand extends CConsoleCommand
 {
     public $nombres = array(
-        "Encuesta de Universidades",
-        "Encuesta para laboratorios, centros y otros",
+        "Encuesta para Universidades, tecnológicos y escuelas técnicas",
+        "Encuesta para Laboratorios, centros, grupos y otros",
     );
     public function run($args)
     {

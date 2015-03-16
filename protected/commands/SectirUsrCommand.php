@@ -23,7 +23,7 @@ class SectirUsrCommand extends UsrCommand
         $parentDescr['responder.tipoencuesta_uni'] = 
             Yii::t('SectirUsrCommand','Responder encuestas del tipo universidad');
         $parentDescr['responder.tipoencuesta_otros'] = 
-            Yii::t('SectirUsrCommand','Responder Encuestas de otros tipos');
+            Yii::t('SectirUsrCommand','Responder encuestas de otros tipos');
         return $parentDescr;
     }
 }

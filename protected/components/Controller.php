@@ -23,6 +23,8 @@ class Controller extends CController
 
     protected function beforeAction($event) {
         if(!Yii::app()->user->isGuest) {
+            $this->layout = '//layouts/user';
+
             $userId = Yii::app()->user->id;
             $userAdmin = User::model()->findByAttributes(array('username'=>Yii::app()->params['adminUser']));
             $auth = Yii::app()->authManager;
