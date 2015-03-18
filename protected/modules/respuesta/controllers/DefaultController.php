@@ -15,6 +15,7 @@ class DefaultController extends Controller
             array('deny'),
         );
     }
+
     public function filters()
     {
         return array(
@@ -25,9 +26,9 @@ class DefaultController extends Controller
             ),
         );
     }
-	public function actionResponderencuesta($encuestaId)
+
+    public function actionResponderencuesta($encuestaId)
     {
-        Yii::app()->clientScript->registerPackage("sectir-input");
         $encuesta = Encuesta::model()->findByPk($encuestaId);
         $postRespuestaUrl = Yii::app()
             ->createAbsoluteUrl("/respuesta/default/postrespuesta",array(
@@ -42,6 +43,7 @@ class DefaultController extends Controller
         $anoComienzo = $encuesta->ano - Encuesta::ANOS_ENCUESTADOS;
         $this->render('responderencuesta',array(
             'idTE' => $encuesta->tipoencuesta_id,
+            'nameTE' => $encuesta->tipoencuesta->enunciado,
             'urlPost' => $postRespuestaUrl,
             'urlComienzo' => $urlComienzo,
             'urlRetorno' => $urlRetorno,
@@ -49,6 +51,7 @@ class DefaultController extends Controller
             'anoComienzo' => $anoComienzo,
         ));
     }
+
     public function actionPreguntas($idTE)
     {
         $enc = Tipoencuesta::model()->findByPk($idTE);
@@ -66,6 +69,7 @@ class DefaultController extends Controller
         /* CVarDumper::dump($errores); */
 
     }
+
     public function actionExito()
     {
         $this->render("exito");

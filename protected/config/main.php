@@ -71,8 +71,8 @@ $arrayConfig = array(
 					'js' => array('angular.min.js'),
 				),
 				'angular-ui-bootstrap' => array(
-					'baseUrl' => '//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/',
-					'js' => array('ui-bootstrap.min.js'),
+					'baseUrl' => '//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.1/',
+					'js' => array('ui-bootstrap-tpls.min.js'),
 				),
                 'd3' => array(
                     'baseUrl' => '//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/',
@@ -97,10 +97,14 @@ $arrayConfig = array(
 					'baseUrl' => '//cdnjs.cloudflare.com/ajax/libs/sugar/1.4.1/',
 					'js' => array('sugar-full.min.js'),
                 ),
+                'ng-tags' => array(
+                    'basePath' => 'webroot.bower_components.ng-tags-input',
+                    'css' => array('ng-tags-input.css'),
+                ),
                 'sectir-input' => array(
-                    'basePath' => "webroot.js.sectir-input",
+                    'basePath' => 'webroot.js.sectir-input',
                     'js' => array('sectir-input.js'),
-                    'depends' => array("angular"),
+                    'depends' => array('angular', 'angular-ui-bootstrap', 'ng-tags'),
                 ),
 			),
 		),

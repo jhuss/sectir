@@ -1,0 +1,82 @@
+@import 'bootstrap';
+
+.sectir-pager-wholecontainer {
+  margin: 0 0 40px 0;
+
+  button, .sectir-button-add span, .sectir-button-delete span {
+    @extend button;
+    @extend .btn;
+    @extend .btn-sm;
+    @extend .btn-default;
+  }
+
+  .sectir-button-add span, .sectir-button-delete span {
+    @extend .btn-xs;
+  }
+
+  input, select {
+    @extend .form-control;
+  }
+}
+
+.sectir-input-wrapper {
+  margin-bottom: 10px;
+}
+
+.sectir-input-namefield {
+  color: #595959;
+  font-size: 12px;
+}
+
+tags-input {
+  .tags {
+    border-radius: 4px;
+
+    input {
+      margin: 0 !important;
+    }
+  }
+}
+
+.sectir-table {
+  display: table;
+
+  .sectir-table-header:first-child {
+    margin-bottom: 10px;
+    position: relative;
+    width: 100%;
+
+    .sectir-header {
+      padding-bottom: 20px;
+      text-align: left;
+    }
+  }
+
+  .sectir-table-header {
+    .sectir-header {
+      @extend .sectir-input-namefield;
+      text-align: center;
+    }
+
+    .sectir-add, .sectir-delete {
+      display: none;
+    }
+  }
+
+  .sectir-ans-row {
+    margin-bottom: 5px;
+
+    th {
+      padding: 4px 3px;
+    }
+  }
+}
+
+.sectir-pager-button-row {
+  margin: 10px 0;
+
+  button {
+    @extend .btn-primary;
+    margin: 0 3px;
+  }
+}

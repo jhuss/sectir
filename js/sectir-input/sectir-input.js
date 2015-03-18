@@ -698,7 +698,7 @@ module.exports = (function () {
         link: function(scope, element, attrs, ctrl) {
           var linkFn, watchFn;
           linkFn = function() {
-            var dropRefactorFn, elm, elmAdd, field, firstRow, forEachRefactorFn, haveSubQuestions, headers, ngModelRow, remainingTable, row, rows, rowspan, spanAddLabel, spanDeleteLabel, subQ, subQNodes, table, templateAnswers, templateAnswersFn, tr, trRows, treeHeight, treeToBeRefactored, val, _i, _j, _k, _l, _len, _len1, _len2, _len3, _len4, _m, _ref;
+            var dropRefactorFn, elm, elmAdd, field, firstRow, forEachRefactorFn, haveSubQuestions, headers, ix, ngModelRow, remainingTable, row, rows, rowspan, spanAddLabel, spanDeleteLabel, subQ, subQNodes, table, templateAnswers, templateAnswersFn, tr, trRows, treeHeight, treeToBeRefactored, val, _i, _j, _k, _l, _len, _len1, _len2, _len3, _len4, _m, _ref;
             sectirTreeFactory.addTree(scope.tabledata, scope.namespace, scope.titlefield, scope.typefield);
             treeToBeRefactored = sectirTreeFactory.trees[scope.namespace];
             console.log(treeToBeRefactored);
@@ -725,8 +725,8 @@ module.exports = (function () {
             table.addClass("sectir-table");
             firstRow = true;
             trRows = [];
-            for (_i = 0, _len = rows.length; _i < _len; _i++) {
-              row = rows[_i];
+            for (ix = _i = 0, _len = rows.length; _i < _len; ix = ++_i) {
+              row = rows[ix];
               headers = [];
               tr = angular.element("<tr>");
               tr.addClass("sectir-table-header");
@@ -768,14 +768,15 @@ module.exports = (function () {
                   elmAdd.attr("rowspan", treeHeight);
                   headers.push(elmAdd);
                   headers.push(elm);
-                } else {
-                  elm = angular.element("<th>");
-                  elm.addClass("sectir-subq-title");
-                  elm.text("{{subqtitle}}");
-                  elm.attr("colspan", 1);
-                  elm.attr("rowspan", treeHeight);
-                  headers.unshift(elm);
                 }
+              }
+              if ((ix === rows.length - 1) && haveSubQuestions) {
+                elm = angular.element("<th>");
+                elm.addClass("sectir-subq-title");
+                elm.text("{{subqtitle}}");
+                elm.attr("colspan", 1);
+                elm.attr("rowspan", 1);
+                headers.unshift(elm);
               }
               for (_k = 0, _len2 = headers.length; _k < _len2; _k++) {
                 val = headers[_k];

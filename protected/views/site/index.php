@@ -2,15 +2,6 @@
     /* @var $this SiteController */
 
     $this->setPageTitle(Yii::app()->name . ': ' . Yii::app()->params['defaultTitle']);
-
-    // ejemplo de "Clip" registrando angularjs
-    $this->beginClip('Footer');
-        $cs = Yii::app()->clientScript;
-        $cs->coreScriptPosition=CClientScript::POS_END;
-
-        $cs->registerCoreScript('angular');
-        $cs->registerCoreScript('angular-ui-bootstrap');
-    $this->endClip();
 ?>
 
 <div class="container">
@@ -26,11 +17,11 @@
                 <div class="col-md-6">
                     <?php echo CHtml::link($c['enunciado'],
                         array('/respuesta/default/responderencuesta','encuestaId' => $c['id']),
-                        array('class' => 'btn-enc'.' enc-'.$c['tipoencuesta_id']));
+                        array('class' => 'btn-enc enc-te '.' enc-'.$c['tipoencuesta_id']));
                     ?>
                 </div>
             <?php endforeach; ?>
             </div>
         </div>
-	</div>
+    </div>
 </div>
