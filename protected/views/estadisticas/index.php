@@ -15,15 +15,16 @@
 </div>
 <div id="sectir-site-content" class="row">
     <div class="col-xs-7 col-centered">
+        <h2 class="text-center">Consultar Encuesta:</h2>
         <div class="row">
             <div class="col-md-6">
-                <?php echo CHtml::link('Univ',
+                <?php echo CHtml::link('Encuesta de Universidades',
                     $this->createUrl("$this->uniqueId/index/id/1"),
                     array('class' => 'btn-enc enc-te enc-1'));
                 ?>
             </div>
             <div class="col-md-6">
-                <?php echo CHtml::link('Laboratorios',
+                <?php echo CHtml::link('Encuesta para laboratorios, centros y otros',
                     $this->createUrl("$this->uniqueId/index/id/2"),
                     array('class' => 'btn-enc enc-te enc-2'));
                 ?>

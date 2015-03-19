@@ -35,12 +35,24 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-xs-2"><?php
+            <div class="col-xs-3"><?php
                 $this->renderPartial('//layouts/_chart_menu', array(
                     'encId'=>$this->encId,
                     'actions'=>$this->actions
                 )); ?></div>
-            <div class="col-xs-10">
+            <div class="col-xs-9">
+                <div class="row">
+                    <div class="title-enc">
+                        <h4 class="enc-te enc-<?php echo $this->encId; ?>"><?php
+                        if ($this->encId == 1) {
+                            echo "Encuesta de Universidades";
+                        } elseif ($this->encId == 2) {
+                            echo "Encuesta para laboratorios, centros y otros";
+                        }
+                        ?></h4>
+                        <hr>
+                    </div>
+                </div>
                 <?php echo $content; ?>
             </div>
         </div>
