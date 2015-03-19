@@ -40,7 +40,7 @@
             <li class="item dropdown">
                 <?php echo CHtml::link($avatar . CHtml::tag('span', array('class'=>'nav-title'), 'Encuestas', true) . CHtml::tag('span', array('class'=>'caret'), '', true), '#', array('class'=>'avatar dropdown-toggle', 'data-toggle'=>'dropdown')); ?>
                 <ul class="dropdown-menu" role="menu">
-                    <li><?php echo CHtml::link('Ver Encuestas', array('/Encuesta')); ?></li>
+                    <li><?php echo CHtml::link('Llenar Encuestas', array('site/admin')); ?></li>
 
                         <li><?php echo CHtml::link('Administrar Encuestas', array('/Encuesta/admin')); ?></li>
 

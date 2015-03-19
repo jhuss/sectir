@@ -27,6 +27,22 @@ body
   margin-bottom: 10px;
 }
 
+.proj-title {
+  background-image: url('../../images/login-header.png');
+  background-repeat: no-repeat;
+  background-position: top center;
+  padding-top: 90px;
+  margin-top: 20px;
+
+  span {
+    font-size: 1.2em;
+  }
+
+  hr {
+    margin-top: 4px;
+  }
+}
+
 .usr-bar {
   $usr-bar-bgcolor-start: #6D9B50;
   $usr-bar-bgcolor-end: #567B3F;
@@ -91,4 +107,42 @@ body
     display: block;
     margin: 0 auto;
   }
+}
+
+// encuestas
+.btn-enc {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #FAFAFA;
+  display: inline-block;
+  font-size: 2em;
+  text-align: center;
+  text-decoration: none;
+  padding: 140px 10px 5px 10px;
+  min-height: 275px;
+  width: 100%;
+}
+
+.btn-enc:hover {
+  background-color: #f1f1f1;
+}
+
+.enc-te {
+  background-repeat: no-repeat;
+  background-position: center 10px;
+}
+
+.enc-1 {
+  background-image: url("../../images/icons/university-icon.png");
+}
+
+.enc-2 {
+  background-image: url("../../images/icons/laboratory-icon.png");
+}
+
+// estadisticas
+.stats-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }

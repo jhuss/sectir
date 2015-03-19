@@ -26,7 +26,24 @@
         </div>
 <?php endif; ?>
 <?php $this->renderPartial('//layouts/_usrbar', array('model'=>null)); ?>
-<?php echo $content; ?>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="proj-title text-center">
+                    <span>Sistema Estadístico en Ciencia, Tecnología e Innovación del Estado Trujillo</span>
+                    <hr>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-2"><?php
+                $this->renderPartial('//layouts/_chart_menu', array(
+                    'encId'=>$this->encId,
+                    'actions'=>$this->actions
+                )); ?></div>
+            <div class="col-xs-10">
+                <?php echo $content; ?>
+            </div>
+        </div>
     </div>
 <?php
     if(isset($this->clips['Footer'])) {
