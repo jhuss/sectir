@@ -524,6 +524,9 @@ EOF;
     protected function insertarPreguntasNum()
     {
         $valoresAInsertar = array();
+        if (empty($this->_colaRespuestasNum)) {
+            return;
+        }
         foreach ($this->_colaRespuestasNum as $respuesta) {
             $valoresAInsertar[] = array(
                 'valor' => $respuesta["valor"],
@@ -592,6 +595,9 @@ EOF;
     protected function insertarPreguntasAno()
     {
         $valoresAInsertar = array();
+        if (empty($this->_colaRespuestasAno)) {
+            return;
+        }
         foreach ($this->_colaRespuestasAno as $respuesta) {
             $valoresAInsertar[] = array(
                 'valor' => $respuesta["valor"],
