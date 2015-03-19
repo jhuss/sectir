@@ -26,7 +26,7 @@
                     <li><a href="<?php echo $this->createUrl("$this->uniqueId/$name/id/$enc") ?>"><?php echo $title; ?></a></li>
                 <?php endforeach; ?>
                 </ul>
-                <? endif; ?>
+                <?php endif; ?>
             </div>
         </div>
     </div>
