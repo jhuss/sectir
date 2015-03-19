@@ -67,7 +67,7 @@ $arrayConfig = array(
 		'clientScript' => array(
 			'packages' => array(
 				'angular' => array(
-					'baseUrl' => '//ajax.googleapis.com/ajax/libs/angularjs/1.2.23/',
+					'baseUrl' => '//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/',
 					'js' => array('angular.min.js'),
 				),
 				'angular-ui-bootstrap' => array(
