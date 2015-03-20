@@ -1,4 +1,8 @@
 <?php
+$_data = CJSON::decode($data);
+if(!empty($_data)):
+?>
+<?php
 $script = <<<EOF
 var tt = document.createElement('div'),
   leftOffset = -(~~$('html').css('padding-left').replace('px', '') + ~~$('body').css('margin-left').replace('px', '')),
@@ -31,3 +35,6 @@ EOF;
     Yii::app()->clientScript->registerScript($this->scriptId,$script);
 ?>
 <figure style="width: <?php echo $this->chartWidth; ?>; height: <?php echo $this->chartHeight; ?>;" id="<?php echo $this->chartId; ?>"></figure>
+<?php else: ?>
+<div class="no-data">Sin Información</div>
+<?php endif; ?>

@@ -2,11 +2,17 @@
 /* @var $this EstadisticasController */
 
 $this->breadcrumbs=array(
-	'Estadisticas'=>array('/estadisticas'),
-	'Infraestructura',
+    'Estadisticas'=>array('/estadisticas'),
+    'Infraestructura',
 );
 ?>
-<h1>Infraestructura en ciencia, tecnología e innovación</h1>
-<?php $this->widget("SectirHorizontalChart",array(
-    'data' => $datos
-)); ?>
+<div class="chart row">
+    <div class="col-xs-12">
+        <p class="title">Infraestructura en ciencia, tecnología e innovación</p>
+        <?php
+        $this->widget("SectirHorizontalChart",array(
+            'data' => $datos
+        ));
+        ?>
+    </div>
+</div>

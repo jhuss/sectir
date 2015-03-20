@@ -2,27 +2,32 @@
 /* @var $this EstadisticasController */
 
 $this->breadcrumbs=array(
-	'Estadisticas'=>array('/estadisticas'),
-	'Proyectosinvestigacion',
+    'Estadisticas'=>array('/estadisticas'),
+    'Proyectosinvestigacion',
 );
-
 ?>
+<div class="chart row">
+    <div class="col-xs-12">
+        <p class="title">Programas Existentes</p>
+        <?php
+        $this->widget("SectirPointChart",array(
+            'data' => $datos,
+            'chartId' => "chart_proyabrob",
+            "scriptId" => "chart_proyabrob"
+        ));
+        ?>
+    </div>
+</div>
 
-<h1>Programas Existentes</h1>
-
-<?php 
-$this->widget("SectirPointChart",array(
-    'data' => $datos,
-    'chartId' => "chart_proyabrob",
-    "scriptId" => "chart_proyabrob"
-));
-?>
-<h1>Egresados de Programas Existentes</h1>
-
-<?php 
-$this->widget("SectirPointChart",array(
-    'data' => $datosEgresados,
-    'chartId' => "chart_egresados",
-    "scriptId" => "chart_egresados"
-));
-?>
+<div class="chart row">
+    <div class="col-xs-12">
+        <p class="title">Egresados de Programas Existentes</p>
+        <?php
+        $this->widget("SectirPointChart",array(
+            'data' => $datosEgresados,
+            'chartId' => "chart_egresados",
+            "scriptId" => "chart_egresados"
+        ));
+        ?>
+    </div>
+</div>

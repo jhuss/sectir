@@ -2,11 +2,17 @@
 /* @var $this EstadisticasController */
 
 $this->breadcrumbs=array(
-	'Estadisticas'=>array('/estadisticas'),
-	'Comité de ética',
+    'Estadisticas'=>array('/estadisticas'),
+    'Comité de ética',
 );
 ?>
-<h1>Universidades, Institutos tecnológicos y escuelas que cuentan con comité de ética</h1>
-<?php $this->widget("SectirPointChart",array(
-    'data' => $datosComiteEtica
-)); ?>
+<div class="chart row">
+    <div class="col-xs-12">
+        <p class="title">Universidades, Institutos tecnológicos y escuelas que cuentan con comité de ética</p>
+        <?php
+        $this->widget("SectirPointChart",array(
+            'data' => $datosComiteEtica
+        ));
+        ?>
+    </div>
+</div>
