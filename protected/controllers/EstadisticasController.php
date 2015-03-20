@@ -80,8 +80,10 @@ class EstadisticasController extends Controller
 
     protected function agruparDatos($datos, $x, $y)
     {
+        $labels = array();
         $retVal = array();
-        if (!is_array($x)) {
+
+        /*if (!is_array($x)) {
             foreach ($datos as $d) {
                 $retVal[] = array(
                     "x" => $d[$x],
@@ -101,8 +103,16 @@ class EstadisticasController extends Controller
                     "y" => $d[$y],
                 );
             }
+        }*/
+
+        if (!is_array($x)) {
+            foreach ($datos as $d) {
+                array_push($labels, $d[$x]);
+                array_push($retVal, $d[$y]);
+            }
         }
-        return $retVal;
+
+        return array('labels' => $labels, 'data' => $retVal);
     }
 
     public function agruparDatosPorArray($datos, $group, $x, $y)
@@ -128,6 +138,86 @@ class EstadisticasController extends Controller
             throw new CHttpException(404, "No existe encuesta");
         }
     }
+
+    private function dataChartView($temp, $titulo)
+    {
+        $data = array();
+        foreach ($temp as $i => $t) {
+            $data[] = array(
+                'titulo' => strtr($titulo, array("{val}" => $i)),
+                'data' => $t,
+            );
+        }
+        return $data;
+    }
+
+    private function prepareProductosTecnologicos($groupBy, $ente, $agruparArray)
+    {
+        $estadisticasPorEnte = $this->encuesta
+            ->getEstadisticasSumaRespuestaAno(array("preg_productos_numero"), $groupBy, $ente);
+        $datosAgrup = $this->agruparDatos($estadisticasPorEnte, $agruparArray, "suma");
+        return $datosAgrup;
+    }
+
+    private function getRecursosHumanos($id, $ente = false)
+    {
+        $this->loadEncuesta($id);
+        if (!$ente) {
+            $datos = $this->encuesta->getEstadisticasPorCheckbox(array(
+                'preg_talentohumano_pei_inv',
+                'preg_talentohumano_pei_inn',
+            ));
+            $datosUni = $this->encuesta->getEstadisticasPorCheckbox(array(
+                'preg_talentohumano_nacionalpub',
+                'preg_talentohumano_nacionalpri',
+                'preg_talentohumano_internacional'
+            ));
+            $datosExp = $this->encuesta->getEstadisticasPorOpcion(array(
+                'preg_talentohumano_exp_area'
+            ));
+            $datosFuenteFin = $this->encuesta->getEstadisticasPorOpcion(array(
+                'preg_talentohumano_fuentefin'
+            ));
+        } else {
+            $datos = $this->encuesta->getEstadisticasPorCheckbox(array(
+                'preg_talentohumano_pei_inv',
+                'preg_talentohumano_pei_inn',
+            ), 1, "=", true, true);
+            $datosUni = $this->encuesta->getEstadisticasPorCheckbox(array(
+                'preg_talentohumano_nacionalpub',
+                'preg_talentohumano_nacionalpri',
+                'preg_talentohumano_internacional'
+            ), 1, "=", true, true);
+            $datosExp = $this->encuesta->getEstadisticasPorOpcion(array(
+                'preg_talentohumano_exp_area'
+            ), 1, "=", true, true);
+            $datosFuenteFin = $this->encuesta->getEstadisticasPorOpcion(array(
+                'preg_talentohumano_fuentefin'
+            ), 1, "=", true, true);
+
+        }
+        return array(
+            'datos' => $datos,
+            'datosUni' => $datosUni,
+            'datosExp' => $datosExp,
+            'datosFuenteFin' => $datosFuenteFin,
+        );
+    }
+
+    private function getEstadisticasOpcionEnte($id, $preguntas)
+    {
+        $this->loadEncuesta($id);
+        $estadisticas = $this->encuesta->getEstadisticasPorOpcion($preguntas, true);
+        $datos = $this->agruparDatosPorArray(
+            $estadisticas, "sub2_enunciado",
+            "enunciado", "cuenta"
+        );
+        return $datos;
+    }
+
+    /**********
+     * ACTIONS
+     **********/
 
     public function actionindex($id=null)
     {
@@ -250,14 +340,6 @@ class EstadisticasController extends Controller
         ));
     }
 
-    private function prepareProductosTecnologicos($groupBy, $ente, $agruparArray)
-    {
-        $estadisticasPorEnte = $this->encuesta
-            ->getEstadisticasSumaRespuestaAno(array("preg_productos_numero"), $groupBy, $ente);
-        $datosAgrup = $this->agruparDatos($estadisticasPorEnte, $agruparArray, "suma");
-        return $datosAgrup;
-    }
-
     public function actionProyectosinvestigacion($id, $porEnte = 0)
     {
         $this->loadEncuesta($id);
@@ -333,51 +415,6 @@ class EstadisticasController extends Controller
         ));
     }
 
-    private function getRecursosHumanos($id, $ente = false)
-    {
-        $this->loadEncuesta($id);
-        if (!$ente) {
-            $datos = $this->encuesta->getEstadisticasPorCheckbox(array(
-                'preg_talentohumano_pei_inv',
-                'preg_talentohumano_pei_inn',
-            ));
-            $datosUni = $this->encuesta->getEstadisticasPorCheckbox(array(
-                'preg_talentohumano_nacionalpub',
-                'preg_talentohumano_nacionalpri',
-                'preg_talentohumano_internacional'
-            ));
-            $datosExp = $this->encuesta->getEstadisticasPorOpcion(array(
-                'preg_talentohumano_exp_area'
-            ));
-            $datosFuenteFin = $this->encuesta->getEstadisticasPorOpcion(array(
-                'preg_talentohumano_fuentefin'
-            ));
-        } else {
-            $datos = $this->encuesta->getEstadisticasPorCheckbox(array(
-                'preg_talentohumano_pei_inv',
-                'preg_talentohumano_pei_inn',
-            ), 1, "=", true, true);
-            $datosUni = $this->encuesta->getEstadisticasPorCheckbox(array(
-                'preg_talentohumano_nacionalpub',
-                'preg_talentohumano_nacionalpri',
-                'preg_talentohumano_internacional'
-            ), 1, "=", true, true);
-            $datosExp = $this->encuesta->getEstadisticasPorOpcion(array(
-                'preg_talentohumano_exp_area'
-            ), 1, "=", true, true);
-            $datosFuenteFin = $this->encuesta->getEstadisticasPorOpcion(array(
-                'preg_talentohumano_fuentefin'
-            ), 1, "=", true, true);
-
-        }
-        return array(
-            'datos' => $datos,
-            'datosUni' => $datosUni,
-            'datosExp' => $datosExp,
-            'datosFuenteFin' => $datosFuenteFin,
-        );
-    }
-
     public function actionActores($id, $porEnte = 0)
     {
         $this->loadEncuesta($id);
@@ -425,21 +462,9 @@ class EstadisticasController extends Controller
 
     public function actionRedesCooperacionEnte($id)
     {
-
         $datos = $this->getEstadisticasOpcionEnte($id, array("preg_red_tem_pert"));
         $datos = $this->dataChartView($datos, "Redes temáticas de cooperación para {val}");
         $this->render("chartview", array("datos" => $datos));
-    }
-
-    private function getEstadisticasOpcionEnte($id, $preguntas)
-    {
-        $this->loadEncuesta($id);
-        $estadisticas = $this->encuesta->getEstadisticasPorOpcion($preguntas, true);
-        $datos = $this->agruparDatosPorArray(
-            $estadisticas, "sub2_enunciado",
-            "enunciado", "cuenta"
-        );
-        return $datos;
     }
 
     public function actionProyectosInnovacion($id, $porEnte = 0)
@@ -527,7 +552,6 @@ class EstadisticasController extends Controller
             'datosSatisfaccion' => $datosSatisfaccion,
             'datosProveedor' => $datosProveedor,
         ));
-
     }
 
     public function actionComiteetica($id, $porEnte = 0)
@@ -579,18 +603,6 @@ class EstadisticasController extends Controller
             $this->render("chartview", array('pageName' => 'Experiencia',
                 'datos' => $data));
         }
-    }
-
-    private function dataChartView($temp, $titulo)
-    {
-        $data = array();
-        foreach ($temp as $i => $t) {
-            $data[] = array(
-                'titulo' => strtr($titulo, array("{val}" => $i)),
-                'data' => $t,
-            );
-        }
-        return $data;
     }
 
     public function actionBeneficiarios($id)

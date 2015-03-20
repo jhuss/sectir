@@ -208,6 +208,11 @@ body
     font-size: 1.7em;
   }
 
+  canvas {
+    display: block;
+    margin: 0 auto;
+  }
+
   .no-data {
     color: #999;
     background: url("../../images/icons/charts-bg.png") no-repeat center top;

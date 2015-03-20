@@ -10,10 +10,10 @@ $this->breadcrumbs=array(
     <div class="col-xs-12">
         <p class="title">Recursos aprobados por ente de financiamiento</p>
         <?php
-        $this->widget("SectirPointChart",array(
+        $this->widget("SectirChartBars",array(
             'data' => $proyectosaprob,
-            'chartId' => "chart_proyabrob",
-            "scriptId" => "chart_proyabrob"
+            'chartId' => 'chart_proyabrob',
+            'scriptId' => 'chart_proyabrob'
         ));
         ?>
     </div>
@@ -23,10 +23,10 @@ $this->breadcrumbs=array(
     <div class="col-xs-12">
         <p class="title">Recursos aprobados por área de experiencia</p>
         <?php
-        $this->widget("SectirPointChart",array(
+        $this->widget("SectirChartBars",array(
             'data' => $proyectosaprobArea,
-            'chartId' => "chart_area",
-            "scriptId" => "chart_area"
+            'chartId' => 'chart_area',
+            'scriptId' => 'chart_area'
         ));
         ?>
     </div>
