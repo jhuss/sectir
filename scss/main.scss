@@ -188,3 +188,33 @@ body
     }
   }
 }
+
+#charts {
+  .title-enc {
+    margin-top: 0;
+  }
+
+  .chart {
+    margin-bottom: 50px;
+  }
+
+  p.cat-title, p.title {
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  p.cat-title {
+    font-size: 1.7em;
+  }
+
+  .no-data {
+    color: #999;
+    background: url("../../images/icons/charts-bg.png") no-repeat center top;
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+    height: 128px;
+    line-height: 128px;
+  }
+}

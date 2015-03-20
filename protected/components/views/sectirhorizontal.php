@@ -1,5 +1,8 @@
 <?php
-
+$_data = CJSON::decode($data);
+if(!empty($_data)):
+?>
+<?php
 $script = <<<EOF
    
     function loadChart(data){
@@ -89,7 +92,9 @@ $script = <<<EOF
             loadChart(data);
     });
 EOF;
-Yii::app()->clientScript->registerScript($this->scriptId,$script);
+Yii::app()->clientScript->registerScript($this->scriptId, $script);
 ?>
-
     <div id="<?php echo $this->chartId; ?>"></div>
+<?php else: ?>
+    <div class="no-data">Sin Información</div>
+<?php endif; ?>

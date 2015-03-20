@@ -2,11 +2,17 @@
 /* @var $this EstadisticasController */
 
 $this->breadcrumbs=array(
-	'Estadisticas'=>array('/estadisticas'),
-	'Servicios',
+    'Estadisticas'=>array('/estadisticas'),
+    'Servicios',
 );
 ?>
-<h1>Centros según servicios que ofrecen</h1>
-<?php $this->widget("SectirPointChart",array(
-    'data' => $datos
-)); ?>
+<div class="chart row">
+    <div class="col-xs-12">
+        <p class="title">Centros según servicios que ofrecen</p>
+        <?php
+        $this->widget("SectirPointChart",array(
+            'data' => $datos
+        ))
+        ?>
+    </div>
+</div>

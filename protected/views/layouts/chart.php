@@ -34,7 +34,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div id="charts" class="row">
             <div class="col-xs-3"><?php
                 $this->renderPartial('//layouts/_chart_menu', array(
                     'encId'=>$this->encId,

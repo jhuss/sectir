@@ -2,16 +2,19 @@
 /* @var $this EstadisticasController */
 
 $this->breadcrumbs=array(
-	'Estadisticas'=>array('/estadisticas'),
-	'Cooperación',
+    'Estadisticas'=>array('/estadisticas'),
+    'Cooperación',
 );
 ?>
-
-<h1>Participación en redes temáticas de cooperación</h1>
-<?php 
-$this->widget("SectirPointChart",array(
-    'data' => $datos,
-    'chartId' => "chart_cooperacion",
-    "scriptId" => "chart_cooperacion"
-));
-?>
+<div class="chart row">
+    <div class="col-xs-12">
+        <p class="title">Participación en redes temáticas de cooperación</p>
+        <?php
+        $this->widget("SectirPointChart",array(
+            'data' => $datos,
+            'chartId' => "chart_cooperacion",
+            "scriptId" => "chart_cooperacion"
+        ));
+        ?>
+    </div>
+</div>

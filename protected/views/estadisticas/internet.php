@@ -2,34 +2,45 @@
 /* @var $this EstadisticasController */
 
 $this->breadcrumbs=array(
-	'Estadisticas'=>array('/estadisticas'),
-	'Internet',
+    'Estadisticas'=>array('/estadisticas'),
+    'Internet',
 );
+?>
+<div class="chart row">
+    <div class="col-xs-12">
+        <p class="title">Universidades, Institutos Tecnológicos y Escuelas técnicas con servicio de internet</p>
+        <?php
+        $this->widget("SectirPointChart",array(
+            'data' => $datosTieneInternet,
+            'scriptId' => "datosTieneInternet",
+            'chartId' => "datosTieneInternet",
+        ));
+        ?>
+    </div>
+</div>
 
-?>
+<div class="chart row">
+    <div class="col-xs-12">
+        <p class="title">Universidades, Institutos Tecnológicos y Escuelas técnicas según nivel de satisfacción del servicio de internet</p>
+        <?php
+        $this->widget("SectirPointChart",array(
+            'data' => $datosSatisfaccion,
+            'scriptId' => "datosSatisfaccion",
+            'chartId' => "datosSatisfaccion",
+        ));
+        ?>
+    </div>
+</div>
 
-<h1>Universidades, Institutos Tecnológicos y Escuelas técnicas con servicio de internet</h1>
-<?php 
-$this->widget("SectirPointChart",array(
-    'data' => $datosTieneInternet,
-    'scriptId' => "datosTieneInternet",
-    'chartId' => "datosTieneInternet",
-));
-?>
-<h1>Universidades, Institutos Tecnológicos y Escuelas técnicas según nivel de satisfacción del servicio de internet</h1>
-
-<?php 
-$this->widget("SectirPointChart",array(
-    'data' => $datosSatisfaccion,
-    'scriptId' => "datosSatisfaccion",
-    'chartId' => "datosSatisfaccion",
-));
-?>
-<h1>Universidades, Institutos Tecnológicos y Escuelas técnicas según tipo de conexión a internet</h1>
-<?php 
-$this->widget("SectirPointChart",array(
-    'data' => $datosProveedor,
-    'scriptId' => "datosProveedor",
-    'chartId' => "datosProveedor",
-));
-?>
+<div class="chart row">
+    <div class="col-xs-12">
+        <p class="title">Universidades, Institutos Tecnológicos y Escuelas técnicas según tipo de conexión a internet</p>
+        <?php
+        $this->widget("SectirPointChart",array(
+            'data' => $datosProveedor,
+            'scriptId' => "datosProveedor",
+            'chartId' => "datosProveedor",
+        ));
+        ?>
+    </div>
+</div>

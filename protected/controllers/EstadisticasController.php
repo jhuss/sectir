@@ -393,6 +393,7 @@ class EstadisticasController extends Controller
 
     public function actionCooperacion($id, $porEnte = 0)
     {
+        // TODO: falla si no hay datos
         $this->loadEncuesta($id);
         $datos = $this->encuesta->getEstadisticasPorOpcion(array(
             "preg_red_tem_pert"
@@ -577,8 +578,6 @@ class EstadisticasController extends Controller
             $data = $this->dataChartView($temp, "Experiencia para {val}");
             $this->render("chartview", array('pageName' => 'Experiencia',
                 'datos' => $data));
-
-
         }
     }
 
@@ -646,6 +645,7 @@ class EstadisticasController extends Controller
             "enunciado_comp", "suma"
         );
         $data = $this->dataChartView($temp, "Servicios por {val}");
+        print_r($data);
         $this->render("chartview", array('pageName' => 'Servicios',
             'datos' => $data));
     }
