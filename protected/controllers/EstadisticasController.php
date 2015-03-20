@@ -393,7 +393,6 @@ class EstadisticasController extends Controller
 
     public function actionCooperacion($id, $porEnte = 0)
     {
-        // TODO: falla si no hay datos
         $this->loadEncuesta($id);
         $datos = $this->encuesta->getEstadisticasPorOpcion(array(
             "preg_red_tem_pert"
@@ -411,6 +410,9 @@ class EstadisticasController extends Controller
 
 
             }
+        }
+        else {
+            $this->render("cooperacion", array("datos" => array()));
         }
     }
 
