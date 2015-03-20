@@ -20,6 +20,7 @@
 
     $home = CHtml::image(Html::imageUrl('icons/home.png'));
     $avatar = CHtml::image($picture['url'], Yii::t('UsrModule.usr', 'Profile picture'), array('height' => 16, 'width' => 16));
+    $charts = CHtml::image(Html::imageUrl('icons/charts.png'));
     $salir = CHtml::image(Html::imageUrl('icons/door_out.png'), 'salir', array('height' => 16, 'width' => 16));
 ?>
 <div class="row usr-bar">
@@ -38,7 +39,7 @@
             </li>
             <?php if(Yii::app()->user->checkAccess('usr.update')): ?>
             <li class="item dropdown">
-                <?php echo CHtml::link($avatar . CHtml::tag('span', array('class'=>'nav-title'), 'Encuestas', true) . CHtml::tag('span', array('class'=>'caret'), '', true), '#', array('class'=>'avatar dropdown-toggle', 'data-toggle'=>'dropdown')); ?>
+                <?php echo CHtml::link($charts . CHtml::tag('span', array('class'=>'nav-title'), 'Encuestas', true) . CHtml::tag('span', array('class'=>'caret'), '', true), '#', array('class'=>'avatar dropdown-toggle', 'data-toggle'=>'dropdown')); ?>
                 <ul class="dropdown-menu" role="menu">
                     <li><?php echo CHtml::link('Llenar Encuestas', array('site/admin')); ?></li>
 
