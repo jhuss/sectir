@@ -16,6 +16,7 @@
   ],
   "dependencies": {
     "sectir-table": "asdrubalivan/sectir-table",
-    "sectir-respuesta-app": "asdrubalivan/sectir-respuesta-app"
+    "sectir-respuesta-app": "asdrubalivan/sectir-respuesta-app",
+    "chart.horizontalbar": "~1.0.2"
   }
 }

@@ -110,6 +110,17 @@ class EstadisticasController extends Controller
                 array_push($labels, $d[$x]);
                 array_push($retVal, $d[$y]);
             }
+        } else {
+            foreach ($datos as $d) {
+                $indiceX = "";
+                foreach ($x as $elX) {
+                    $indiceX .= $d[$elX];
+                    $indiceX .= ":";
+                }
+                $indiceX = rtrim($indiceX, ": ");
+                array_push($labels, $indiceX);
+                array_push($retVal, $d[$y]);
+            }
         }
 
         return array('labels' => $labels, 'data' => $retVal);
@@ -335,6 +346,7 @@ class EstadisticasController extends Controller
                 array(
                     "titulo" => "Cantidad de productos por año",
                     "data" => $datosPorPeriodo,
+                    "mode" => 'horizontal'
                 ),
             )
         ));
@@ -657,7 +669,6 @@ class EstadisticasController extends Controller
             "enunciado_comp", "suma"
         );
         $data = $this->dataChartView($temp, "Servicios por {val}");
-        print_r($data);
         $this->render("chartview", array('pageName' => 'Servicios',
             'datos' => $data));
     }

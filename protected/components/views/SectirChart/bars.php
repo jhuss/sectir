@@ -1,9 +1,19 @@
 <?php
-    if(!empty($data)):
+    if(!empty($data['data'])):
 ?>
 <?php
+    if($this->Mode == 'vertical') {
+        $mode = 'Bar';
+    } elseif ($this->Mode == 'horizontal') {
+        $mode = 'HorizontalBar';
+        $this->opts = array_merge($this->opts, array(
+            'barShowStroke' => false
+        ));
+    }
+
     $jlabels = CJSON::encode($data['labels']);
     $jdata = CJSON::encode($data['data']);
+    $jopts = CJSON::encode($this->opts);
 
     $script = <<<EOF
 var data = {
@@ -19,7 +29,7 @@ var data = {
     ]
 };
 var ctx = document.getElementById("$this->chartId").getContext("2d");
-var $this->varName = new Chart(ctx).Bar(data);
+var $this->varName = new Chart(ctx).$mode(data, $jopts);
 EOF;
     Yii::app()->clientScript->registerScript($this->scriptId, $script);
 ?>

@@ -13,7 +13,10 @@ $this->breadcrumbs=array(
         $this->widget("SectirChartBars",array(
             'data' => $proyectosaprob,
             'chartId' => 'chart_proyabrob',
-            'scriptId' => 'chart_proyabrob'
+            'scriptId' => 'chart_proyabrob',
+            'opts' => array(
+                'scaleLabel' => "<%=value%> Bs"
+            )
         ));
         ?>
     </div>
@@ -26,7 +29,10 @@ $this->breadcrumbs=array(
         $this->widget("SectirChartBars",array(
             'data' => $proyectosaprobArea,
             'chartId' => 'chart_area',
-            'scriptId' => 'chart_area'
+            'scriptId' => 'chart_area',
+            'opts' => array(
+            'scaleLabel' => "<%=value%> Bs"
+        )
         ));
         ?>
     </div>

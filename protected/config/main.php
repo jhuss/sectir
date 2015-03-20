@@ -87,6 +87,10 @@ $arrayConfig = array(
                     'baseUrl' => 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/',
                     'js' => array('Chart.min.js'),
                 ),
+                'chartjs.horizontal' => array(
+                    'basePath' => 'webroot.bower_components',
+                    'js' => array('chart.horizontalbar/Chart.HorizontalBar.js'),
+                ),
                 'jquery' => array(
                     'baseUrl' => '//ajax.googleapis.com/ajax/libs/jquery/1.11.1/',
                     'js' => array('jquery.min.js'),

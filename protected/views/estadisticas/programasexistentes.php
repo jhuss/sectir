@@ -10,7 +10,7 @@ $this->breadcrumbs=array(
     <div class="col-xs-12">
         <p class="title">Programas Existentes</p>
         <?php
-        $this->widget("SectirPointChart",array(
+        $this->widget("SectirChartBars",array(
             'data' => $datos,
             'chartId' => "chart_proyabrob",
             "scriptId" => "chart_proyabrob"
@@ -23,7 +23,7 @@ $this->breadcrumbs=array(
     <div class="col-xs-12">
         <p class="title">Egresados de Programas Existentes</p>
         <?php
-        $this->widget("SectirPointChart",array(
+        $this->widget("SectirChartBars",array(
             'data' => $datosEgresados,
             'chartId' => "chart_egresados",
             "scriptId" => "chart_egresados"
