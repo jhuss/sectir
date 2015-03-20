@@ -3,6 +3,9 @@ use Underscore\Types\Arrays;
 
 class EstadisticasController extends Controller
 {
+    public $layout = '//layouts/chart';
+    public $encId = null;
+    public $actions = array();
     public $encuesta = null;
 
     public function filters()
@@ -17,6 +20,62 @@ class EstadisticasController extends Controller
         return array(
             array('allow', 'users' => array('*')),
         );
+    }
+
+    protected function beforeAction($event)
+    {
+        $reflection = new ReflectionClass('EstadisticasController');
+        $methods = $reflection->getMethods();
+        $actions = array();
+        $titles = array(
+            'Gastosactividades' => 'Gastos en Actividades',
+            'IdentificacionPorEnte' => 'Identificación por Ente',
+            'Infraestructura' => 'Infraestructura',
+            'Problematicas' => 'Problematicas',
+            'Activa' => 'Instalaciones/Sedes Activas',
+            'Productostecnologicos' => 'Productos Tecnológicos',
+            'Proyectosinvestigacion' => 'Proyectos de Investigación',
+            'Recursoshumanos' => 'Recursos Humanos',
+            'RecursosHumanosPorEnte' => 'Recursos Humanos por Ente',
+            'Actores' => 'Actores',
+            'Cooperacion' => 'Cooperación',
+            'LineasInvestigacionEnte' => 'Lineas de Investigación por Ente',
+            'RedesCooperacionEnte' => 'Redes de Cooperación por Ente',
+            'ProyectosInnovacion' => 'Proyectos de Innovación',
+            'ProgramasExistentes' => 'Programas Existentes',
+            'Revistas' => 'Revistas',
+            'Condiciones' => 'Condiciones',
+            'Internet' => 'Internet',
+            'Comiteetica' => 'Comite de Ética',
+            'TipoPatrimonio' => 'Patrimonio',
+            'Experiencia' => 'Experiencia',
+            'Beneficiarios' => 'Beneficiarios',
+            'BeneficiariosPorEnte' => 'Beneficiarios por Ente',
+            'Servicios' => 'Servicios',
+            'ServiciosPorEnte' => 'Servicios por Ente'
+        );
+
+        foreach ($methods as $m) {
+            if (preg_match('/^action+\w{2,}/',$m->name)) {
+                $name = explode('action', $m->name)[1];
+                if ($name != 'index') {
+                    array_push($actions, array('name'=>$name, 'title'=>$titles[$name]));
+                }
+            }
+        }
+
+        $this->actions = $actions;
+        $parms = $this->getActionParams();
+
+        if (array_key_exists('id', $parms)) {
+            $this->encId = $parms['id'];
+        }
+
+        if (is_null($this->encId)) {
+            $this->layout = '//layouts/main';
+        }
+
+        return true;
     }
 
     protected function agruparDatos($datos, $x, $y)
@@ -72,50 +131,7 @@ class EstadisticasController extends Controller
 
     public function actionindex($id=null)
     {
-        $reflection = new ReflectionClass('EstadisticasController');
-        $methods = $reflection->getMethods();
-        $actions = array();
-        $titles = array(
-            'Gastosactividades' => 'Gastos en Actividades',
-            'IdentificacionPorEnte' => 'Identificación por Ente',
-            'Infraestructura' => 'Infraestructura',
-            'Problematicas' => 'Problematicas',
-            'Activa' => 'Instalaciones/Sedes Activas',
-            'Productostecnologicos' => 'Productos Tecnológicos',
-            'Proyectosinvestigacion' => 'Proyectos de Investigación',
-            'Recursoshumanos' => 'Recursos Humanos',
-            'RecursosHumanosPorEnte' => 'Recursos Humanos por Ente',
-            'Actores' => 'Actores',
-            'Cooperacion' => 'Cooperación',
-            'LineasInvestigacionEnte' => 'Lineas de Investigación por Ente',
-            'RedesCooperacionEnte' => 'Redes de Cooperación por Ente',
-            'ProyectosInnovacion' => 'Proyectos de Innovación',
-            'ProgramasExistentes' => 'Programas Existentes',
-            'Revistas' => 'Revistas',
-            'Condiciones' => 'Condiciones',
-            'Internet' => 'Internet',
-            'Comiteetica' => 'Comite de Ética',
-            'TipoPatrimonio' => 'Patrimonio',
-            'Experiencia' => 'Experiencia',
-            'Beneficiarios' => 'Beneficiarios',
-            'BeneficiariosPorEnte' => 'Beneficiarios por Ente',
-            'Servicios' => 'Servicios',
-            'ServiciosPorEnte' => 'Servicios por Ente'
-        );
-
-        foreach ($methods as $m) {
-            if (preg_match('/^action+\w{2,}/',$m->name)) {
-                $name = explode('action', $m->name)[1];
-                if ($name != 'index') {
-                    array_push($actions, array('name'=>$name, 'title'=>$titles[$name]));
-                }
-            }
-        }
-
-        $this->render('index', array(
-            'enc'=>$id,
-            'actions'=>$actions,
-        ));
+        $this->render('index');
     }
 
     public function actionGastosactividades($id, $porEnte = 0)

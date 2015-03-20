@@ -25,8 +25,7 @@
             <div class="col-xs-12 gob-banner"></div>
         </div>
 <?php endif; ?>
-<?php $this->renderPartial('//layouts/_usrbar', array('model'=>null));
- ?> 
+<?php $this->renderPartial('//layouts/_usrbar', array('model'=>null)); ?>
 <?php echo $content; ?>
     </div>
 <?php

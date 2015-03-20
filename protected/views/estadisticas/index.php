@@ -4,30 +4,32 @@
     $this->setPageTitle(Yii::app()->name . ': ' . Yii::app()->params['defaultTitle']);
 ?>
 
-<div class="container">
-    <div id="sectir-site-titulo" class="row">
-        <div class="col-md-12">
-            <h2 class="text-center">Estadísticas</h2>
+<?php if(is_null($this->encId)): ?>
+<div id="sectir-site-titulo" class="row">
+    <div class="col-xs-12">
+        <div class="proj-title text-center">
+            <span>Sistema Estadístico en Ciencia, Tecnología e Innovación del Estado Trujillo</span>
+            <hr>
         </div>
     </div>
-    <div id="sectir-site-content" class="row">
-        <div class="col-md-7 col-centered">
-            <div class="row">
-                <?php if (is_null($enc)): ?>
-                    <a href="<?php echo $this->createUrl("$this->uniqueId/index/id/1") ?>">Univ</a>
-                    <a href="<?php echo $this->createUrl("$this->uniqueId/index/id/2") ?>">Laboratorios</a>
-                <? else: ?>
-                <ul>
-                <?php foreach ($actions as $a): ?>
-                <?php
-                    $name = $a['name'];
-                    $title = $a['title'];
+</div>
+<div id="sectir-site-content" class="row">
+    <div class="col-xs-7 col-centered">
+        <h2 class="text-center">Consultar Encuesta:</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <?php echo CHtml::link('Encuesta de Universidades',
+                    $this->createUrl("$this->uniqueId/index/id/1"),
+                    array('class' => 'btn-enc enc-te enc-1'));
                 ?>
-                    <li><a href="<?php echo $this->createUrl("$this->uniqueId/$name/id/$enc") ?>"><?php echo $title; ?></a></li>
-                <?php endforeach; ?>
-                </ul>
-                <?php endif; ?>
+            </div>
+            <div class="col-md-6">
+                <?php echo CHtml::link('Encuesta para laboratorios, centros y otros',
+                    $this->createUrl("$this->uniqueId/index/id/2"),
+                    array('class' => 'btn-enc enc-te enc-2'));
+                ?>
             </div>
         </div>
     </div>
 </div>
+<?php endif; ?>

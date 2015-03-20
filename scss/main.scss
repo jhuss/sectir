@@ -13,6 +13,7 @@ body
 
 .container {
   max-width: 960px;
+  margin-bottom: 40px;
 }
 
 .col-centered {
@@ -25,6 +26,22 @@ body
   background-repeat: no-repeat;
   height: 40px;
   margin-bottom: 10px;
+}
+
+.proj-title {
+  background-image: url('../../images/login-header.png');
+  background-repeat: no-repeat;
+  background-position: top center;
+  padding-top: 90px;
+  margin-top: 20px;
+
+  span {
+    font-size: 1.2em;
+  }
+
+  hr {
+    margin-top: 4px;
+  }
 }
 
 .usr-bar {
@@ -90,5 +107,84 @@ body
   img {
     display: block;
     margin: 0 auto;
+  }
+}
+
+// encuestas
+.btn-enc {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #FAFAFA;
+  display: inline-block;
+  font-size: 2em;
+  text-align: center;
+  text-decoration: none;
+  padding: 140px 10px 5px 10px;
+  min-height: 275px;
+  width: 100%;
+}
+
+.btn-enc:hover {
+  background-color: #f1f1f1;
+  text-decoration: none;
+}
+
+.enc-te {
+  background-repeat: no-repeat;
+  background-position: center 10px;
+}
+
+.enc-1 {
+  background-image: url("../../images/icons/university-icon.png");
+}
+
+.enc-2 {
+  background-image: url("../../images/icons/laboratory-icon.png");
+}
+
+.title-enc {
+  margin: 20px 25px 0 25px;
+  font-weight: bold;
+
+  h4 {
+    background-size: 40px;
+    background-position: center left;
+    padding: 10px 0 10px 50px;
+    margin: 0;
+  }
+
+  hr {
+    margin: 4px 0 15px 0;
+  }
+}
+
+// estadisticas
+.stats-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    a {
+      color: #4d4d4c;
+      border-left: 8px solid #595959;
+      border-bottom: 1px solid #595959;
+      font-size: 1.2em;
+      text-decoration: none;
+      display: block;
+      padding: 4px 10px;
+      margin-bottom: 2px;
+    }
+
+    a:hover {
+      background-color: #F2F2F2;
+    }
+
+    a.active {
+      $bcolor: #225280;
+      border-left-color: $bcolor;
+      border-bottom-color: $bcolor;
+      background-color: #E6EDF4;
+    }
   }
 }

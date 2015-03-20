@@ -1,55 +1,5 @@
-.enc-te {
-  background-repeat: no-repeat;
-  background-position: center 10px;
-}
-
-.enc-1 {
-  background-image: url("../../images/icons/university-icon.png");
-}
-
-.enc-2 {
-  background-image: url("../../images/icons/laboratory-icon.png");
-}
-
 #sectir-site-titulo {
   h2 {
     margin-bottom: 20px;
-  }
-}
-
-#sectir-site-content {
-
-  .btn-enc {
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background-color: #FAFAFA;
-    display: inline-block;
-    font-size: 2em;
-    text-align: center;
-    text-decoration: none;
-    padding: 140px 10px 5px 10px;
-    min-height: 275px;
-  }
-
-  .btn-enc:hover {
-    background-color: #f1f1f1;
-  }
-}
-
-#fill-enc {
-  .title-enc {
-    margin: 20px 25px 0 25px;
-    font-weight: bold;
-
-    h4 {
-      background-size: 40px;
-      background-position: center left;
-      padding: 10px 0 10px 50px;
-      margin: 0;
-    }
-
-    hr {
-      margin: 4px 0 15px 0;
-    }
   }
 }
