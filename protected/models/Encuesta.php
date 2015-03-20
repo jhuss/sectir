@@ -524,6 +524,9 @@ EOF;
     protected function insertarPreguntasNum()
     {
         $valoresAInsertar = array();
+        if (empty($this->_colaRespuestasNum)) {
+            return;
+        }
         foreach ($this->_colaRespuestasNum as $respuesta) {
             $valoresAInsertar[] = array(
                 'valor' => $respuesta["valor"],
@@ -592,6 +595,9 @@ EOF;
     protected function insertarPreguntasAno()
     {
         $valoresAInsertar = array();
+        if (empty($this->_colaRespuestasAno)) {
+            return;
+        }
         foreach ($this->_colaRespuestasAno as $respuesta) {
             $valoresAInsertar[] = array(
                 'valor' => $respuesta["valor"],
@@ -774,7 +780,7 @@ EOF;
     public function getPublicacionesRevista($ente = false)
     {
         $sql = <<<EOF
-SELECT SUM(ra.valor) AS suma, opc.enunciado, _subparams_ FROM {{Respuestaano}} ra
+SELECT SUM(ra.valor) AS suma, opc.enunciado _subparams_ FROM {{Respuestaano}} ra
     INNER JOIN {{Opcioncomp}} opc ON ra.opcioncomp_id = opc.id
     INNER JOIN {{Pregunta}} p ON ra.pregunta_id = p.id
     INNER JOIN (
@@ -798,7 +804,7 @@ EOF;
     public function getRevistasPorArea($ente = false)
     {
         $sql = <<<EOF
-SELECT COUNT(ra.valor) AS cuenta, opc.enunciado, opc.identificador, _subparams_ FROM {{Respuestaabierta}} ra 
+SELECT COUNT(ra.valor) AS cuenta, opc.enunciado, opc.identificador _subparams_ FROM {{Respuestaabierta}} ra 
     INNER JOIN {{Pregunta}} p ON p.id = ra.pregunta_id 
     INNER JOIN {{Opcioncomp}} opc ON opc.id = ra.opcioncomp_id 
     _subjoin_
@@ -814,7 +820,7 @@ EOF;
     public function getPostgradosMaestria($ente = false)
     {
         $sql = <<<EOF
-SELECT COUNT(ra.valor) AS cuenta, p.enunciado, _subparams_ FROM {{Respuestaabierta}} ra
+SELECT COUNT(ra.valor) AS cuenta, p.enunciado _subparams_ FROM {{Respuestaabierta}} ra
 	INNER JOIN {{Pregunta}} p ON ra.pregunta_id = p.id
     _subjoin_
 WHERE p.identificador IN 
@@ -830,7 +836,7 @@ EOF;
     public function getEgresadosProgramas($ente = false)
     {
         $sql = <<<EOF
-SELECT SUM(ra.valor) AS suma, p.identificador, _subparams_ FROM {{Respuestaano}} ra
+SELECT SUM(ra.valor) AS suma, p.identificador _subparams_ FROM {{Respuestaano}} ra
 	INNER JOIN {{Pregunta}} p ON ra.pregunta_id = p.id
     _subjoin_
 WHERE ra.encuesta_id = 1 AND p.identificador IN ('preg_doctorado_numero', 'preg_maestria_numero', 'preg_especialidades_numero', 'preg_pregrado_numero')
