@@ -847,4 +847,17 @@ EOF;
         $command->bindValue(":encuesta_id",$this->id);
         return $command->queryAll();
     }
+    public function getUsuarioUni($identificador)
+    {
+        $sql = <<<EOF
+SELECT ro.user_id FROM {{Respuestaopc}} ro
+    INNER JOIN {{Opcion}} o ON ro.opcion_id = o.id
+    INNER JOIN {{Pregunta}} p ON ro.pregunta_id = p.id
+WHERE p.identificador = "preg_datos_universidad_pertenece" AND o.identificador = :identificador AND ro.encuesta_id = :encuesta_id
+EOF;
+        $command = Yii::app()->db->createCommand($sql);
+        $command->bindValue(":encuesta_id",$this->id);
+        $command->bindValue(":identificador",$identificador);
+        return $command->queryScalar();
+    }
 }
