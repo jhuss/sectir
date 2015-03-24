@@ -444,10 +444,10 @@ class EstadisticasController extends Controller
         return $datos;
     }
 
-    public function actionProyectosInnovacion($id, $porEnte = 0)
+    public function actionProyectosInnovacion($id, $porEnte = 0,$identificadorUni = null)
     {
         $this->loadEncuesta($id);
-        $datos = $this->encuesta->getProyectosInnovacion("opc.id");
+        $datos = $this->encuesta->getProyectosInnovacion("opc.id",true,false,$identificadorUni);
         if ($datos) {
             $datos = $this->agruparDatos($datos, "enunciado", "cuenta");
         }

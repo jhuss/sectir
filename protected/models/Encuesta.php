@@ -809,16 +809,34 @@ EOF;
         ));
         return $query;
     }
+    protected function putUniAnd($query,$identificador,$alias)
+    {
+        $key = "_lastAnd_";
+        if (!is_null($identificador)) {
+            $trArray = array(
+                $key => "AND $alias.user_id = :user_id",
+            );
+        } else {
+            $trArray = array(
+                $key => ''
+            );
+        }
+        return strtr($query,$trArray);
+    }
 
     public
 
-    function getProyectosInnovacion($groupBy, $actividadesCiencia = true, $ente = false)
+    function getProyectosInnovacion($groupBy, $actividadesCiencia = true, $ente = false, $identificadorUni = null)
     {
-        return $this->proyectosInnovacionInternal($groupBy, $actividadesCiencia, $ente);
+        $idUni = $this->getUsuarioUni($identificadorUni);
+
+        return $this->proyectosInnovacionInternal($groupBy, $actividadesCiencia, $ente,$idUni);
     }
 
+    
+
     private
-    function proyectosInnovacionInternal($groupBy, $actividadesCiencia, $ente)
+    function proyectosInnovacionInternal($groupBy, $actividadesCiencia, $ente, $idUni)
     {
         $sql = <<<EOF
 SELECT COUNT(ra.valor) AS cuenta, opc.enunciado _subparams_ FROM {{Respuestaabierta}} ra
@@ -830,10 +848,11 @@ SELECT COUNT(ra.valor) AS cuenta, opc.enunciado _subparams_ FROM {{Respuestaabie
         WHERE _ra.valor = 1 AND _p.identificador = :identificador_int
     ) sub ON sub.id = ra.opcioncomp_id AND sub.user_id = ra.user_id AND sub.encuesta_id = ra.encuesta_id
     _subjoin_
-WHERE ra.encuesta_id = :encuesta_id AND ra.valor <> :valor_vacio AND p.identificador = :identificador_ext
+WHERE ra.encuesta_id = :encuesta_id AND ra.valor <> :valor_vacio AND p.identificador = :identificador_ext _lastAnd_
 GROUP BY $groupBy
 EOF;
         $sql = $this->putOpcSubQuery($sql, $ente);
+        $sql = $this->putUniAnd($sql,$idUni,"ra");
         $command = Yii::app()->db->createCommand($sql);
         $command->bindValue(":valor_vacio", "");
         $command->bindValue(":encuesta_id", $this->id);
@@ -850,6 +869,9 @@ EOF;
 
             $command->bindValue(":identificador_int", "preg_servcient_sino");
             $command->bindValue(":identificador_ext", "preg_servicient_cuales");
+        }
+        if (!is_null($idUni)) {
+            $command->bindValue(":user_id",$idUni);
         }
 
         return $command->queryAll();
@@ -1081,9 +1103,20 @@ EOF;
         return $command->queryAll();
     }
 
-    public
+    private 
+    function getUsuarioUni($identificadorUni)
+    {
+        if (is_string($identificadorUni)) {
+            $id = $this->getUsuarioUniInternal($identificadorUni);
+        }
+        else {
+            $id = null;
+        }
+        return $id;
+    }
 
-    function getUsuarioUni($identificador)
+    public
+    function getUsuarioUniInternal($identificador)
     {
         $sql = <<<EOF
 SELECT ro.user_id FROM {{Respuestaopc}} ro
