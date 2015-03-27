@@ -879,13 +879,14 @@ EOF;
 
     public
 
-    function getEstadisticasPorOpcion($identificadores, $ente = false)
+    function getEstadisticasPorOpcion($identificadores, $ente = false,$identificadorUni = null)
     {
-        return $this->estadisticasPorOpcionInternal($identificadores, $ente);
+        $idUni = $this->getUsuarioUni($identificadorUni);
+        return $this->estadisticasPorOpcionInternal($identificadores, $ente,$idUni);
     }
 
     private
-    function estadisticasPorOpcionInternal($identificadores, $ente)
+    function estadisticasPorOpcionInternal($identificadores, $ente ,$idUni)
     {
         $fn =
         function ($val)
@@ -897,31 +898,37 @@ EOF;
     INNER JOIN {{Pregunta}} p ON ra.pregunta_id = p.id
     INNER JOIN {{Opcion}} o ON ra.opcion_id = o.id
     _subjoin_
-WHERE ra.encuesta_id = :encuesta_id AND p.identificador IN (_ids_)
+WHERE ra.encuesta_id = :encuesta_id AND p.identificador IN (_ids_) _lastAnd_
 GROUP BY ra.opcion_id
 EOF;
         $sql = strtr($sql, array(
             '_ids_' => implode(",", array_map($fn, range(0, count($identificadores) - 1))) ,
         ));
         $sql = $this->putOpcSubQuery($sql, $ente);
+        $sql = $this->putUniAnd($sql,$idUni,"ra");
         $command = Yii::app()->db->createCommand($sql);
         $command->bindValue(":encuesta_id", $this->id);
         foreach($identificadores as $i => $id) {
             $command->bindValue($fn($i) , $id);
         }
+        if (!is_null($idUni)) {
+            $command->bindValue(":user_id",$idUni);
+        }
+        
 
         return $command->queryAll();
     }
 
     public
 
-    function getEstadisticasPorCheckbox($identificadores, $valor = 1, $comparador = "=", $useOpcionComp = true, $ente = false)
+    function getEstadisticasPorCheckbox($identificadores, $valor = 1, $comparador = "=", $useOpcionComp = true, $ente = false, $identificadorUni = null)
     {
-        return $this->estadisticasPorCheckboxInternal($identificadores, $valor, $comparador, $useOpcionComp, $ente);
+        $idUni = $this->getUsuarioUni($identificadorUni);
+        return $this->estadisticasPorCheckboxInternal($identificadores, $valor, $comparador, $useOpcionComp, $ente, $idUni);
     }
 
     private
-    function estadisticasPorCheckboxInternal($identificadores, $valor, $comparador, $useOpcionComp, $ente)
+    function estadisticasPorCheckboxInternal($identificadores, $valor, $comparador, $useOpcionComp, $ente, $idUni)
     {
         $sql = <<<EOF
 SELECT COUNT(ra.valor) AS cuenta, p.identificador AS preg_ident, p.enunciado AS preg_enun, op.enunciado _subparams_ FROM {{Respuestaabierta}} ra
@@ -929,7 +936,7 @@ SELECT COUNT(ra.valor) AS cuenta, p.identificador AS preg_ident, p.enunciado AS 
     _subjoin_
     LEFT JOIN {{Opcioncomp}} op ON ra.opcioncomp_id = op.id
 WHERE ra.valor $comparador :valor AND ra.encuesta_id = :encuesta_id AND p.identificador
-    IN (_ids_)
+    IN (_ids_) _lastAnd_
 GROUP BY p.id, op.id _group_
 EOF;
         $fn =
@@ -952,32 +959,38 @@ EOF;
             ));
         }
 
+        $sql = $this->putUniAnd($sql,$idUni,"ra");
         $command = Yii::app()->db->createCommand($sql);
         $command->bindValue(":encuesta_id", $this->id);
         $command->bindValue(":valor", $valor);
         foreach($identificadores as $i => $id) {
             $command->bindValue($fn($i) , $id);
         }
+        if (!is_null($idUni)) {
+            $command->bindValue(":user_id",$idUni);
+        }
+
 
         return $command->queryAll();
     }
 
     public
 
-    function getEstadisticasSumaRespuestaAno($identificadores, $group = "ra.pregunta_id", $ente = false)
+    function getEstadisticasSumaRespuestaAno($identificadores, $group = "ra.pregunta_id", $ente = false, $identificadorUni=null)
     {
-        return $this->sumaRespuestaAnoInternal($identificadores, $group, $ente);
+        $idUni = $this->getUsuarioUni($identificadorUni);
+        return $this->sumaRespuestaAnoInternal($identificadores, $group, $ente, $idUni);
     }
 
     private
-    function sumaRespuestaAnoInternal()
+    function sumaRespuestaAnoInternal($identificadores, $group, $ente, $idUni)
     {
         $sql = <<<EOF
 SELECT SUM(ra.valor) AS suma, ra.ano , p.enunciado, o.enunciado AS enunciado_comp _subparams_ FROM {{Respuestaano}} ra
     INNER JOIN {{Pregunta}} p ON ra.pregunta_id = p.id
     _subjoin_
     LEFT JOIN {{Opcioncomp}} o ON ra.opcioncomp_id = o.id
-WHERE ra.encuesta_id = :encuesta_id AND p.identificador IN (_ids_)
+WHERE ra.encuesta_id = :encuesta_id AND p.identificador IN (_ids_) _lastAnd_
 GROUP BY $group
 EOF;
         $fn =
@@ -989,10 +1002,14 @@ EOF;
             '_ids_' => implode(",", array_map($fn, range(0, count($identificadores) - 1))) ,
         ));
         $sql = $this->putOpcSubQuery($sql, $ente);
+        $sql = $this->putUniAnd($sql,$idUni,"ra");
         $command = Yii::app()->db->createCommand($sql);
         $command->bindValue(":encuesta_id", $this->id);
         foreach($identificadores as $i => $id) {
             $command->bindValue($fn($i) , $id);
+        }
+        if (!is_null($idUni)) {
+            $command->bindValue(":user_id",$idUni);
         }
 
         return $command->queryAll();
@@ -1000,13 +1017,14 @@ EOF;
 
     public
 
-    function getPublicacionesRevista($ente = false)
+    function getPublicacionesRevista($ente = false,$identificadorUni=null)
     {
-        $this->publicacionesRevistaInternal($ente);
+        $idUni = $this->getUsuarioUni($identificadorUni);
+        $this->publicacionesRevistaInternal($ente,$idUni);
     }
 
     private
-    function publicacionesRevistaInternal($ente)
+    function publicacionesRevistaInternal($ente,$idUni)
     {
         $sql = <<<EOF
 SELECT SUM(ra.valor) AS suma, opc.enunciado _subparams_ FROM {{Respuestaano}} ra
@@ -1018,28 +1036,33 @@ SELECT SUM(ra.valor) AS suma, opc.enunciado _subparams_ FROM {{Respuestaano}} ra
         WHERE _ra.valor <> :valor_int AND _p.identificador = :identificador_int
     ) sub ON sub.id = ra.opcioncomp_id AND sub.user_id = ra.user_id AND sub.encuesta_id = ra.encuesta_id
     _subjoin_
-WHERE ra.encuesta_id = :encuesta_id AND ra.valor <> :valor AND p.identificador = :identificador_ext
+WHERE ra.encuesta_id = :encuesta_id AND ra.valor <> :valor AND p.identificador = :identificador_ext _lastAnd_
 GROUP BY opc.id
 EOF;
         $sql = $this->putOpcSubQuery($sql, $ente);
+        $sql = $this->putUniAnd($sql,$idUni,"ra");
         $command = Yii::app()->db->createCommand($sql);
         $command->bindValue(":valor_int", "");
         $command->bindValue(":valor", "");
         $command->bindValue(":identificador_int", "preg_revistas_area_revista");
         $command->bindValue(":identificador_ext", "preg_revistas_area_num");
         $command->bindValue(":encuesta_id", $this->id);
+        if (!is_null($idUni)) {
+            $command->bindValue(":user_id",$idUni);
+        }
         return $command->queryAll();
     }
 
     public
 
-    function getRevistasPorArea($ente = false)
+    function getRevistasPorArea($ente = false, $identificadorUni=null)
     {
-        return $this->revistasPorAreaInternal($ente);
+        $idUni = $this->getUsuarioUni($identificadorUni);
+        return $this->revistasPorAreaInternal($ente,$idUni);
     }
 
     private
-    function revistasPorAreaInternal($ente)
+    function revistasPorAreaInternal($ente,$idUni)
     {
         $sql = <<<EOF
 SELECT COUNT(ra.valor) AS cuenta, opc.enunciado, opc.identificador _subparams_ FROM {{Respuestaabierta}} ra
@@ -1047,23 +1070,29 @@ SELECT COUNT(ra.valor) AS cuenta, opc.enunciado, opc.identificador _subparams_ F
     INNER JOIN {{Opcioncomp}} opc ON opc.id = ra.opcioncomp_id
     _subjoin_
 
-    WHERE ra.encuesta_id = :encuesta_id AND p.identificador = "preg_revistas_area_revista" AND ra.valor <> "" GROUP BY opc.id
+    WHERE ra.encuesta_id = :encuesta_id AND p.identificador = "preg_revistas_area_revista" AND ra.valor <> "" _lastAnd_
+GROUP BY opc.id
 EOF;
         $sql = $this->putOpcSubQuery($sql, $ente);
+        $sql = $this->putUniAnd($sql,$idUni,"ra");
         $command = Yii::app()->db->createCommand($sql);
         $command->bindValue(":encuesta_id", $this->id);
+        if (!is_null($idUni)) {
+            $command->bindValue(":user_id",$idUni);
+        }
         return $command->queryAll();
     }
 
     public
 
-    function getPostgradosMaestria($ente = false)
+    function getPostgradosMaestria($ente = false,$identificadorUni = null)
     {
-        return $this->postgradosMaestriaInternal($ente);
+        $idUni = $this->getUsuarioUni($identificadorUni);
+        return $this->postgradosMaestriaInternal($ente,$idUni);
     }
 
     private
-    function postgradosMaestriaInternal($ente)
+    function postgradosMaestriaInternal($ente,$identificadorUni)
     {
         $sql = <<<EOF
         SELECT COUNT(ra.valor) AS cuenta, p.enunciado _subparams_ FROM {{Respuestaabierta}} ra
@@ -1071,35 +1100,44 @@ EOF;
             _subjoin_
         WHERE p.identificador IN
             ('preg_doctorado_existente', 'preg_maestria_existente', 'preg_especialidades_existente', 'preg_pregrado_existente')
-        AND ra.encuesta_id = :encuesta_id AND ra.valor <> ""
+        AND ra.encuesta_id = :encuesta_id AND ra.valor <> "" _lastAnd_
         GROUP BY p.id
 EOF;
         $sql = $this->putOpcSubQuery($sql, $ente);
+        $sql = $this->putUniAnd($sql,$identificadorUni,"ra");
         $command = Yii::app()->db->createCommand($sql);
         $command->bindValue(":encuesta_id", $this->id);
+        if (!is_null($identificadorUni)) {
+            $command->bindValue(":user_id",$identificadorUni);
+        }
         return $command->queryAll();
     }
 
     public
 
-    function getEgresadosProgramas($ente = false)
+    function getEgresadosProgramas($ente = false,$identificadorUni = null)
     {
-        return $this->egresadosProgramasInternal($ente);
+        $idUni = $this->getUsuarioUni($identificadorUni);
+        return $this->egresadosProgramasInternal($ente,$idUni);
     }
 
     private
-    function egresadosProgramasInternal($ente)
+    function egresadosProgramasInternal($ente,$idUni)
     {
         $sql = <<<EOF
         SELECT SUM(ra.valor) AS suma, p.identificador _subparams_ FROM {{Respuestaano}} ra
             INNER JOIN {{Pregunta}} p ON ra.pregunta_id = p.id
             _subjoin_
-        WHERE ra.encuesta_id = 1 AND p.identificador IN ('preg_doctorado_numero', 'preg_maestria_numero', 'preg_especialidades_numero', 'preg_pregrado_numero')
+        WHERE ra.encuesta_id = :encuesta_id AND p.identificador IN ('preg_doctorado_numero', 'preg_maestria_numero', 'preg_especialidades_numero', 'preg_pregrado_numero') _lastAnd_
         GROUP BY ra.pregunta_id
 EOF;
         $sql = $this->putOpcSubQuery($sql, $ente);
+        $sql = $this->putUniAnd($sql,$idUni,"ra");
         $command = Yii::app()->db->createCommand($sql);
         $command->bindValue(":encuesta_id", $this->id);
+        if (!is_null($idUni)) {
+            $command->bindValue(":user_id",$idUni);
+        }
         return $command->queryAll();
     }
 
