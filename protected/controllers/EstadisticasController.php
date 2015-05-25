@@ -80,8 +80,10 @@ class EstadisticasController extends Controller
 
     protected function agruparDatos($datos, $x, $y)
     {
+        $labels = array();
         $retVal = array();
-        if (!is_array($x)) {
+
+        /*if (!is_array($x)) {
             foreach ($datos as $d) {
                 $retVal[] = array(
                     "x" => $d[$x],
@@ -101,8 +103,27 @@ class EstadisticasController extends Controller
                     "y" => $d[$y],
                 );
             }
+        }*/
+
+        if (!is_array($x)) {
+            foreach ($datos as $d) {
+                array_push($labels, $d[$x]);
+                array_push($retVal, $d[$y]);
+            }
+        } else {
+            foreach ($datos as $d) {
+                $indiceX = "";
+                foreach ($x as $elX) {
+                    $indiceX .= $d[$elX];
+                    $indiceX .= ":";
+                }
+                $indiceX = rtrim($indiceX, ": ");
+                array_push($labels, $indiceX);
+                array_push($retVal, $d[$y]);
+            }
         }
-        return $retVal;
+
+        return array('labels' => $labels, 'data' => $retVal);
     }
 
     public function agruparDatosPorArray($datos, $group, $x, $y)
@@ -128,6 +149,23 @@ class EstadisticasController extends Controller
             throw new CHttpException(404, "No existe encuesta");
         }
     }
+
+    private function dataChartView($temp, $titulo)
+    {
+        $data = array();
+        foreach ($temp as $i => $t) {
+            $data[] = array(
+                'titulo' => strtr($titulo, array("{val}" => $i)),
+                'data' => $t,
+            );
+        }
+        return $data;
+    }
+
+
+    /**********
+     * ACTIONS
+     **********/
 
     public function actionindex($id=null)
     {
@@ -245,6 +283,7 @@ class EstadisticasController extends Controller
                 array(
                     "titulo" => "Cantidad de productos por año",
                     "data" => $datosPorPeriodo,
+                    "mode" => 'horizontal'
                 ),
             )
         ));
@@ -407,8 +446,6 @@ class EstadisticasController extends Controller
                 $datos = $this->dataChartView($datos, "Cooperación para {val}");
                 $this->render("chartview", array('pageName' => 'Cooperación',
                     'datos' => $datos));
-
-
             }
         }
         else {
@@ -418,7 +455,6 @@ class EstadisticasController extends Controller
 
     public function actionLineasInvestigacionEnte($id,$identificadorUni=null)
     {
-        
         $datos = $this->getEstadisticasOpcionEnte($id, array("preg_lineas_inv_lineasinv"),$identificadorUni);
 
         $datos = $this->dataChartView($datos, "Lineas de investigación para {val}");
@@ -428,7 +464,6 @@ class EstadisticasController extends Controller
 
     public function actionRedesCooperacionEnte($id,$identificadorUni=null)
     {
-
         $datos = $this->getEstadisticasOpcionEnte($id, array("preg_red_tem_pert"),$identificadorUni);
         $datos = $this->dataChartView($datos, "Redes temáticas de cooperación para {val}");
         $this->render("chartview", array("datos" => $datos));
@@ -530,7 +565,6 @@ class EstadisticasController extends Controller
             'datosSatisfaccion' => $datosSatisfaccion,
             'datosProveedor' => $datosProveedor,
         ));
-
     }
 
     public function actionComiteetica($id, $porEnte = 0, $identificadorUni = null)
@@ -584,18 +618,6 @@ class EstadisticasController extends Controller
         }
     }
 
-    private function dataChartView($temp, $titulo)
-    {
-        $data = array();
-        foreach ($temp as $i => $t) {
-            $data[] = array(
-                'titulo' => strtr($titulo, array("{val}" => $i)),
-                'data' => $t,
-            );
-        }
-        return $data;
-    }
-
     public function actionBeneficiarios($id,$identificadorUni=null)
     {
         $this->loadEncuesta($id);
@@ -623,7 +645,6 @@ class EstadisticasController extends Controller
         $data = $this->dataChartView($temp, "Beneficiarios para {val}");
         $this->render("chartview", array('pageName' => 'Beneficiarios',
             'datos' => $data));
-
     }
 
     public function actionServicios($id, $porEnte = 0)
@@ -648,7 +669,6 @@ class EstadisticasController extends Controller
             "enunciado_comp", "suma"
         );
         $data = $this->dataChartView($temp, "Servicios por {val}");
-        print_r($data);
         $this->render("chartview", array('pageName' => 'Servicios',
             'datos' => $data));
     }

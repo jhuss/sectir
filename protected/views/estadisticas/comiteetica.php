@@ -10,7 +10,7 @@ $this->breadcrumbs=array(
     <div class="col-xs-12">
         <p class="title">Universidades, Institutos tecnológicos y escuelas que cuentan con comité de ética</p>
         <?php
-        $this->widget("SectirPointChart",array(
+        $this->widget("SectirChartBars",array(
             'data' => $datosComiteEtica
         ));
         ?>

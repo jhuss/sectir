@@ -10,7 +10,7 @@ $this->breadcrumbs=array(
     <div class="col-xs-12">
         <p class="title">Participación en redes temáticas de cooperación</p>
         <?php
-        $this->widget("SectirPointChart",array(
+        $this->widget("SectirChartBars",array(
             'data' => $datos,
             'chartId' => "chart_cooperacion",
             "scriptId" => "chart_cooperacion"

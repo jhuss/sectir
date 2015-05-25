@@ -12,7 +12,7 @@ $this->breadcrumbs=array(
     <div class="col-xs-12">
         <p class="title">Talento humano por categoría PEI</p>
         <?php
-        $this->widget("SectirPointChart",array(
+        $this->widget("SectirChartBars",array(
             'data' => $datosPorCat,
             'chartId' => "chart_cat",
             "scriptId" => "chart_cat"
@@ -25,7 +25,7 @@ $this->breadcrumbs=array(
     <div class="col-xs-12">
         <p class="title">Talento humano por experiencia PEI</p>
         <?php
-        $this->widget("SectirPointChart",array(
+        $this->widget("SectirChartBars",array(
             'data' => $datosExp,
             'chartId' => "chart_exp",
             "scriptId" => "chart_exp"
@@ -38,7 +38,7 @@ $this->breadcrumbs=array(
     <div class="col-xs-12">
         <p class="title">Talento humano por formación universitaria</p>
         <?php
-        $this->widget("SectirPointChart",array(
+        $this->widget("SectirChartBars",array(
             'data' => $datosUni,
             'chartId' => "chart_uni",
             "scriptId" => "chart_uni"
@@ -51,7 +51,7 @@ $this->breadcrumbs=array(
     <div class="col-xs-12">
         <p class="title">Talento humano por fuente de financiamiento</p>
         <?php
-        $this->widget("SectirPointChart",array(
+        $this->widget("SectirChartBars",array(
             'data' => $datosFuenteFin,
             'chartId' => "chart_fuentefin",
             "scriptId" => "chart_fuentefin"

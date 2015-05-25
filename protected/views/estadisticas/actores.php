@@ -10,7 +10,7 @@ $this->breadcrumbs=array(
     <div class="col-xs-12">
         <p class="title">Actores Involucrados en proyectos de investigación</p>
         <?php
-        $this->widget("SectirPointChart",array(
+        $this->widget("SectirChartBars",array(
             'data' => $datos,
             'chartId' => "chart_actores",
             "scriptId" => "chart_actores"

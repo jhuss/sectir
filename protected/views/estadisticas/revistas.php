@@ -10,7 +10,7 @@ $this->breadcrumbs=array(
     <div class="col-xs-12">
         <p class="title">Publicaciones en vistas arbitradas e Indexadas</p>
         <?php
-        $this->widget("SectirPointChart",array(
+        $this->widget("SectirChartBars",array(
             'data' => $datos,
         ));
         ?>
@@ -21,7 +21,7 @@ $this->breadcrumbs=array(
     <div class="col-xs-12">
         <p class="title">Cantidad de revistas por área</p>
         <?php
-        $this->widget("SectirPointChart",array(
+        $this->widget("SectirChartBars",array(
             'data' => $datosPorArea,
             'scriptId' => "datosArea",
             'chartId' => "datosArea",

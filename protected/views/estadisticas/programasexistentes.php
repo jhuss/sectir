@@ -5,6 +5,7 @@ $this->breadcrumbs=array(
     'Estadisticas'=>array('/estadisticas'),
     'Proyectosinvestigacion',
 );
+
 ?>
 <div class="chart row">
     <div class="col-xs-12">

@@ -10,7 +10,7 @@ $this->breadcrumbs=array(
     <div class="col-xs-12">
         <p class="title">Infraestructura en ciencia, tecnología e innovación</p>
         <?php
-        $this->widget("SectirHorizontalChart",array(
+        $this->widget("SectirChartBars",array(
             'data' => $datos
         ));
         ?>

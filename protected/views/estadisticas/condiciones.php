@@ -10,7 +10,7 @@ $this->breadcrumbs=array(
     <div class="col-xs-12">
         <p class="title">Condiciones de los Espacios de las Universidades</p>
         <?php
-        $this->widget("SectirPointChart",array(
+        $this->widget("SectirChartBars",array(
             'data' => $datosEspacios,
             'scriptId' => "datosEspacios",
             'chartId' => "datosEspacios",
@@ -23,7 +23,7 @@ $this->breadcrumbs=array(
     <div class="col-xs-12">
         <p class="title">Condiciones del equipamiento de las universidades</p>
         <?php
-        $this->widget("SectirPointChart",array(
+        $this->widget("SectirChartBars",array(
             'data' => $datosEquipamiento,
             'scriptId' => "datosEquipamiento",
             'chartId' => "datosEquipamiento",

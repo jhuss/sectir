@@ -10,7 +10,7 @@ $this->breadcrumbs=array(
     <div class="col-xs-12">
         <p class="title">Universidades, Institutos Tecnológicos y Escuelas técnicas con servicio de internet</p>
         <?php
-        $this->widget("SectirPointChart",array(
+        $this->widget("SectirChartBars",array(
             'data' => $datosTieneInternet,
             'scriptId' => "datosTieneInternet",
             'chartId' => "datosTieneInternet",
@@ -23,7 +23,7 @@ $this->breadcrumbs=array(
     <div class="col-xs-12">
         <p class="title">Universidades, Institutos Tecnológicos y Escuelas técnicas según nivel de satisfacción del servicio de internet</p>
         <?php
-        $this->widget("SectirPointChart",array(
+        $this->widget("SectirChartBars",array(
             'data' => $datosSatisfaccion,
             'scriptId' => "datosSatisfaccion",
             'chartId' => "datosSatisfaccion",
@@ -36,7 +36,7 @@ $this->breadcrumbs=array(
     <div class="col-xs-12">
         <p class="title">Universidades, Institutos Tecnológicos y Escuelas técnicas según tipo de conexión a internet</p>
         <?php
-        $this->widget("SectirPointChart",array(
+        $this->widget("SectirChartBars",array(
             'data' => $datosProveedor,
             'scriptId' => "datosProveedor",
             'chartId' => "datosProveedor",
